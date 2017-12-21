@@ -1,9 +1,8 @@
 <!--------banner section------->
 <div class="banner_ctrgy">
-    <img src="<?php echo $this->request->webroot; ?>images/website/ctgry_bngle.jpg">
-    <div class="bnr_txt">
-        <h3>New Gold<br>Banner Collection</h3>
-    </div>
+     <?= $this->Flash->render() ?>  
+    <!--img src="<?php echo $this->request->webroot; ?>images/website/ctgry_bngle.jpg"-->
+
 </div>
 <!-----------category_lst--------------->
 <div class="categry_sction">
@@ -76,7 +75,7 @@
                         <div class="cvr_pic">
                             <div class="brd_pic">
                                  <?php if($item['image']){ ?>  
-                                <img src="<?php echo $this->request->webroot."images/products".$item['image']; ?>" class="ful_lnght">
+                                <img src="<?php echo $this->request->webroot."images/products/".$item['image']; ?>" class="ful_lnght">
                                  <?php }else{ ?>
                                 <img src="<?php echo $this->request->webroot."images/products/no-image.jpg"; ?>" class="ful_lnght">
                                  <?php } ?>

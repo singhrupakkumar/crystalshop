@@ -1,6 +1,7 @@
 <!--------banner section------->
 <div class="banner_ctrgy">
-    <img src="<?php echo $this->request->webroot; ?>images/website/ctgry_bngle.jpg">
+     <?= $this->Flash->render() ?>    
+    <!--img src="<?php echo $this->request->webroot; ?>images/website/ctgry_bngle.jpg"-->
     <div class="bnr_txt">
         <h3><?php if(isset($cat['name'])){ echo $cat['name']; } ?></h3> 
     </div>

@@ -1,5 +1,6 @@
  <!--------banner section------->
    <div class="banner_sction">
+      <?= $this->Flash->render() ?>        
    <img src="<?php echo $this->request->webroot; ?>images/website/sctn.png">
     <div class="btn_sell">
     <button type="button" class="btn btn-success">Sell Your Products</button> 
@@ -145,7 +146,9 @@
                     <p>Making the investment in quality gem stones is only the first step towards life-long enjoyment of the jewel. Like any other valued item, gems will look better and last longer...  <a href="#" class="read_lst">Read More</a></p>
                 	</div>
             	</div>
-                
+                <div class="see_txt"> 
+           <a href="#">Promote Your Products<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+          </div>
         	</div> 
     	</div>
 	</div>  

@@ -1,9 +1,11 @@
 <div class="sgn_bner">
+  
     <img src="<?php echo $this->request->webroot; ?>images/website/sgn_bner.jpg">
     <div class="uper_sgnlyer">
         <h4>Reset Password</h4>
     </div>
 </div>
+  <?= $this->Flash->render() ?> 
 <!--------sign_up_section------->
 <div class="frm_sgnup">
     <div class="container">
@@ -22,9 +24,10 @@
                         <span class="input-group-addon brdr_trns"><i class="fa fa-password" aria-hidden="true"></i></span>
                         <input type="password" class="form-control" name="password" placeholder="Confirm Password" required="required">
                     </div>
-                
+                     <p class="mymessage" style="color:red;text-align: center;"></p>    
+                    <div class="g-recaptcha cpta_tnm" data-sitekey="6Lef5j0UAAAAADt47q0_rrHhl3BfaFQBtP2O6UBM"></div> 
 
-                 <?= $this->Form->button(__('Save'),['class'=>'btn btn-success cntr_grn']); ?>
+                 <?= $this->Form->button(__('Save'),['class'=>'btn btn-success cntr_grn','id'=>'resetbutton','type'=>'button']); ?>
                  <?= $this->Form->end() ?>
 
             </div>
@@ -56,5 +59,30 @@ $(document).ready(function() {
 			}		
 		}
 	});
+        
+         
+       jQuery("#resetbutton").click(function(event) { 
+            
+          jQuery.ajax({
+                    url: '<?php echo $this->request->webroot ;?>users/capchaverify', 
+                    data: jQuery('#reset-form').serialize(),
+                    type: 'POST',
+                    dataType: "json",
+                    success: function (msg) {    
+                        if (msg.status === true) 
+                        {
+                            jQuery(".mymessage").html(msg.msg); 
+                            jQuery("#reset-form").submit();  
+                        }
+                        else
+                        { 
+                              event.preventDefault();
+                            jQuery(".mymessage").html(msg.msg);
+                        }
+                    }
+                });
+  event.preventDefault();     
+});   
+        
 });
 </script>

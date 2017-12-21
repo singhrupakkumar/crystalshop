@@ -17,7 +17,8 @@ jQuery(document).ready(function () {
 '    </tr>'+
 '  </thead>'+
 '  <tbody>';
-$.each(data['data']['products'], function (index, value) {      
+$.each(data['data']['products'], function (index, value) {    
+    var str = value.product.description;  
 myvar += '   <tr>'+
 '      <td data-label="ITEM" class="zro_lvl"><div class="pic_stncrt">'+
 '      	<div class="crt_pic">'+
@@ -25,7 +26,7 @@ myvar += '   <tr>'+
 '        	</div>'+
 '          <div class="cart_txt">'+
 '          	<h3>Sphene stone</h3>'+
-'            <p>'+ value.product.description +'</p>'+
+'            <p>'+ str.substring(1, 4) +'</p>'+
 '          	</div>'+
 '      	</div>'+
 '        </td>'+

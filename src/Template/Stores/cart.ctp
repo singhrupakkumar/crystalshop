@@ -5,7 +5,7 @@
         <h4>Cart</h4> 
     </div>
 </div>
-
+<?= $this->Flash->render() ?>  
 <!-----------cart_table--------------->
 <?php // if(empty($shop['OrderItem'])) : ?>
 

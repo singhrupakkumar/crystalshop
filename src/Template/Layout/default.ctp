@@ -50,17 +50,17 @@ $cakeDescription = '';
        .message{text-align: center;} 
        .message.success{
 		background: #00b33c;
-		padding: 20px;
+		padding: 10px;
 		color: #fff;
 		font-size: 15px;
-		margin: 4px 0px 0px 0px;
+		margin: 0px;
 	}
 	.message.error{
 		background: #cc0000;
-		padding: 20px;
+		padding: 10px;
 		color: #fff;
 		font-size: 15px;
-		margin: 4px 0px 0px 0px;
+		margin: 0px 0px 0px 0px;
 	}
         .my-error-class{
             color:red !important;
@@ -171,11 +171,7 @@ $cakeDescription = '';
   </div>
   
   </div>
- </header>
- 
- 
- 
- <?= $this->Flash->render() ?>  
+ </header>  
   <!--------banner section------->
  <?= $this->fetch('content') ?>      
 <!-----------footer-section-------------->

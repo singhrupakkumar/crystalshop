@@ -1,9 +1,8 @@
 <!--------banner section------->
 <div class="sgn_bner">
-    <img src="<?php echo $this->request->webroot; ?>images/website/detil_bnr.jpg">
-    <div class="uper_sgnlyer">
-        <h4>Product Detail</h4>
-    </div>
+     <?= $this->Flash->render() ?>    
+    <!--img src="<?php echo $this->request->webroot; ?>images/website/detil_bnr.jpg"-->
+   
 </div>
 <!-----------category_details--------------->
 <div class="slvr_rng">
