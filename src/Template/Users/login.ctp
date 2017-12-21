@@ -26,7 +26,7 @@
       <span class="input-group-addon brdr_trns"><i class="glyphicon glyphicon-lock"></i></span></span>
       <input id="password" type="password" class="form-control ctrl_smn" name="password" placeholder="Password" required="required">
     </div>
-    <p class="mymessage" style="color:red;text-align: center;"></p>
+    <p class="mymessage"></p>
     <div class="g-recaptcha cpta_tnm" data-sitekey="6Lef5j0UAAAAADt47q0_rrHhl3BfaFQBtP2O6UBM"></div> 
     <?= $this->Form->button(__('Sign In'),['class'=>'btn btn-success cntr_grn','type'=>'button','id'=>'loginbutton']); ?> 
     <?= $this->Form->end() ?> 

@@ -23,11 +23,12 @@
     <span class="req_fld">All Fields Are Required</span>
  
      <?= $this->Form->create($user, ['type' => 'file','id' => 'user-form']) ?>
+     
     <div class="input-group zip_full">
       <span class="input-group-addon brdr_trns"><i class="glyphicon glyphicon-user"></i></span>  
           	<?php echo $this->Form->control('name', [
                     'label' => false,
-                    'class' => 'form-control ctrl_smn',
+                    'class' => 'form-control ctrl_smn lft_hldr',
                     'placeholder' => 'Full Name'
                 ]); ?>
       
@@ -54,36 +55,37 @@
       <span class="input-group-addon brdr_trns"><i class="fa fa-map-marker fnt_inc1" aria-hidden="true"></i></span>
        <?php echo $this->Form->control('address', [
         'label' => false,
-        'class' => 'form-control ctrl_smn',
+        'class' => 'form-control ctrl_smn lft_hldr',
         'placeholder' => 'Street or P.O.Box'
     ]); ?>
       
     </div>
     
      <div class="input-group grp_adjst">
+      <span class="input-group-addon brdr_trns lgh_snt"><i class="fa fa-building-o" aria-hidden="true"></i></span> 
          <?php echo $this->Form->control('city', [
         'label' => false,
-        'class' => 'form-control ctrl_smn',
+        'class' => 'form-control ctrl_smn lft_hldr',
         'placeholder' => 'City'
     ]); ?>   
     
     </div>
     
      <div class="input-group grp_adjst1">
-         
+          <span class="input-group-addon brdr_trns lgh_snt"><i class="fa fa-globe" aria-hidden="true"></i></span> 
      <?php echo $this->Form->control('state', [
         'label' => false,
-        'class' => 'form-control ctrl_smn',
+        'class' => 'form-control ctrl_smn lft_hldr',
         'placeholder' => 'State'
     ]); ?>   
      
     </div>
     
-     <div class="input-group zip_full1">
-         
+     <div class="input-group zip_full">
+         <span class="input-group-addon brdr_trns"><i class="fa fa-barcode" aria-hidden="true"></i></span> 
      <?php echo $this->Form->control('zip', [
         'label' => false,
-        'class' => 'form-control ctrl_smn',
+        'class' => 'form-control ctrl_smn lft_hldr',
         'placeholder' => 'Zip Code'
     ]); ?>     
     
@@ -101,7 +103,7 @@
    
     <?php echo $this->Form->error('password', null, array('class' => 'label label-block label-danger text-left', 'wrap' => 'label')); ?>
     </div>
-     <p class="mymessage" style="color:red;text-align: center;"></p>
+     <p class="mymessage"></p> 
     <div class="g-recaptcha cpta_tnm" data-sitekey="6Lef5j0UAAAAADt47q0_rrHhl3BfaFQBtP2O6UBM"></div>  
    <?= $this->Form->button(__('Sign Up'),['class'=>'btn btn-success cntr_grn','id'=>'signupbutton','type'=>'button']); ?>  
    <?= $this->Form->end() ?>

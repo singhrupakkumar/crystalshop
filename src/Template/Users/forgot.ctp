@@ -20,7 +20,7 @@
                         <span class="input-group-addon brdr_trns"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
                         <input id="email" type="email" class="form-control ctrl_smn" name="email" placeholder="Email Address" required="required">
                     </div>
-                    <p class="mymessage" style="color:red;text-align: center;"></p>   
+                    <p class="mymessage"></p>     
                     <div class="g-recaptcha cpta_tnm" data-sitekey="6Lef5j0UAAAAADt47q0_rrHhl3BfaFQBtP2O6UBM"></div>
                  <?= $this->Form->button(__('Send'),['class'=>'btn btn-success cntr_grn','id'=>'forgotbutton','type'=>'button']); ?>
                  <?= $this->Form->end() ?>

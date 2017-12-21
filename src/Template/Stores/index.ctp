@@ -14,7 +14,7 @@
 	<div class="container">
     	<div class="row">
         	<div class="slider_cvr">
-        <section class="center slider">
+        <section class="regular slider">
             
       <?php if(!empty($features)){ 
           foreach($features as $product){ 

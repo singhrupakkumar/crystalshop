@@ -28,10 +28,10 @@
                    
                     <div class="frm_sgncvr1">
                          <?= $this->Form->create($user, ['id' => 'edit-form', 'enctype' => 'multipart/form-data']) ?>
-                            <?php echo $this->Form->control('image', ['class' => 'form-control ctrl_smn','type'=>'file','id'=>'img' ,'label' => false]); ?>
-                            <div class="input-group">
+                            <?php echo $this->Form->control('image', ['class' => 'form-control ctrl_smn smm_alg','type'=>'file','id'=>'img' ,'label' => false]); ?>
+                            <div class="input-group gp_slct">
                                 <span class="input-group-addon brdr_trns"><i class="glyphicon glyphicon-user"></i></span>
-                                <?php echo $this->Form->control('name', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Full Name']); ?>
+                                <?php echo $this->Form->control('name', ['class' => 'form-control ctrl_smn lft_hldr', 'label' => false,'placeholder'=>'Full Name']); ?>
                             </div> 
                         
                              <div class="input-group">
@@ -41,7 +41,7 @@
 
                            <div class="input-group">
                                <span class="input-group-addon brdr_trns"><i class="glyphicon glyphicon-user"></i></span>
-                               <label for="exampleInputGender">Gender</label>
+                       <!--   <label for="exampleInputGender">Gender</label>-->
                                 <select name="gender" class="form-control">
                                   <option value="male" <?php if($user->gender=='male'){ echo "selected"; }?>>Male</option>
                                   <option value="female" <?php if($user->gender=='female'){ echo "selected"; }?>>Female</option>
@@ -53,8 +53,9 @@
                               <span class="input-group-addon brdr_trns"><i class="fa fa-mobile fnt_inc" aria-hidden="true"></i></span>  
                               <?php echo $this->Form->control('phone', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Phone Number']); ?>
                            </div>
-                           <div class="input-group grp_adjst">
-                              <?php echo $this->Form->control('dob', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Date Of Birth']); ?>
+                           <div class="input-group ">
+                           <span class="input-group-addon brdr_trns"><i class="fa fa-calendar fnt_clng" aria-hidden="true"></i></span>  
+                              <?php echo $this->Form->control('dob', ['class' => 'form-control ctrl_smn lft_hldr', 'label' => false,'placeholder'=>'Date Of Birth']); ?>
                            </div>
                            <div class="input-group">
                             <span class="input-group-addon brdr_trns"><i class="fa fa-map-marker fnt_inc1" aria-hidden="true"></i></span>   
@@ -62,13 +63,16 @@
                            </div> 
                             
                            <div class="input-group grp_adjst">
-                              <?php echo $this->Form->control('state', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'State']); ?>
+                            <span class="input-group-addon brdr_trns lgh_snt"><i class="fa fa-globe" aria-hidden="true"></i></span> 
+                              <?php echo $this->Form->control('state', ['class' => 'form-control ctrl_smn lft_hldr', 'label' => false,'placeholder'=>'State']); ?>
                            </div> 
                            <div class="input-group grp_adjst">
-                              <?php echo $this->Form->control('zip', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'State']); ?>
+                             <span class="input-group-addon brdr_trns"><i class="fa fa-barcode" aria-hidden="true"></i></span> 
+                              <?php echo $this->Form->control('zip', ['class' => 'form-control ctrl_smn lft_hldr', 'label' => false,'placeholder'=>'Zip']); ?>
                            </div>
-                           <div class="input-group grp_adjst">
-                              <label for="exampleInputPassword1">Country</label> 
+                           <div class="input-group cntr_ctl">
+                              <!--<label for="exampleInputPassword1">Country</label> -->
+                              <span class="input-group-addon brdr_trns"><i class="fa fa-flag" aria-hidden="true"></i></span>
                                 <select class="form-control form-select ajax-processed sel-country" id="edit-node-type" name="country" readonly="readonly">
                                <option value="-1" selected="selected">Select Country</option>
                                <?php if(!empty($countries)){ ?>

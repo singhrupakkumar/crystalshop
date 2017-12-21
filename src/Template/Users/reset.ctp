@@ -24,7 +24,7 @@
                         <span class="input-group-addon brdr_trns"><i class="fa fa-password" aria-hidden="true"></i></span>
                         <input type="password" class="form-control" name="password" placeholder="Confirm Password" required="required">
                     </div>
-                     <p class="mymessage" style="color:red;text-align: center;"></p>    
+                     <p class="mymessage"></p>     
                     <div class="g-recaptcha cpta_tnm" data-sitekey="6Lef5j0UAAAAADt47q0_rrHhl3BfaFQBtP2O6UBM"></div> 
 
                  <?= $this->Form->button(__('Save'),['class'=>'btn btn-success cntr_grn','id'=>'resetbutton','type'=>'button']); ?>

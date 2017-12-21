@@ -1,10 +1,10 @@
 <!--------banner section-------> 
-<div class="sgn_bner"> 
+<!--div class="sgn_bner">   
     <img src="<?php echo $this->request->webroot; ?>images/website/cart_bner.jpg">
     <div class="uper_sgnlyer">  
         <h4>Cart</h4> 
     </div>
-</div>
+</div-->
 <?= $this->Flash->render() ?>  
 <!-----------cart_table--------------->
 <?php // if(empty($shop['OrderItem'])) : ?>

@@ -128,7 +128,7 @@ class UsersController extends AppController {
                 if ($user) {
                     $this->Auth->setUser($user);
                   
-                  $this->Flash->success(__('Registered Successfully.'));   
+                  $this->Flash->success(__('You have been registered successfully.'));   
                     return $this->redirect($this->Auth->redirectUrl());   
                 }
   

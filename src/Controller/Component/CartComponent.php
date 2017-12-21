@@ -103,15 +103,18 @@ class CartComponent extends Component {
     }    
 
    //////////////////////////////////////////////////
-    public function checkcrt($sid, $pid) {
-        $shop = ClassRegistry::init('Cart')->find('all', array(
+      public function checkcrt($sid, $pid,$uid) { 
+        $shop = TableRegistry::get('Carts')->find('all', array(
+            'contain'=>['Products'],
             'conditions' => array(
-                'AND' => array( 
-                    'sessionid' => $sid, 
-                    'product_id' => $pid
+                'AND' => array(
+                    'Carts.sessionid' => $sid,
+                    'Carts.product_id' => $pid,
+		    'Carts.uid'=> $uid
         ))));
+        $shop = $shop->all();   
         return $shop;
-    } 
+    }
     
   
     

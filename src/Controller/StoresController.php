@@ -35,7 +35,7 @@ class StoresController extends AppController
 
 
         $this->Auth->allow(['index', 'add','storeDetails','shop','all','hotdeals','cart',
-            'remove','itemupdate','clear','displaycart','webdisplaycart','webremoveitems']);
+            'remove','itemupdate','clear','displaycart','webdisplaycart','webremoveitems','cartincreaseqty','cartdecreaseqty']);
 
         $this->authcontent();
   
@@ -410,4 +410,92 @@ class StoresController extends AppController
         echo json_encode($response);
         exit;  
         }
+        
+        
+         public function cartincreaseqty() {    
+            $sesid = $this->request->session()->id();
+            $product_id = $this->request->data['id']; 
+            if($this->Auth->user('id')){
+            $uid = $this->Auth->user('id');
+            }else{
+                $uid =0;
+            }
+             $this->loadModel('Products');
+             $pro_record = $this->Products->find('all',array('conditions'=>array('Products.id'=>$product_id)));
+	     $pro_record = $pro_record->first();
+			
+            $this->loadModel('Carts');  
+            $data = $this->Carts->find('all', array('contain'=>['Products'],'conditions' => array('Carts.product_id' => $product_id))); 	
+            $data = $data->all();
+            
+         
+             foreach ($data as $d) { 
+
+		      $cartd = $this->Cart->checkcrt($sesid, $product_id,$uid);
+	
+		      $product_quantity = 0; 
+                    foreach ($cartd as $key => $cart_product) {
+                        $product_quantity += $cart_product['quantity'];
+                    }
+			
+			if($product_quantity < $d['product']['quantity']){ 	
+			 $qty = $d['quantity'] + 1;
+                        $weight_total = $d['weight_total'] + $d['weight'];
+                        $subtotal = $d['subtotal'] + $d['price'];
+                       
+             $updated = $this->Carts->updateAll(array('subtotal' => $subtotal, 'quantity' => $qty, 'weight_total' => $weight_total), array('id' => $d['id']));
+           
+                    }else{
+                    $response['error'] = "1";
+                    $response['msg'] = 'Available Item(s) in Stock : '.$d['product']['quantity'];	
+                  }		
+	
+        }
+             $user_id= $uid?$uid:0;   
+             $data = $this->displaycart($user_id, $sesid);  
+             $response['error'] = "0";
+             $response['data'] = $data; 
+          echo 	json_encode($response);
+          exit;     
+     
+    } 
+    
+        public function cartdecreaseqty() { 
+        $product_id = $this->request->data['id'];
+        $sesid = $this->request->session()->id();
+        $this->loadModel('Carts');
+         $this->loadModel('Products');
+         if($this->Auth->user('id')){
+            $uid = $this->Auth->user('id');
+            }else{
+                $uid =0;
+            }
+         $pro_record = $this->Products->find('all',array('conditions'=>array('Products.id'=>$product_id)));
+         $pro_record = $pro_record->first();  
+         $data = $this->Carts->find('all', array('conditions' => array('Carts.product_id' => $product_id))); 
+         $data = $data->all();    
+
+        foreach ($data as $d) {
+	
+            if($d['quantity']>1){
+                $qty = $d['quantity'] - 1;
+                $weight_total = $d['weight_total'] + $d['weight'];
+                $subtotal = $d['price'] * $qty;
+                $updated = $this->Carts->updateAll(array('subtotal' => $subtotal, 'quantity' => $qty, 'weight_total' => $weight_total), array('id' => $d['id'])
+                ); 
+            }
+		
+        }
+             $user_id= $uid?$uid:0;   
+             $data = $this->displaycart($user_id, $sesid);  
+             $response['error'] = "0"; 
+             $response['data'] = $data; 
+          echo 	json_encode($response);
+          exit;  
+    }
+
+   
+        
+        
+        
 }

@@ -47,11 +47,10 @@ $cakeDescription = '';
    <?php echo $this->Html->script(array('addtocart.js'), array('inline' => false)); ?>
  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <style>
-       .message{text-align: center;} 
-       .message.success{
-		background: #00b33c;
+       .alert-danger{text-align: center;}
+       .alert-success{text-align: center;}
+       .alert-success{
 		padding: 10px;
-		color: #fff;
 		font-size: 15px;
 		margin: 0px;
 	}
@@ -69,6 +68,7 @@ $cakeDescription = '';
           color:#49BA64 !important;  
         }
         #added_items h4{text-align: center; }
+      
     </style> 
   <script>
   $( function() {  
@@ -85,10 +85,10 @@ $cakeDescription = '';
   <div class="row">
      <div class="col-sm-12">
      	<div class="seacr-br">
-        <div class="col-sm-4">
+        <div class="col-sm-6">
         	<div class="blnk-mbl"></div>  
         </div>
-        <div class="col-sm-8"> 
+        <div class="col-sm-6"> 
     			  <div class="input-group seacrh-inpt"  id="adv-search">
                 <input type="text" class="form-control top_mgn" placeholder="Search for anything" />
                 <div class="input-group-btn">
@@ -161,7 +161,7 @@ $cakeDescription = '';
                 <li class="<?php  if($this->request->params['action'] == 'index' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>stores/index">Home</a></li>
                 <li class="<?php  if($this->request->params['action'] == 'contact' ) { echo "active"; }?>"><a href="#">Contact Us</a></li> 
                 <li><a href="#">How To Sell Your Products</a></li>
-                <li><a href="#">Promote Your Product</a></li>
+               <!-- <li><a href="#">Promote Your Product</a></li>-->
             </ul>
             
         </div>
@@ -242,7 +242,7 @@ $cakeDescription = '';
                          </div>
                     </div>
                     </li>
-                    <li><a href="#" class="rgst_lnk">register now to get updates</a></li>
+                    <li><a href="#" class="rgst_lnk">Register now to get updates</a></li>
                     <li><a href="#" class="pay_lnk">payment</a><img src="<?php echo $this->request->webroot; ?>images/website/foter_paypal.png" class="pal_side"></li>
                     </ul>
                 	</div>
@@ -319,29 +319,42 @@ $cakeDescription = '';
 </script>
 
 <script>
-$('.center').slick({
-  centerMode: true,
-  centerPadding: '60px',
+
+	  
+	  
+	  $('.regular').slick({
+  dots: true,
+  infinite: false,
+  speed: 300,
   slidesToShow: 5,
+  slidesToScroll: 1,
   responsive: [
     {
-      breakpoint: 768,
+      breakpoint: 1024,
       settings: {
-        arrows: false,
-        centerMode: true,
-        centerPadding: '40px',
-        slidesToShow: 3
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
       }
     },
     {
       breakpoint: 480,
       settings: {
-        arrows: false,
-        centerMode: true,
-        centerPadding: '40px',
-        slidesToShow: 1
+        slidesToShow: 1,
+        slidesToScroll: 1
       }
     }
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
   ]
 });
 </script>
@@ -382,6 +395,10 @@ $('.center').slick({
                 });
             }
             return false;
+        });
+        
+        $(document).ready(function(){ 
+                $('.flash-msg').delay(5000).fadeOut('slow');
         });
         
     </script> 
