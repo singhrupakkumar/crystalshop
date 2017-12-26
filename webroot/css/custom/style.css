@@ -200,7 +200,7 @@ margin-top:0px !important;
 
   position: relative;
 
-  z-index: 999;
+  z-index: 1;
 
   text-align: right;
 
@@ -2620,7 +2620,7 @@ font-size: 16px;
 
 .tble_heding {
 
- width: 80%;
+ width: 100%;
 
 float: none;
 
@@ -2648,7 +2648,7 @@ display: table;
 
 .table_boundry {
 
- width: 80%;
+ width: 100%;
 
 float: none;
 

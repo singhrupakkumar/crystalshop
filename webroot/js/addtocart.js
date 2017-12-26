@@ -2,7 +2,7 @@ jQuery(document).ready(function () {
   $.getJSON("http://rupak.crystalbiltech.com/crystal/stores/webdisplaycart", function (data) { 
  jQuery('#cartcount').html(data['data']['cartcount']); 
   var myvar = '';
- if(data['data']['cartcount'] == "0"){    
+ if(data['data']['cartcount'] == "0"){     
   myvar += '<h4>Shopping Cart is empty</h4>'; 
  }else{
  myvar = '<div class="table_boundry">'+
@@ -31,7 +31,7 @@ myvar += '   <tr>'+
 '      	</div>'+
 '        </td>'+
 '      <td data-label="QTY" class="on_crt">'+
-'      <div class="qty_nmbr">'+
+'      <div class="qty_nmbr"><p class="stock"></p>'+
 '                       <span>QTY</span>'+
 '                       '+
 ' <div class="input-group spinner">'+
@@ -60,7 +60,7 @@ myvar += '  </tbody>'+
 '</div>'+
 '    '+
 '<div class="cntinue_alst">'+
-' <button type="button" class="btn btn-success scss_cntn">Continue</button>  '+
+'<a href="http://rupak.crystalbiltech.com/crystal/stores/checkout"><button type="button" class="btn btn-success scss_cntn">Continue</button></a>  '+
 '</div>'+
 '        '+
 '        	</div>';
@@ -81,7 +81,8 @@ myvar += '  </tbody>'+
                     id: jQuery(this).attr("id") 
                 },
                 dataType: "json",
-                success: function (data) {   
+                success: function (data) { 
+
  jQuery('#cartcount').html(data['data']['cartcount']); 
   var myvar = '';
  if(data['data']['cartcount'] == "0"){    
@@ -113,7 +114,7 @@ myvar += '   <tr>'+
 '      	</div>'+
 '        </td>'+
 '      <td data-label="QTY" class="on_crt">'+
-'      <div class="qty_nmbr">'+
+'      <div class="qty_nmbr"><p class="stock"></p>'+
 '                       <span>QTY</span>'+
 '                       '+
 ' <div class="input-group spinner">'+
@@ -142,7 +143,7 @@ myvar += '  </tbody>'+
 '</div>'+
 '    '+
 '<div class="cntinue_alst">'+
-' <button type="button" class="btn btn-success scss_cntn">Continue</button>  '+
+' <a href="http://rupak.crystalbiltech.com/crystal/stores/checkout"><button type="button" class="btn btn-success scss_cntn">Continue</button></a>  '+
 '</div>'+
 '        '+
 '        	</div>';
@@ -169,8 +170,8 @@ myvar += '  </tbody>'+
                     id:jQuery(this).attr("id"),
                 },
                 dataType: "json",
-                success: function (data) {
-      
+                success: function (data) { 
+
               jQuery('#cartcount').html(data['data']['cartcount']); 
   var myvar = '';
  if(data['data']['cartcount'] == "0"){    
@@ -202,7 +203,7 @@ myvar += '   <tr>'+
 '      	</div>'+
 '        </td>'+
 '      <td data-label="QTY" class="on_crt">'+
-'      <div class="qty_nmbr">'+
+'      <div class="qty_nmbr"><p class="stock"></p>'+
 '                       <span>QTY</span>'+
 '                       '+
 ' <div class="input-group spinner">'+
@@ -231,13 +232,13 @@ myvar += '  </tbody>'+
 '</div>'+
 '    '+
 '<div class="cntinue_alst">'+
-' <button type="button" class="btn btn-success scss_cntn">Continue</button>  '+
+'<a href="http://rupak.crystalbiltech.com/crystal/stores/checkout"><button type="button" class="btn btn-success scss_cntn">Continue</button></a>  '+
 '</div>'+
 '        '+
 '        	</div>';
  } 
   $('#added_items').html(myvar);   
- 
+  jQuery('.stock').html(data.msg);   
         rmv();
                 },
                 error: function () {
@@ -257,6 +258,7 @@ myvar += '  </tbody>'+
                 success: function (data) {
      
                jQuery('#cartcount').html(data['data']['cartcount']); 
+                
   var myvar = '';
  if(data['data']['cartcount'] == "0"){    
   myvar += '<h4>Shopping Cart is empty</h4>'; 
@@ -287,7 +289,7 @@ myvar += '   <tr>'+
 '      	</div>'+
 '        </td>'+
 '      <td data-label="QTY" class="on_crt">'+
-'      <div class="qty_nmbr">'+
+'      <div class="qty_nmbr"><p class="stock"></p>'+
 '                       <span>QTY</span>'+
 '                       '+
 ' <div class="input-group spinner">'+
@@ -316,13 +318,13 @@ myvar += '  </tbody>'+
 '</div>'+
 '    '+
 '<div class="cntinue_alst">'+
-' <button type="button" class="btn btn-success scss_cntn">Continue</button>  '+
+'<a href="http://rupak.crystalbiltech.com/crystal/stores/checkout"><button type="button" class="btn btn-success scss_cntn">Continue</button></a> '+
 '</div>'+
 '        '+
 '        	</div>';
  } 
   $('#added_items').html(myvar);   
- 
+   jQuery('.stock').html(data.msg); 
         rmv();      
                 },
                 error: function () {
@@ -340,10 +342,10 @@ myvar += '  </tbody>'+
         
         
         
-        
+         
         
       
-    }   
+    }     
     
 
   

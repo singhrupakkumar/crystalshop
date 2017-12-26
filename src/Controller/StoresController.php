@@ -34,7 +34,7 @@ class StoresController extends AppController
 
 
 
-        $this->Auth->allow(['index', 'add','storeDetails','shop','all','hotdeals','cart',
+        $this->Auth->allow(['index', 'add','storeDetails','shop','all','hotdeals','cart','checkout',
             'remove','itemupdate','clear','displaycart','webdisplaycart','webremoveitems','cartincreaseqty','cartdecreaseqty']);
 
         $this->authcontent();
@@ -493,9 +493,128 @@ class StoresController extends AppController
           echo 	json_encode($response);
           exit;  
     }
+    
+    public function checkout(){
+        if($this->Auth->user('id')){
+            
+            if($this->request->is('post')){ 
+             
+            $address = array(
+                'name'=> $this->request->data['name'],
+                'email'=> $this->request->data['email'],
+                'phone'=> $this->request->data['phone'],
+                'address'=> $this->request->data['address'],
+                'city'=> $this->request->data['city'],
+                'state'=> $this->request->data['state'],
+                'zip'=> $this->request->data['zip']
+                );  
+          
+            $this->request->session()->write('shippingaddress',$address);
+            if($this->request->session()->read('shippingaddress')){
+              $res['status'] = true;
+              $res['msg'] = 'Shipping address saved';
+            }else{
+             $res['status'] = false;
+              $res['msg'] = 'Try Again';   
+            }
+             echo json_encode($res);  
+             exit; 
+            }
+           $this->loadModel('Users');
+           $user = $this->Users->find('all',['conditions'=>['Users.id'=>$this->Auth->user('id')]]);
+           $user = $user->first();
+            
+        }else{ 
+            $this->Flash->error(__('You must login first'));
+            return $this->redirect(array('action' => 'cart')); 
+        } 
+        $shippingaddress = $this->request->session()->read('shippingaddress');  
+        $this->set('user', $user);
+        $this->set('shippingaddress', $shippingaddress); 
+    }
+    
+    public function payment() { 
+        $shop = $this->Session->read('Shop');
+        if(empty($shop)) {
+            return $this->redirect('/'); 
+        }
+        if ($this->request->is('post')) {
+            
+            if(array_key_exists('order_type',$shop['Order'])){
+			
+            $this->loadModel('Order');
+ 
+            $this->Order->set($this->request->data);
+            if($this->Order->validates()) {
+                $order = $shop; 
+    
+                if($shop['Order']['order_type'] == 'paypal') {  
+           
+                    $val = $order['Order']['total'];
+                    $order['Order']['status'] = 1;
+                    $order['Order']['order_type'] = $shop['Order']['order_type'];
+                    $save = $this->Order->saveAll($order, array('validate' => 'first'));
+                    $email = $order['Order']['email'];
+                   
+                    
+                    if ($save) {
+                        $last_id = $this->Order->getLastInsertId();
+                        ///////////////////////////////////////////////payment////////////////////////////////////////////////
+                        echo ".<form name=\"_xclick\" action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">
+                    <input type=\"hidden\" name=\"cmd\" value=\"_xclick\">
+                    <input type=\"hidden\" name=\"email\" value=\"$email\">
+                    <input type=\"hidden\" name=\"business\" value=\"wearorganicclothing@gmail.com\">
+                    <input type=\"hidden\" name=\"currency_code\" value=\"USD\">
+                    <input type=\"hidden\" name=\"custom\" value=\"$last_id\">
+                    <input type=\"hidden\" name=\"amount\" value=\"$val\">
+                    <input type=\"hidden\" name=\"return\" value=\"http://rupak.crystalbiltech.com/shop/shop/success\">
+                    <input type=\"hidden\" name=\"notify_url\" value=\"http://rupak.crystalbiltech.com/shop/shop/ipn\"> 
+                    </form>";
+//                    exit;
+                        echo "<script>document._xclick.submit();</script>";
+                        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    }else {
+                    $errors = $this->Order->invalidFields();
+                    $this->set(compact('errors'));
+                }
+           
+                }else{
+               return $this->redirect(array('action' => 'address?panel=2'));        
+               $this->Session->setFlash('Please fill address field.', 'flash_error');    
+                }
 
-   
+            }else{
+                 return $this->redirect(array('action' => 'address?panel=2'));       
+               $this->Session->setFlash('Please fill address field.', 'flash_error');  
+            }
+            
         
+		} else{	
+		 $this->Session->setFlash('Please fill address field.', 'flash_error');	
+			 return $this->redirect(array('action' => 'address?panel=2'));  
+				
+			
+			} 
+            
+            
+        }else{
+                 return $this->redirect(array('action' => 'address?panel=2'));       
+               $this->Session->setFlash('Try again.', 'flash_error');  
+            }
+ 
+        $this->set(compact('shop'));
+
+    }
+    
+      public function success() {
+        $shop = $this->request->session()->read('Shop');
+        $this->Cart->clear(); 
+        if(empty($shop)) { 
+            return $this->redirect('/');
+        }
         
+        $this->set(compact('shop'));
+      }
+
         
 }

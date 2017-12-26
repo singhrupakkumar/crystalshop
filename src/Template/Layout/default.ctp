@@ -68,7 +68,7 @@ $cakeDescription = '';
           color:#49BA64 !important;  
         }
         #added_items h4{text-align: center; }
-      
+        .stock {color: red;} 
     </style> 
   <script>
   $( function() {  
