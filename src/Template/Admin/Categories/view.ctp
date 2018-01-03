@@ -27,6 +27,11 @@
             <th scope="row"><?= __('Name') ?></th>
             <td><?= h($category->name) ?></td>
         </tr>
+        
+        <tr>
+            <th scope="row"><?= __('Description') ?></th>
+            <td><?= h(strip_tags($category->description)) ?></td>
+        </tr>
 
         <tr>
             <th scope="row"><?= __('Id') ?></th>
@@ -49,13 +54,7 @@
             <?php } ?>
           </td>
         </tr>
-        <tr>
-          <td>
-          <?= $this->Html->link(__('Edit Category'), ['action' => 'edit', $category->id], ['class' => 'btn btn-info']) ?>     
-          <?= $this->Form->postLink(__('Delete Category'), ['action' => 'delete', $category->id], ['confirm' => __('Are you sure you want to delete # {0}?', $category->id),'class' => 'btn btn-danger']) ?>    
-          </td>
-          <td></td>
-        </tr>
+   
       </tbody>
     </table>
   </div>

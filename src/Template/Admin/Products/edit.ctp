@@ -29,10 +29,20 @@
                   <?php echo $this->Form->control('quantity',['class' => 'form-control']);?>     
                  <?php echo $this->Form->control('user_id',['class' => 'form-control','label'=>'Seller']);?>
                  <?php echo $this->Form->control('cat_id',['class' => 'form-control','label'=>'Category']);?>
-
+                 <div class="form-group"> 
+                        <label>Condition</label>   
+                 <select class="form-control" name="conditions" id="conditions">
+                                <option value="New" <?php if($product['conditions']=='New'){ echo "selected"; } ?>>New</option>
+                                <option value="Old" <?php if($product['conditions']=='Old'){ echo "selected"; } ?>>Old</option>
+                 </select>
+                  </div>   
                 <div class="form-group">
                   <?php echo $this->Form->control('description', ['class' => 'form-control', 'label' => 'Description']); ?>
                 </div>
+                <div class="form-group">
+                  <?php echo $this->Form->control('delivery_details', ['class' => 'form-control', 'label' => 'Delivery Details']); ?>
+                </div>    
+                    
                     
                 <div class="form-group">
                   <label for="exampleInputEmail1">Status</label>

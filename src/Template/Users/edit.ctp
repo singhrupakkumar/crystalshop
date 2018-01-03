@@ -34,10 +34,10 @@
                                 <?php echo $this->Form->control('name', ['class' => 'form-control ctrl_smn lft_hldr', 'label' => false,'placeholder'=>'Full Name']); ?>
                             </div> 
                         
-                             <div class="input-group">
+                             <!--div class="input-group">
                                 <span class="input-group-addon brdr_trns"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
                                 <?php echo $this->Form->control('email', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Email Address']); ?>
-                            </div>
+                            </div-->
 
                            <div class="input-group">
                                <span class="input-group-addon brdr_trns"><i class="glyphicon glyphicon-user"></i></span>
@@ -87,7 +87,7 @@
                                </select>
                            </div> 
 
-                        <?= $this->Form->button(__('Save changes'), ['class' => 'btn btn-success cntr_grn']) ?>
+                        <?= $this->Form->button(__('Save Changes'), ['class' => 'btn btn-success cntr_grn']) ?>
                            <?= $this->Form->end() ?>
                        
                     </div>

@@ -21,13 +21,13 @@
             <?= $this->Form->create($category, ['id' => 'product-form', 'enctype' => 'multipart/form-data']) ?>
               <div class="box-body">
                 <div class="form-group">
-                  <div class="form-group">     
+                  <!--div class="form-group">     
                  <?php
                   echo $this->Form->control('parent_id', ['options' => $parentCategories, 'empty' => true,'class' => 'form-control']);  
-                 ?>  
-                 </div>     
+                 ?>    
+                 </div-->     
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Name</label>
+                  <label for="exampleInputEmail1">Name</label> 
                   <?php echo $this->Form->control('name', ['class' => 'form-control', 'label' => false]); ?>
                 </div> 
                   <?php echo $this->Form->control('description',['class' => 'form-control']);?>   

@@ -41,18 +41,33 @@
             <td><?= h($product->user->name) ?></td>
         </tr>
         
-        <tr>
-            <th scope="row"><?= __('Status') ?></th>
-            <td><?= $this->Number->format($product->status) ?></td>
+         <tr>
+            <th scope="row"><?= __('Quantity') ?></th> 
+            <td><?= h($product->quantity) ?></td>
         </tr>
+         <tr>
+            <th scope="row"><?= __('Price') ?></th> 
+            <td><?= h($product->price) ?></td>
+        </tr>
+          <?php if(!empty($product->delivery_details)){ ?> 
+        <tr>
+            <th scope="row"><?= __('Delivery Details') ?></th>
+            <td><?= h($product->delivery_details) ?></td>  
+        </tr>
+       <?php } ?>
+        
+       <?php if(!empty($product->conditions)){ ?> 
+        <tr>
+            <th scope="row"><?= __('Condition') ?></th>
+            <td><?= h($product->conditions) ?></td>
+        </tr>
+       <?php } ?>
+    
         <tr>
             <th scope="row"><?= __('Created') ?></th>
             <td><?= h($product->created) ?></td>
         </tr>
-        <tr>
-            <th scope="row"><?= __('Expired') ?></th>
-            <td><?= h($product->expired) ?></td>
-        </tr>
+     
         <tr>
           <th><?= __('Image') ?></th>
           <td>
@@ -65,14 +80,8 @@
             <?php } ?>
           </td>
         </tr>
-        <tr>
-          <td>
-          <?= $this->Html->link(__('Edit Product'), ['action' => 'edit', $product->id], ['class' => 'btn btn-info']) ?>     
-          <?= $this->Form->postLink(__('Delete Product'), ['action' => 'delete', $product->id], ['confirm' => __('Are you sure you want to delete # {0}?', $product->id),'class' => 'btn btn-danger']) ?>    
-          </td>
-          <td></td>
-        </tr>
-      </tbody>
+  
+      </tbody>  
     </table>
   </div>
   <!-- /.box-body -->

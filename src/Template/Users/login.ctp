@@ -6,11 +6,13 @@
         <h4>Sign In</h4>
         	</div>
   </div> 
- <?= $this->Flash->render() ?>   
+  
 <!--------sign_up_section------->
 <div class="frm_sgnup">
 	<div class="container">
+
     	<div class="row">
+                      <?= $this->Flash->render() ?>      
         	 <div class="sgnup_heading">
    <h4>Sign In to Earth Vendors</h4>  
    	</div> 

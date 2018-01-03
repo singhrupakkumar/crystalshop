@@ -1,9 +1,10 @@
 <div class="chk_section">
     <div class="container">
+     <?= $this->Flash->render() ?>  
         <div class="row">
             <div class="my_thm">
                 <div class="my_hder">
-                    <h3>My Product</h3>   
+                    <h3>My Products</h3>   
                 </div>
 
                 <!-----pro-table-------->               
@@ -33,7 +34,7 @@
                                     </div>
                                     <div class="mypr_txt">
                                         <h4><?php if(isset($product['name'])){ echo $product['name']; } ?></h4>
-                                        <p><?php if(isset($product['description'])){ echo $product['description']; } ?></p> 
+                                        <p><?php if(isset($product['description'])){ echo substr(strip_tags($product['description']),10); } ?></p> 
                                     </div>
 
 
@@ -43,12 +44,12 @@
                                 <td data-label="Price">$<?php if(isset($product['price'])){ echo $product['price']; } ?></td>
                                 <td class="actions">
                                     <?= $this->Html->link(
-                                         '<span class="fa fa-eye"></span><span class="sr-only">' . __('View') . '</span>',
-                                         ['controller'=>'products','action' => 'view', $product->id],
+                                         'view<span class="sr-only">' . __('View') . '</span>',
+                                         ['controller'=>'products','action' => 'view', $product->slug],
                                          ['escape' => false, 'title' => __('View'), 'class' => 'btn btn-info btn-xs']
                                      ) ?>  
                                      <?= $this->Html->link(
-                                         '<span class="fa fa-pencil"></span><span class="sr-only">' . __('Edit') . '</span>',
+                                         'Edit<span class="sr-only">' . __('Edit') . '</span>',
                                          ['controller'=>'products','action' => 'edit', $product->id],
                                          ['escape' => false, 'title' => __('Edit'), 'class' => 'btn btn-success btn-xs']
                                      ) ?>

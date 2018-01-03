@@ -233,8 +233,10 @@ class ProductsController extends AppController
         $gallery = $this->Products->get($id, [
             'contain' => ['Categories', 'Users','Galleries']
         ]);
+
     
         $this->set('gallery', $gallery);
+        $this->set('productid', $id);
         $this->set('_serialize', ['gallery']);
     }
 
@@ -290,6 +292,34 @@ class ProductsController extends AppController
         $this->set('_serialize', ['product']);
     }
 
+    
+     public function addgallery($productid = null )
+    {
+        $this->loadModel('Galleries'); 
+        $gallery = $this->Galleries->newEntity();
+        if ($this->request->is('post')) {
+
+                if(isset($this->request->data['image'])){
+               
+                    for($i=0; $i<count($this->request->data['image']);$i++){
+                        $fileName = $this->request->data['image'][$i]['name'];
+                        $fileName = date('His') . $fileName;
+                        $uploadPath = WWW_ROOT.'images/gallery/'.$fileName; 
+                        $actual_file[] = $fileName;
+                        move_uploaded_file($this->request->data['image'][$i]['tmp_name'], $uploadPath);
+                        $post['product_id'] = $productid;
+                        $post['image']    = $fileName;
+                        $gallery = $this->Galleries->newEntity();                    
+                        $gallery = $this->Galleries->patchEntity($gallery,$post);            
+                        $this->Galleries->save($gallery);
+                    } 
+                     $this->Flash->success(__('The gallery has been saved.'));  
+                    return $this->redirect(['action' => 'gallery/'.$productid]);
+                }   
+   
+         
+        }
+    }
     /**
      * Edit method
      *
@@ -356,4 +386,20 @@ class ProductsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    
+       public function gallerydelete($id = null)
+    {  
+           $this->loadModel('Galleries');
+        $this->request->allowMethod(['post', 'delete']);
+        $product = $this->Galleries->get($id);
+        if ($this->Galleries->delete($product)) {
+            $this->Flash->success(__('The gallery has been deleted.'));
+        } else {
+            $this->Flash->error(__('The gallery could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']); 
+    }
+    
+    
 }

@@ -21,9 +21,9 @@
             <?= $this->Form->create($category, ['id' => 'product-form', 'enctype' => 'multipart/form-data']) ?>
               <div class="box-body">
               	<div class="form-group">
-                <div class="form-group">
+                <!--div class="form-group">
                   <?php echo $this->Form->control('parent_id', ['options' => $parentCategories, 'empty' => true,'class' => 'form-control']); ?>  
-                </div>
+                </div!-->
                     
                 <div class="form-group">
                   <?php echo $this->Form->control('name', ['class' => 'form-control', 'label' =>'Name']); ?>

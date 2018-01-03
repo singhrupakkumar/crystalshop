@@ -80,13 +80,7 @@
         </tr>
          <?php } ?>
 
-        <tr>
-          <td>
-          <?php echo $this->Html->link(__('Edit Profile'), ['action' => 'edit', $user->id], ['class' => 'btn btn-info']); ?>
-          <?php echo $this->Html->link(__('Change Password'), ['action' => 'changepassword', $user->id], ['class' => 'btn btn-warning']); ?>
-          </td>
-          <td></td>
-        </tr>
+     
       </tbody>
     </table>
   </div>

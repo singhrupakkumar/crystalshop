@@ -28,9 +28,16 @@
                 
                   <?php echo $this->Form->control('user_id',['class' => 'form-control','label'=>'Seller']);?>
                   <?php echo $this->Form->control('cat_id',['class' => 'form-control','label'=>'Category']);?>
-                  <?php echo $this->Form->control('price',['class' => 'form-control','min'=>1]);?> 
+                    <div class="form-group"> 
+                        <label>Condition</label>  
+                  <?php echo $this->Form->select('conditions',['New'=>'New','Old'=>'Old'],['class' => 'form-control','label'=>'Conditions']);?>  
+                  </div>
+                      <?php echo $this->Form->control('price',['class' => 'form-control','min'=>1]);?> 
                   <?php echo $this->Form->control('quantity',['class' => 'form-control']);?>   
-                  <?php echo $this->Form->control('description',['class' => 'form-control']);?>   
+                  <?php echo $this->Form->control('description',['class' => 'form-control']);?> 
+                    <div class="form-group">
+                  <?php echo $this->Form->control('delivery_details', ['class' => 'form-control', 'label' => 'Delivery Details']); ?>
+                </div>    
                   <?php echo $this->Form->control('image',['class' => 'form-control','type'=>'file']);?>
                 <div class="form-group">
                  <label for="exampleInputEmail1">Status</label>

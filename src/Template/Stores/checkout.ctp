@@ -41,6 +41,9 @@
      $zip = $shippingaddress['zip'];         
  }
 ?>
+<style>
+    .countinue{ display: none; }
+</style>
 <div class="chk_section"> 
 	<div class="container">
     	<div class="row">
@@ -54,7 +57,7 @@
   <div class="clearfix"></div>
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <!-----tab1-------->
-    <div class="panel panel-default">
+    <div class="panel panel-default checkout">
       <div class="panel-heading" role="tab" id="headingOne">
         <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#accordion"  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -119,8 +122,11 @@
                   <label for="zip">Zip Code</label>
                   <input type="number" class="form-control" id="zip" value="<?php if(isset($zip)){ echo $zip; } ?>" placeholder="Zip Code" name="zip">
                 </div> 
-                <p class="mymessage"></p>       
+                <div class="row">
+                     <p class="mymessage"></p>       
+                </div>
                 <button type="button" id="saveaddress" class="btn btn-success scss_cntn">Save</button> 
+                  
             </form>
 
          	</div>     
@@ -284,12 +290,12 @@ $().ready(function() {
                     success: function (msg) {  
                         if (msg.status === true) 
                         {
-                            jQuery(".mymessage").html(msg.msg); 
+                            jQuery(".mymessage").html('<div class="alert alert-success">'+msg.msg+'</div>'); 
                         }
                         else
                         { 
                             event.preventDefault();
-                            jQuery(".mymessage").html(msg.msg);
+                            jQuery(".mymessage").html('<div class="alert alert-success">'+msg.msg+'</div>');
                         } 
                     }
                 });

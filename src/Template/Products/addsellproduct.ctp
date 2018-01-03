@@ -149,9 +149,12 @@
                         </div>
                     </div>
 
-                    <div class="form-group">        
+                    <div class="form-group">   
                         <div class="col-sm-offset-2 col-sm-10"> 
-                             <div class='success'></div> 
+                          <div class='success'></div> 
+                        </div>  
+                        <div class="col-sm-offset-2 col-sm-10"> 
+                           
                                 <div class='loadingmessage' style='display:none'>   
                                     <img src='<?php echo $this->request->webroot; ?>img/loading.gif'/>
                                 </div>
@@ -277,6 +280,7 @@ function handleForm(e) {
         if(this.status == 200) {  
             $(".loadingmessage").hide();
             $(".success").html('<div class="alert alert-success">Product add successfully</div>'); 
+              setTimeout(function(){  window.location.href = '<?php echo $this->request->webroot; ?>users/myproduct'; }, 1000);  
      
         }
     }

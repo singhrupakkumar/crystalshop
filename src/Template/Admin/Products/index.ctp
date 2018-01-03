@@ -29,7 +29,6 @@
              <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('slug') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Price') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Quantity') ?></th>
@@ -46,8 +45,7 @@
                     
                     
             <tr>
-                <td><?= $this->Number->format($product->id) ?></td>
-                <td><?= h($product->slug) ?></td>
+                <td><?= $this->Number->format($product->id) ?></td>  
                 <td><?= h($product->name) ?></td>
                 <td><?= h($product->price) ?></td>  
                 <td><?= h($product->quantity) ?></td>
@@ -64,7 +62,7 @@
                     ) ?> 
                     <?= $this->Html->link(   
                         __('Gallery'),
-                        ['action' => '#', $product->id],
+                        ['action' => 'gallery', $product->id],
                         ['escape' => false, 'title' => __('Gallery'), 'class' => 'btn btn-warning btn-xs']
                     ) ?>
                     <?= $this->Html->link(

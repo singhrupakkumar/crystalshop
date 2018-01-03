@@ -279,10 +279,10 @@ class UsersController extends AppController {
 
             if ($this->Users->save($user)) {
 
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('Your profile has been updated successfully.'));
             } else {
 
-                $this->Flash->error(__('The User Could Not Be saved. Please, Try Again.'));
+                $this->Flash->error(__('The user could not be saved. Please, Try Again.'));
             }
         }
 

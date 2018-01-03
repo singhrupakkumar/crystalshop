@@ -25,7 +25,7 @@ myvar += '   <tr>'+
 '        	<img src="'+ value.product.image +'">'+
 '        	</div>'+
 '          <div class="cart_txt">'+
-'          	<h3>Sphene stone</h3>'+
+'          	<h3>'+ value.product.name +'</h3>'+
 '            <p>'+ str +'</p>'+
 '          	</div>'+
 '      	</div>'+
@@ -46,10 +46,12 @@ myvar += '   <tr>'+
 '      '+
 '      </td>'+
 '      <td data-label="PRICE">$'+ value.price +'</td>'+
-'      <td data-label="DELIVERY DETAIL">'+
-'      <h3 class="fre_colr">Free</h3>'+
-'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>'+
-'      </td>'+
+'      <td data-label="DELIVERY DETAIL">';
+ if(value.product.delivery_details != null){
+ myvar += '      <h3 class="fre_colr">Free</h3>'+
+'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>';
+ }
+myvar += '      </td>'+
 '      <td data-label="REMOVE" class="trsh_sze"><i class="fa fa-trash remove_item" id=' + value.product.id + ' aria-hidden="true"></i></td>'+
 '    </tr> ';
  });  
@@ -60,7 +62,7 @@ myvar += '  </tbody>'+
 '</div>'+
 '    '+
 '<div class="cntinue_alst">'+
-'<a href="http://rupak.crystalbiltech.com/crystal/stores/checkout"><button type="button" class="btn btn-success scss_cntn">Continue</button></a>  '+
+'<a href="http://rupak.crystalbiltech.com/crystal/stores/checkout"><button type="button" class="btn btn-success scss_cntn countinue">Continue</button></a>  '+
 '</div>'+
 '        '+
 '        	</div>';
@@ -108,7 +110,7 @@ myvar += '   <tr>'+
 '        	<img src="'+ value.product.image +'">'+
 '        	</div>'+
 '          <div class="cart_txt">'+
-'          	<h3>Sphene stone</h3>'+
+'          	<h3>'+ value.product.name +'</h3>'+
 '            <p>'+ str +'</p>'+
 '          	</div>'+
 '      	</div>'+
@@ -129,10 +131,12 @@ myvar += '   <tr>'+
 '      '+
 '      </td>'+
 '      <td data-label="PRICE">$'+ value.price +'</td>'+
-'      <td data-label="DELIVERY DETAIL">'+
-'      <h3 class="fre_colr">Free</h3>'+
-'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>'+
-'      </td>'+
+'      <td data-label="DELIVERY DETAIL">';
+ if(value.product.delivery_details != null){
+ myvar += '      <h3 class="fre_colr">Free</h3>'+
+'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>';
+ }
+myvar += '      </td>'+
 '      <td data-label="REMOVE" class="trsh_sze"><i class="fa fa-trash remove_item" id=' + value.product.id + ' aria-hidden="true"></i></td>'+
 '    </tr> ';
  });  
@@ -143,7 +147,7 @@ myvar += '  </tbody>'+
 '</div>'+
 '    '+
 '<div class="cntinue_alst">'+
-' <a href="http://rupak.crystalbiltech.com/crystal/stores/checkout"><button type="button" class="btn btn-success scss_cntn">Continue</button></a>  '+
+' <a href="http://rupak.crystalbiltech.com/crystal/stores/checkout"><button type="button" class="btn btn-success scss_cntn countinue">Continue</button></a>  '+
 '</div>'+
 '        '+
 '        	</div>';
@@ -197,7 +201,7 @@ myvar += '   <tr>'+
 '        	<img src="'+ value.product.image +'">'+
 '        	</div>'+
 '          <div class="cart_txt">'+
-'          	<h3>Sphene stone</h3>'+
+'          	<h3>'+ value.product.name +'</h3>'+
 '            <p>'+ str +'</p>'+
 '          	</div>'+
 '      	</div>'+
@@ -218,10 +222,12 @@ myvar += '   <tr>'+
 '      '+
 '      </td>'+
 '      <td data-label="PRICE">$'+ value.price +'</td>'+
-'      <td data-label="DELIVERY DETAIL">'+
-'      <h3 class="fre_colr">Free</h3>'+
-'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>'+
-'      </td>'+
+'      <td data-label="DELIVERY DETAIL">';
+ if(value.product.delivery_details != null){
+ myvar += '      <h3 class="fre_colr">Free</h3>'+
+'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>';
+ }
+myvar += '      </td>'+
 '      <td data-label="REMOVE" class="trsh_sze"><i class="fa fa-trash remove_item" id=' + value.product.id + ' aria-hidden="true"></i></td>'+
 '    </tr> ';
  });  
@@ -232,7 +238,7 @@ myvar += '  </tbody>'+
 '</div>'+
 '    '+
 '<div class="cntinue_alst">'+
-'<a href="http://rupak.crystalbiltech.com/crystal/stores/checkout"><button type="button" class="btn btn-success scss_cntn">Continue</button></a>  '+
+'<a href="http://rupak.crystalbiltech.com/crystal/stores/checkout"><button type="button" class="btn btn-success scss_cntn countinue">Continue</button></a>  '+
 '</div>'+
 '        '+
 '        	</div>';
@@ -242,7 +248,7 @@ myvar += '  </tbody>'+
         rmv();
                 },
                 error: function () {
-                    console.log('Error!');
+                    console.log('Error!');    
                 }
             });
             return false;
@@ -283,7 +289,7 @@ myvar += '   <tr>'+
 '        	<img src="'+ value.product.image +'">'+
 '        	</div>'+
 '          <div class="cart_txt">'+
-'          	<h3>Sphene stone</h3>'+
+'          	<h3>'+ value.product.name +'</h3>'+
 '            <p>'+ str +'</p>'+
 '          	</div>'+
 '      	</div>'+
@@ -304,10 +310,12 @@ myvar += '   <tr>'+
 '      '+
 '      </td>'+
 '      <td data-label="PRICE">$'+ value.price +'</td>'+
-'      <td data-label="DELIVERY DETAIL">'+
-'      <h3 class="fre_colr">Free</h3>'+
-'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>'+
-'      </td>'+
+'      <td data-label="DELIVERY DETAIL">';
+ if(value.product.delivery_details != null){
+ myvar += '      <h3 class="fre_colr">Free</h3>'+
+'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>';
+ }
+myvar += '      </td>'+
 '      <td data-label="REMOVE" class="trsh_sze"><i class="fa fa-trash remove_item" id=' + value.product.id + ' aria-hidden="true"></i></td>'+
 '    </tr> ';
  });  
@@ -318,7 +326,7 @@ myvar += '  </tbody>'+
 '</div>'+
 '    '+
 '<div class="cntinue_alst">'+
-'<a href="http://rupak.crystalbiltech.com/crystal/stores/checkout"><button type="button" class="btn btn-success scss_cntn">Continue</button></a> '+
+'<a href="http://rupak.crystalbiltech.com/crystal/stores/checkout"><button type="button" class="btn btn-success scss_cntn countinue">Continue</button></a> '+
 '</div>'+
 '        '+
 '        	</div>';
@@ -341,8 +349,8 @@ myvar += '  </tbody>'+
         
         
         
-        
-         
+           
+               
         
       
     }     

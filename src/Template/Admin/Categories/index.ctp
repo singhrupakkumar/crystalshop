@@ -1,6 +1,6 @@
 <section class="content-header">
     <h1>
-    <?= __('Categories') ?>   <?= $this->Html->link(__('Add Categories'), ['action' => 'add'], ['class' => 'btn btn-warning']) ?>
+    <?= __('Categories') ?>   <?= $this->Html->link(__('Add Category'), ['action' => 'add'], ['class' => 'btn btn-warning']) ?>
     <small></small>
     </h1>
     <ol class="breadcrumb">
