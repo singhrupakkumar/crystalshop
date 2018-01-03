@@ -5015,101 +5015,326 @@ margin-top: 60px;
 
 
 /*---------add-product-----*/
-
 .add_pro {
-
   width: 100%;
-
   float: left;
-
   margin-top: 60px;
-
 }
-
 .add_hding {
-
   width: 100%;
-
   float: left;
+}
+.add_hding h3 {
+width: auto;
+float: none;
+text-align: center;
+font-size: 30px;
+font-weight: 500;
+color: #00233d;
+border-bottom: 1px solid #00233d;
+margin: 0 auto;
+display: table;
+}
+.covr_dels{
+width: 100%;
+float: left;
+background: #f2f2f2;
+border: 1px solid #efefef;
+padding: 20px 0px;
+margin-top: 40px; 
+}
+.vov_slct {
+  width: 20%;
+  float: left;
+}
+.con_wth {
+  width: 15%;
+  float: left;
+}
+.up_add {
+    width: 100%;
+    float: left;
+    margin-top: 8px;
+}
+.sve_lf {
+    width: auto;
+    float: left;
+    margin-right: 10px;
+}
+.cndtn {
+  width: 100%;
+  float: left;
+}
+.cndtn h3 {
+  width: 100%;
+  float: left;
+  margin: 15px 0px 0 0;
+  font-size: 15px;
+}
+.rfnd {
+  width: 100%;
+  float: left;
+}
+.rfnd h3 {
+  width: 100%;
+  float: left;
+  font-size: 15px;
+  margin: 15px 0 0 0;
+}
+.rfnd_slct{
+  width: 50%;
+  float: left;
+}
+.upld_phts{
+width:100%;
+float:left;
+}
+.brse_lf {
+ float: left;
+ margin: 15px 0 0 0;
 
 }
+.st_upld {
+  width: 100%;
+  float: left;
+  margin: 15px 0 0 0;
+}
+.lrge_pic {
+  width: 100%;
+  float: left;
+}
+.lrge_pic img {
+  width: 100%;
+  float: left;
+}  
 
-.add_hding h3 {
 
-width: auto;
 
+/*----my-product--------*/
+.my_thm{
+width: 80%;
 float: none;
-
-text-align: center;
-
-font-size: 30px;
-
-font-weight: 500;
-
-color: #00233d;
-
-border-bottom: 1px solid #00233d;
-
 margin: 0 auto;
+display: table; 
+}
 
+.my_hder{
+ width: 100%;
+float: left;
+background: #1e4b6c;
+}
+.my_hder h3{
+width: 100%;
+float: left;
+color: #fff;
+font-size: 22px;
+text-align: center;
+margin: 10px 0 10px 0; 
+}
+
+.table_prodct {
+    width: 100%;
+    float: left;
+}
+
+table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table tr {
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: .35em;
+}
+table th,
+table td {
+  padding: .625em;
+  text-align: left;
+}
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.mypr_pic {
+  width: 50px;
+  height: 50px;
+  float: left;
+}
+.mypr_pic img {
+  width: 100%;
+  height: 100%;
+  float: left;
+}
+.mypr_txt {
+  width: 75%;
+  float: left;
+}
+.mypr_txt h4 {
+  width: 100%;
+  float: left;
+  margin: 0;
+  font-size: 20px;
+}
+.mypr_txt p {
+  width: 100%;
+  float: left;
+}
+/*----------order-page------------*/  
+.ur_ordr_sec .ur_order { text-align:center; padding:10px 0px;}
+.ur_order h1 { 
+width: auto;
+float: none;
+text-align: center;
+font-size: 30px;
+font-weight: 500;
+color: #00233d;
+border-bottom: 1px solid #00233d;
+margin: 0 auto;
 display: table;
 
 }
+.urorder .order_tbl { padding:20px; }
+.imaginary_container{ width:28%; margin:10px 0px }
 
-.covr_dels{
-
-width: 100%;
-
-float: left;
-
-background: #f2f2f2;
-
-border: 1px solid #efefef;
-
-padding: 20px 0px;
-
-margin-top: 40px;	
-
+.imaginary_container input[type="text"] {
+    border:1px solid #CCC;
+    border-radius: 0;    
+    height: 18px;
+    margin-bottom: 10px;
+    margin-top: 0;
+    padding: 12px 17px;
+    width: 87%;
+ font-size:13px; 
+ background:url(../images/seacrh_icn.png) no-repeat top right;
+ background-position:97% 50%;
 }
 
-.vov_slct {
 
-  width: 20%;
 
-  float: left;
-
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+ border-right:0; 
+ box-shadow:0 0 0; 
+ border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
 }
 
-.con_wth {
-
-  width: 15%;
-
-  float: left;
-
+::after, ::before {
+    box-sizing: border-box;
 }
-
-.up_add {
-
+::after, ::before {
+    box-sizing: border-box;
+}
+.order_tblsec {
+   
     width: 100%;
+}
+.order_tblsec.table-responsive tr th { border:1px solid #e7e8ea; border-left:none; border-right:none; padding:20px 10px; font-size: .85em; font-weight:500}
+.order_tblsec.table-responsive tr td  { border-left:none; border-right:none;  border-bottom:1px solid #e7e8ea; padding:15px 10px}
 
+.order_tblsec.table-responsive tr td:nth-child(1),.order_tblsec.table-responsive tr th:nth-child(1) { padding-left:15px}
+.order_tblsec.table-responsive tr td a { color:#1a8e79;;  text-decoration:underline; }
+
+
+.order_pg ul li:first-child a,.order_pg ul li:last-child a { 
+background-color: #1a8e79;
+color: #fff;
+border-color: #4cae4c !important;
+ }
+.order_pg .pagination > li > a,.order_pg .pagination > li > span  { padding:8px 11px; margin:4px; border-color:#d7d7d7; color:#c2c2c2; transition:all 0.5s ease-in; border-radius:3px;}
+.order_pg .pagination > li > a:hover,.order_pg .pagination > li > span :hover {border-color:#1a8e79} 
+.order_pg .pagination > .active > a,.order_pg .pagination > .active > a:focus,.order_pg .pagination > .active > a:hover,.order_pg .pagination > .active > span,.order_pg .pagination > .active > span:focus,.order_pg .pagination > .active > span:hover { background:none; border-color:#1a8e79; color:#1a8e79}
+.smart_container {
+    width: 100%;
     float: left;
-
-    margin-top: 8px;
-
+    margin: 60px 0 0 0;
 }
 
-.sve_lf {
-
-    width: auto;
-
+.ur_ordr_sec {
+    width: 100%;
     float: left;
-
-    margin-right: 10px;
-
 }
 
+.urorder {
+    width: 100%;
+    float: left;
+}
 
+.cncl_crss {
+  width: 100%;
+}
+.cncl_crss a {
+  color: #3a3a3a !important;
+}
+/*------bonus-product----------*/
 
+.bons_sctn {
+  width: 100%;
+  float: left;
+  margin: 20px 0;
+}
+.hgh_lght {
+  width: 100%;
+  float: left;
+  border: 1px solid #dadada;
+  background: #f2f2f2;
+}
+.hgh_lght p {
+width: 100%;
+padding: 20px 20px;
+color: #3a3a3a;
+font-size: 16px;
+}
+.hgh_lght p a{
+color:#1a8e79; 
+font-weight:500;
+}
+.ordr_bons {
+  width: 100%;
+  float: left;
+  margin: 60px 0;
+}
+.bons_heading {
+  width: 100%;
+  float: left;
+}
+.bons_heading h3 {
+  width: auto;
+  float: none;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
+  color: #00233d;
+  border-bottom: 1px solid #00233d;
+  margin: 0 auto;
+  display: table;
+}
+.dumy_form {
+  width: 100%;
+  float: left;
+}
+.dumy_form form a {
+  color: #000;
+  text-decoration: none;
+  font-size: 16px;
+}
+.fm_nmcvr {
+    width: 100%;
+    float: left;
+    margin: 35px 0 40px 0;
+}
+  
 /*-------13/12/2017---*/
 
 .see_nxt {
@@ -5378,7 +5603,7 @@ height: 130px;
 	height: 800px;
 
 }
-
+    
 .sgnup_heading{
 
 	width:100%;

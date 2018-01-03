@@ -209,162 +209,6 @@ class UsersController extends AppController {
         exit;
     }  
 
-    public function fblogin() {  
-        $session = $this->request->session();
-
-        $response = array();
-        if (isset($this->request->data['action']) && $this->request->data['action'] == "fblogin") {
-
-            $results = $this->Users->find('all', ['conditions' => ['Users.email' => $this->request->data['myid']['email']]]);
-            $results = $results->first();
-
-
-            if (!empty($results)) {
-             
-              // $this->request->data['username'] = $results['email'];
-              // $this->request->data['password'] = 'zxswedcxswzrrr';  
-               // $user1 = $this->Auth->identify();  
-
-                if ($results) {
-                    $this->Users->updateAll(array('fb_id' => $this->request->data['myid']['id']), array('id' => $results['id']));
-                    $this->Auth->setUser($results);
-                    $session->write('sociallogin',1);
-                    $response['isSuccess'] = 'true';
-                    $response['msg'] = 'Logged in successfully';
-                } else {
-                    $response['isSuccess'] = 'false';
-                    $response['msg'] = 'Error In Signing In. Please Try Again.';
-                }
-            } else {
-
-                $post = array();
-
-                $post['fb_id'] = $this->request->data['myid']['id'];
-                $post['first_name'] = $this->request->data['myid']['first_name'];
-                $post['last_name'] = $this->request->data['myid']['last_name'];
-                $post['email'] = $this->request->data['myid']['email'];
-                $post['username'] = $this->request->data['myid']['email'];
-                $post['name'] = $this->request->data['myid']['name'];
-                $post['password'] = 'zxswedcxswzrrr';
-                $post['status'] = '1';
-                $post['role'] = 'user';
-
-
-                $user = $this->Users->newEntity();
-
-                $user = $this->Users->patchEntity($user, $post);
-                $new_user = $this->Users->save($user);
-                
-                if ($new_user) {
-                    // generate refferal code
-                        $user_referral_code =  substr($post['email'],0,3).rtrim(strtr(base64_encode($new_user->id), '+/', '-_'), '=');  
-                        $this->Users->updateAll(['refer_code' =>  $user_referral_code], ['id' => $new_user->id]);
-                    $this->request->data['username'] = $this->request->data['myid']['email'];
-                    $this->request->data['password'] = 'zxswedcxswzrrr';
-
-                    if (!filter_var($this->request->data['username'], FILTER_VALIDATE_EMAIL) === false) {
-                        $this->Auth->config('authenticate', [
-                            'Form' => ['fields' => ['username' => 'email', 'password' => 'password']]
-                        ]);
-
-                        $this->Auth->constructAuthenticate();
-
-                        $this->request->data['email'] = $this->request->data['username'];
-
-                        unset($this->request->data['username']);
-                    }
-
-                    $user2 = $this->Auth->identify();
-
-                    if ($user2) {
-
-                        $this->Auth->setUser($user2);
-                         $session->write('sociallogin',1);      
-                        $response['isSuccess'] = 'true';
-                        $response['msg'] = 'Logged In Successfully';
-                    } else {
-                        $response['isSuccess'] = 'false';
-                        $response['msg'] = 'Error in Signing In. Please Try Again.';
-                    }
-                }
-            }
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-
-    public function gplogin() {
-         $session = $this->request->session();
-        $response = array();
-
-        if (isset($this->request->data['action']) && $this->request->data['action'] == "gplogin") {
-
-            $results = $this->Users->find('all', ['conditions' => ['Users.email' => $this->request->data['email']]]);
-            $results = $results->first();
-            if (!empty($results)) {
-               // $user1 = $this->Auth->identify();
-
-                if ($results) {  
-                    $this->Users->updateAll(array('google_id' => $this->request->data['id']), array('id' => $results['id']));
-                    $this->Auth->setUser($results);  
-                     $session->write('sociallogin',1);      
-                    $response['isSuccess'] = 'true';
-                    $response['msg'] = 'Logged in Successfully';
-                } else {
-                    $response['isSuccess'] = 'false';
-                    $response['msg'] = 'Error In Signing In. Please Try Again.';
-                }
-            } else {
-
-                $post = array();
-
-                $post['google_id'] = $this->request->data['id'];
-                $post['first_name'] = $this->request->data['first_name'];
-                $post['last_name'] = $this->request->data['last_name'];
-                $post['email'] = $this->request->data['email'];
-                $post['username'] = $this->request->data['email'];
-                $post['name'] = $this->request->data['name'];
-                $post['password'] = 'zxswedcxswzrrr';
-                $post['status'] = '1';
-                $post['role'] = 'user';  
-
-
-                $user2 = $this->Users->newEntity();
-
-                $user2 = $this->Users->patchEntity($user2, $post);
-                $new_user = $this->Users->save($user2);
-
-                if ($new_user) {
-                    // generate refferal code
-                        $user_referral_code =  substr($post['email'],0,3).rtrim(strtr(base64_encode($new_user->id), '+/', '-_'), '=');  
-                        $this->Users->updateAll(['refer_code' =>  $user_referral_code], ['id' => $new_user->id]);
-                    $this->request->data['username'] = $this->request->data['email'];
-                    $this->request->data['password'] = 'zxswedcxswzrrr';
-                    $user2 = $this->Auth->identify();
-
-                    if ($user2) {
-
-                        $this->Auth->setUser($user2);
-                         $session->write('sociallogin',1);      
-                        $response['isSuccess'] = 'true';
-                        $response['msg'] = 'Logged in Successfully';
-                    } else {
-                        $response['isSuccess'] = 'false';
-                        $response['msg'] = 'Error In Signing In. Please Try Again.';
-                    }
-                } else {
-                    $response['isSuccess'] = 'false';
-                    $response['msg'] = 'Error In Signing In. Please Try Again.';
-                }
-            }
-        }
-
-        echo json_encode($response);
-        exit;
-    }
-    
-    
     public function myaccount(){
       $this->loadModel('Favourites');  
       $uid =  $this->Auth->user('id');
@@ -383,6 +227,8 @@ class UsersController extends AppController {
         $this->set('_serialize', ['userdata','fav_store']);
       
     }
+    
+     
 
     /**
 
@@ -490,6 +336,21 @@ class UsersController extends AppController {
         return $this->redirect(['action' => 'index']);
     }
     
+    
+    
+    /************************My product********************************/ 
+    public function myproduct(){    
+      if($this->Auth->user('id')){  
+        $userdata  = $this->Users->find('all',array('contain'=>['Products'],'conditions'=>array('Users.id'=>$this->Auth->user('id'))));
+        $userdata  = $userdata->first();  
+          
+        }else {
+           return $this->redirect(['controller' => 'stores', 'action' => 'index']);    
+        }
+        $this->set(compact('userdata'));
+        $this->set('_serialize', ['userdata']);  
+    }   
+    
     public function capchaverify(){
         if ($this->request->is('post')) {
          $response = array();
@@ -522,26 +383,13 @@ class UsersController extends AppController {
     
     
     public function login() {
-        
-      
-        
+
       $this->loadModel('Carts');  
     if(empty($this->Auth->user('id'))){
         
         
         if ($this->request->is('post')) {  
-            
-            
-//            if(isset($this->request->data['g-recaptcha-response']) && !empty($this->request->data['g-recaptcha-response'])){
-//                
-//         //your site secret key
-//        $secret = '6Lef5j0UAAAAALd1HfD_lJN_vbfY7YWpBnzIwVs5';
-//        //get verify response data
-//        $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$this->request->data['g-recaptcha-response']);
-//        $responseData = json_decode($verifyResponse);
-//        if($responseData->success){    
-                
-            
+
              $oldsession = $this->request->session()->id();    
   
             $this->request->session()->delete('user_id');    
@@ -597,15 +445,7 @@ class UsersController extends AppController {
 
                 }
             }
-            
-//            }else{
-//                
-//               $this->Flash->error(__('Robot verification failed, please try again.'));  
-//            }   
-//        }else{
-//            $this->Flash->error(__('Please click on the reCAPTCHA box.'));   
-//            
-//        } 
+
         } 
         }else{
            return $this->redirect(['controller' => 'stores', 'action' => 'index']);  
@@ -681,10 +521,6 @@ class UsersController extends AppController {
     }
 
     public function reset($token) {
-//
-//        if ($this->Auth->user('id')) { 
-//            $this->redirect('/');
-//        }
 
         $query = $this->Users->find('all', ['conditions' => ['Users.tokenhash' => $token]]);
         $data = $query->first();
@@ -802,97 +638,8 @@ class UsersController extends AppController {
 
        
     }
-    
-
-    public function wallet() {
-      $uid =  $this->Auth->user('id');
-      $this->loadModel('Paymentinfos');
-        $fav = $this->Paymentinfos->newEntity();
-         $post = $this->request->data;  
-         $post['user_id'] = $this->Auth->user('id');
-        if ($this->request->is('post')) {
-            $check = $this->Paymentinfos->find('all',array('conditions'=>array('AND'=>array('Paymentinfos.card_no'=>$this->request->data['card_no'],'Paymentinfos.user_id'=>$this->Auth->user('id')))));
-           
-             $check = $check->first(); 
-            if($check){
-                 $this->Flash->error(__('This Card Already Added!'));
-            }else{
-            $fav = $this->Paymentinfos->patchEntity($fav, $post);
-            if ($this->Paymentinfos->save($fav)) {
-                
-                $this->Flash->success(__('The Card Info Has Been Saved.'));
-             
-            }else{
-                $this->Flash->error(__('The Card Info Could Not Be Saved. Please, Try Again.'));
-            }
-            }
-        }
-       
-      if($uid){
-        $userdata  = $this->Users->find('all',array('conditions'=>array('Users.id'=>$uid)));
-        $userdata  = $userdata->first(); 
-      }else {
-       return $this->redirect(['controller' => 'stores', 'action' => 'index']);    
-      }
-        $this->set(compact('userdata'));
-        $this->set('_serialize', ['userdata']);  
-
-    }
-
-    public function addGallery() {
-
-        $this->loadModel('Galleries');
-
-        $gallery = $this->Galleries->newEntity();
-
-        if ($this->request->is(['patch', 'put', 'post'])) {
-
-            $file = $this->request->data['file'];
-            $name = time() . $file['name'];
-            $tmp_name = $file['tmp_name'];
-            $upload_path = WWW_ROOT . 'images/gallery/' . $name;
-            move_uploaded_file($tmp_name, $upload_path);
-
-            $this->request->data['file'] = $name;
-            $this->request->data['format'] = $file['type'];
-            $this->request->data['user_id'] = $this->Auth->user('id');
-
-            $gallery = $this->Galleries->patchEntity($gallery, $this->request->data);
-
-            if ($this->Galleries->save($gallery)) {
-                $this->Flash->success(__('You File Bas Been Uploaded Successfully'));
-                return $this->redirect(["controller" => "users", "action" => "trainer"]);
-            } else {
-                $this->Flash->success(__('Error In File Upload. Please Try Again Later'));
-                return $this->redirect(["controller" => "stores", "action" => "index"]);
-            }
-        }
-    }
-
-    public function removeGallery($id) {
-
-        $id = base64_decode($id);
-
-        $this->loadModel('Galleries');
-
-        $gallery = $this->Galleries->get($id, [
-            'contains' => []
-        ]);
-
-        unlink(WWW_ROOT . 'images/gallery/' . $gallery->file);
-
-        $result = $this->Galleries->delete($gallery);
-
-        if ($result) {
-            $this->Flash->success(__('You file has been deleted successfully'));
-            return $this->redirect(["controller" => "users", "action" => "trainer"]);
-        } else {
-            $this->Flash->success(__('Error in file deletion. Please try again later'));
-            return $this->redirect(["controller" => "users", "action" => "trainer"]);
-        }
-    }
-
-    public function contact() {
+ 
+    public function contact() {  
 
 
         $this->loadModel('Contacts');
@@ -924,7 +671,7 @@ class UsersController extends AppController {
         $this->set('_serialize', ['contact']);
     }
 
-    /*     * *********Newsletter**************** */
+   /***********Newsletter*****************/
 
     public function newsletter() {
         // include(ROOT.'/Mailchimp/Mailchimp.php'); 

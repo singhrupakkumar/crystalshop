@@ -61,12 +61,17 @@
                         '<span class="fa fa-eye"></span><span class="sr-only">' . __('View') . '</span>',
                         ['action' => 'view', $product->id],
                         ['escape' => false, 'title' => __('View'), 'class' => 'btn btn-info btn-xs']
-                    ) ?>  
+                    ) ?> 
+                    <?= $this->Html->link(   
+                        __('Gallery'),
+                        ['action' => '#', $product->id],
+                        ['escape' => false, 'title' => __('Gallery'), 'class' => 'btn btn-warning btn-xs']
+                    ) ?>
                     <?= $this->Html->link(
                         '<span class="fa fa-pencil"></span><span class="sr-only">' . __('Edit') . '</span>',
                         ['action' => 'edit', $product->id],
                         ['escape' => false, 'title' => __('Edit'), 'class' => 'btn btn-success btn-xs']
-                    ) ?>
+                    ) ?> 
                   
                      
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $product->id], ['confirm' => __('Are you sure you want to delete # {0}?', $product->id),'class' => 'btn btn-danger btn-xs']) ?>

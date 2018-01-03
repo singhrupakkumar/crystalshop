@@ -74,9 +74,9 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 		
-//		$this->hasMany('Galleries')
-//            ->setForeignKey('user_id')
-//            ->setDependent(true);
+		$this->hasMany('Products')
+            ->setForeignKey('user_id')  
+            ->setDependent(true);  
 //			
 //		$this->hasMany('Reviews')
 //            ->setForeignKey('trainer_id')

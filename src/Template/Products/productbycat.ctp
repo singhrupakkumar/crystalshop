@@ -22,10 +22,10 @@
                     <span>By Seller</span>
                 </div>
                 <div class="srch_fm">
-                    <form action="#">
-                        <input type="text" placeholder="Search.." name="search">
-                        <button type="submit"><i class="fa fa-search"></i></button>
-                    </form>
+                     <form method="post">
+                        <input type="text" name="sellername" placeholder="Search.." value="<?php if(isset($_POST['sellername'])){ echo $_POST['sellername']; }?>" name="search">
+                        <button type="submit"><i class="fa fa-search"></i></button> 
+                    </form> 
                 </div>
 
                 <div class="cate_sctin">
@@ -33,35 +33,19 @@
                         <span>Categories</span>
                     </div>
                     <ul>
-                        <li>
+                         <?php if(!empty($categories)){
+                         foreach($categories as $cat){   
+                         ?>
+                         <li>  
+                            <a href="<?php echo $this->request->webroot."products/productbycat/".$cat['slug']; ?>">
                             <span class="arw_frst">
                                 <img src="<?php echo $this->request->webroot; ?>images/website/arrow_rght.png">
-                                <h3>Jewellery</h3>
-                                <h5>(23)</h5>
+                                <h3><?php if(isset($cat['name'])){  echo $cat['name']; } ?></h3>
+                                <h5>(<?php if(isset($cat['products'])){  echo count($cat['products']); } ?>)</h5> 
                             </span> 
-                        </li>
-
-                        <li>
-                            <span class="arw_frst">
-                                <img src="<?php echo $this->request->webroot; ?>images/website/arrow_rght.png">
-                                <h3>Jewellery</h3>
-                                <h5>(23)</h5>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="arw_frst">
-                                <img src="<?php echo $this->request->webroot; ?>images/website/arrow_rght.png">
-                                <h3>Jewellery</h3>
-                                <h5>(23)</h5>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="arw_frst">
-                                <img src="<?php echo $this->request->webroot; ?>images/website/arrow_rght.png">
-                                <h3>Jewellery</h3>
-                                <h5>(23)</h5>
-                            </span>
-                        </li>
+                            </a>
+                        </li>  
+                        <?php } } ?>    
                     </ul>
                 </div>  
             </div>
@@ -119,7 +103,7 @@
                                 <?= $this->Paginator->last(__('last') . ' >>') ?>
                             </ul>
                             <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-                        </div>
+                        </div> 
                     <?php endif;?> 
                  
 

@@ -35,10 +35,19 @@ class ProductsController extends AppController
 
 
 
-        $this->Auth->allow(['add', 'searchjson', 'search','view','index','addtocart','productbycat','promoteproduct']);        
+        $this->Auth->allow(['add','slugify' ,'gallerydelete','searchjson', 'search','view','index','addtocart','productbycat','promoteproduct','addsellproduct','currencyconverter']);          
 
-        $this->authcontent(); 
-    } 
+        $this->authcontent();    
+    }
+    
+     private function slugify($str) {   
+                // trim the string
+                $str = strtolower(trim($str));
+                // replace all non valid characters and spaces with an underscore
+                $str = preg_replace('/[^a-z0-9-]/', '_', $str);
+                $str = preg_replace('/-+/', "_", $str);
+        return $str;
+     } 
     
     
     /**
@@ -48,29 +57,65 @@ class ProductsController extends AppController
      */
     public function index()
     {  
+        $this->loadModel('Users');
+        $this->loadModel('Categories');
+        if($this->request->is('post')){
+        $uname =  $this->request->data['sellername'];     
+        $seller = $this->Users->find('all',['conditions'=>['Users.name LIKE' => '%' . $uname . '%']]); 
+        $seller = $seller->first();
+        $seller_id = $seller['id'];    
         $this->paginate = [
-            'contain' => ['Categories', 'Stores']
-        ];
-        $products = $this->paginate($this->Products);
+            'contain' => ['Categories', 'Users'],
+            'conditions'=>['Products.user_id'=>$seller_id]
+        ];  
+        
+        }else{
 
-        $this->set(compact('products'));
-        $this->set('_serialize', ['products']);
+        $this->paginate = [
+            'contain' => ['Categories', 'Users']
+        ];
+            
+        }
+        $products = $this->paginate($this->Products); 
+        
+        $categories = $this->Categories->find('all',[ 'contain' => ['Products']]); 
+        $categories = $categories->all();
+        $this->set(compact('products','categories')); 
+        $this->set('_serialize', ['products','categories']);  
     }
 
     
       public function productbycat($slug = NULL)
     {    
         $this->loadModel('Categories');
+        $this->loadModel('Users');
         $cat  = $this->Categories->find('all',array('conditions'=>array('Categories.slug'=>$slug)));
-        $cat = $cat->first();
+        $cat = $cat->first(); 
+        if($this->request->is('post')){
+        $uname =  $this->request->data['sellername'];     
+        $seller = $this->Users->find('all',['conditions'=>['Users.name LIKE' => '%' . $uname . '%']]); 
+        $seller = $seller->first();
+        $seller_id = $seller['id'];    
         $this->paginate = [
-            'contain' => ['Categories', 'Stores'],
+            'contain' => ['Categories', 'Users'],
+            'conditions'=>['AND'=>['Products.user_id'=>$seller_id,'Products.cat_id'=>$cat['id']]]
+        ];  
+        
+        }else{
+             $this->paginate = [
+            'contain' => ['Categories', 'Users'],
             'conditions'=>['Products.cat_id'=>$cat['id']]    
         ];
-        $products = $this->paginate($this->Products);
+            
+        }
+  
+        $products = $this->paginate($this->Products);   
+        
+        $categories = $this->Categories->find('all',[ 'contain' => ['Products']]); 
+        $categories = $categories->all();
 
-        $this->set(compact('products','cat')); 
-        $this->set('_serialize', ['products']);
+        $this->set(compact('products','cat','categories')); 
+        $this->set('_serialize', ['products','categories']); 
     }
     
     
@@ -115,7 +160,7 @@ class ProductsController extends AppController
             $products = $this->Products->find('all', array(
                 'recursive' => -1,
                 'contain' => array(
-                     'Stores'
+                     'Users'
                 ),
                 'fields' => array(
                     'Products.id',
@@ -154,7 +199,7 @@ class ProductsController extends AppController
             
             $products = $this->Products->find('all', array(
                 'contain' => array(
-                    'Stores'
+                    'Users'
                 ),
                 'conditions' => $conditions,
                 'limit' => 200,
@@ -224,23 +269,80 @@ class ProductsController extends AppController
      */
     public function edit($id = null)
     {
+        $this->loadModel('Galleries');
+        if(!empty($this->Auth->user('id'))){
         $product = $this->Products->get($id, [
-            'contain' => []
+            'contain' => ['Galleries']
         ]);
+      if($this->Auth->user('id') == $product['user_id']){  
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $product = $this->Products->patchEntity($product, $this->request->getData());
-            if ($this->Products->save($product)) {
-                $this->Flash->success(__('The product has been saved.'));  
+      
 
-                return $this->redirect(['action' => 'index']);
+            if ($this->request->data['image'] != 1) {   
+                 
+
+                $image = $this->request->data['image'];
+	        $name = time().$image['name'];
+		$tmp_name = $image['tmp_name'];
+		$upload_path = WWW_ROOT.'images/products/'.$name;
+		move_uploaded_file($tmp_name, $upload_path);
+                $this->request->data['image'] = $name;
+               }else {
+                    unset($this->request->data['image']);
+                }
+            $this->request->data['user_id'] = $this->Auth->user('id');    
+            $product = $this->Products->patchEntity($product, $this->request->getData());
+            $saveproduct = $this->Products->save($product);
+            if ($saveproduct) {
+                
+                
+                
+                if(isset($this->request->data['images'])){
+                  if ($this->request->data['images'][0]['name'] != '') {   
+                    for($i=0; $i<count($this->request->data['images']);$i++){
+                        $fileName = $this->request->data['images'][$i]['name'];
+                        $fileName = date('His') . $fileName;
+                        $uploadPath = WWW_ROOT.'images/gallery/'.$fileName; 
+                        $actual_file[] = $fileName;
+                        move_uploaded_file($this->request->data['images'][$i]['tmp_name'], $uploadPath);
+                        $post['product_id'] = $saveproduct['id'];
+                        $post['image']    = $fileName;
+                        $gallery = $this->Galleries->newEntity();                    
+                        $gallery = $this->Galleries->patchEntity($gallery,$post);            
+                        $this->Galleries->save($gallery);
+                    } 
+                  }else {
+                    unset($this->request->data['images']);
+                }    
+                }   
+
+                $response['status'] = true;
+                $response['msg'] = 'The product has been saved.';
+            }else{
+                $response['status'] = false; 
+                $response['msg'] = 'The product could not be saved. Please, try again.';
             }
-            $this->Flash->error(__('The product could not be saved. Please, try again.'));
+            echo json_encode($response);
+            exit; 
+            
+
         }
-        $cats = $this->Products->Cats->find('list', ['limit' => 200]);
+    
+     }else{  
+          $this->Flash->error(__('You have no access'));  
+          return $this->redirect(['controller' => 'stores', 'action' => 'index']);      
+      }    
+        
+        
+     }else{  
+          $this->Flash->error(__('You must login first'));
+          return $this->redirect(['controller' => 'stores', 'action' => 'index']);      
+      }   
+        $cats = $this->Products->Categories->find('treeList', ['limit' => 200]); 
         $stores = $this->Products->Stores->find('list', ['limit' => 200]);
         $this->set(compact('product', 'cats', 'stores'));
-        $this->set('_serialize', ['product']);
-    }
+        $this->set('_serialize', ['product']);  
+    }  
 
     /**
      * Delete method
@@ -261,6 +363,31 @@ class ProductsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+ 
+    
+      public function freesaleproduct(){  
+      if($this->Auth->user('id')){ 
+          if($this->request->is('post')){  
+             $this->Products->updateAll(array('free_sale' =>0), array('user_id' =>$this->Auth->user('id')));    
+             $saleproduct = $this->request->data['saleproduct'];  
+             $product = $this->Products->get($saleproduct);  
+             $product['free_sale'] = 1;
+             if($this->Products->save($product)){
+                 $this->Flash->success(__('The product has been Added on free sale.'));
+             }else{
+                $this->Flash->error(__('The product could not be saved. Please, try again.'));   
+             }      
+          }  
+        $userproduct  = $this->Products->find('all',array('contain'=>['Users'],'conditions'=>array('Products.user_id'=>$this->Auth->user('id'))));
+        $userproduct  = $userproduct->all();   
+
+        }else {
+           return $this->redirect(['controller' => 'stores', 'action' => 'index']);    
+        }
+        $this->set(compact('userproduct'));      
+        $this->set('_serialize', ['userproduct']);  
+    } 
+    
     
     /************************Add to Cart module********************************/
     
@@ -298,5 +425,108 @@ class ProductsController extends AppController
         $this->redirect($this->referer());
     }
     
+    public function addsellproduct(){
+      if(!empty($this->Auth->user('id'))) { 
+        
+       $this->loadModel('Galleries');   
+       $product = $this->Products->newEntity();
+      // $this->autoRender = false;        
+
+     if ($this->request->is('post')) {
+            
+                $image = $this->request->data['images'][0];
+ 
+	        $name = time().$image['name'];
+		$tmp_name = $image['tmp_name'];
+		$upload_path = WWW_ROOT.'images/products/'.$name;
+		move_uploaded_file($tmp_name, $upload_path);
+            $this->request->data['image'] = $name;
+            $this->request->data['user_id'] = $this->Auth->user('id');  
+            $this->request->data['slug'] =$this->slugify($this->request->data['name']);
+            $product = $this->Products->patchEntity($product, $this->request->getData());
+            $saveproduct = $this->Products->save($product);
+            if ($saveproduct) {
+                
+                
+                
+                if(isset($this->request->data['images'])){
+                    for($i=0; $i<count($this->request->data['images']);$i++){
+                        $fileName = $this->request->data['images'][$i]['name'];
+                        $fileName = date('His') . $fileName;
+                        $uploadPath = WWW_ROOT.'images/gallery/'.$fileName; 
+                        $actual_file[] = $fileName;
+                        move_uploaded_file($this->request->data['images'][$i]['tmp_name'], $uploadPath);
+                        $post['product_id'] = $saveproduct['id'];
+                        $post['image']    = $fileName;
+                        $gallery = $this->Galleries->newEntity();                    
+                        $gallery = $this->Galleries->patchEntity($gallery,$post);            
+                        $this->Galleries->save($gallery);
+                    } 
+                }   
+
+                $response['status'] = true;
+                $response['msg'] = 'The product has been saved.';
+            }else{
+                $response['status'] = false; 
+                $response['msg'] = 'The product could not be saved. Please, try again.';
+            }
+            echo json_encode($response);
+            exit;   
+        }else{
+     $cats = $this->Products->Categories->find('treeList', ['limit' => 300]); 
+     $this->set(compact('cats','product'));    
+     $this->set('_serialize', ['product','cats']);     
+    }  
+      }else{
+          $this->Flash->error(__('You must login first'));
+          return $this->redirect(['controller' => 'stores', 'action' => 'index']);      
+      }    
+    }
     
-}
+    public function currencyconverter() { 
+     
+     if ($this->request->is(array('post','put'))) {       
+        $amount = $this->request->data['amount'];
+        $from_Currency = $this->request->data['from_currency'];
+        $to_Currency = $this->request->data['to_currency'];
+     
+        $from_Currency = urlencode($from_Currency);
+        $to_Currency = urlencode($to_Currency);
+        $get = file_get_contents("https://finance.google.com/finance/converter?a=$amount&from=$from_Currency&to=$to_Currency");
+        $get = explode("<span class=bld>",$get);
+        $get = explode("</span>",$get[1]);
+        $converted_currency = preg_replace("/[^0-9\.]/", null, $get[0]);
+
+      
+     }  
+      echo json_encode($converted_currency);   
+        exit;    
+    }
+    
+    
+    public function gallerydelete(){
+        $this->loadModel('Galleries');
+        $this->request->allowMethod(['post', 'delete']);
+        if($this->request->is('post')){
+            
+             $id = $this->request->data['id']; 
+             $product = $this->Galleries->get($id);
+        if ($this->Galleries->delete($product)) {
+            $response['status'] = true;
+            $response['msg'] = 'The gallery image has been deleted';
+        
+        } else {
+            $response['status'] = false;
+            $response['msg'] = 'The product could not be deleted. Please, try again.';
+        
+        }    
+            
+        } 
+    echo json_encode($response);
+    exit;
+        
+    }
+     
+     
+    
+} 

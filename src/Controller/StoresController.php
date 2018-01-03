@@ -1,9 +1,9 @@
 <?php
 namespace App\Controller;
-
+  
 use App\Controller\AppController;
 
-use Cake\Event\Event;
+use Cake\Event\Event; 
 
 use Cake\Routing\Router;
 
@@ -34,7 +34,7 @@ class StoresController extends AppController
 
 
 
-        $this->Auth->allow(['index', 'add','storeDetails','shop','all','hotdeals','cart','checkout',
+        $this->Auth->allow(['index', 'add','storeDetails','shop','all','hotdeals','cart','checkout','payment',
             'remove','itemupdate','clear','displaycart','webdisplaycart','webremoveitems','cartincreaseqty','cartdecreaseqty']);
 
         $this->authcontent();
@@ -495,6 +495,7 @@ class StoresController extends AppController
     }
     
     public function checkout(){
+         $uid = $this->Auth->user('id');
         if($this->Auth->user('id')){
             
             if($this->request->is('post')){ 
@@ -527,94 +528,106 @@ class StoresController extends AppController
         }else{ 
             $this->Flash->error(__('You must login first'));
             return $this->redirect(array('action' => 'cart')); 
-        } 
+        }
+        $sesid = $this->request->session()->id(); 
+        $user_id = $uid?$uid:0;   
+        $cart = $this->displaycart($user_id, $sesid); 
+         
         $shippingaddress = $this->request->session()->read('shippingaddress');  
         $this->set('user', $user);
+        $this->set('cart', $cart);   
         $this->set('shippingaddress', $shippingaddress); 
     }
     
-    public function payment() { 
-        $shop = $this->Session->read('Shop');
-        if(empty($shop)) {
-            return $this->redirect('/'); 
-        }
-        if ($this->request->is('post')) {
+    public function payment() {
+
+        $uid = $this->Auth->user('id');
+        $sesid = $this->request->session()->id(); 
+        $user_id = $uid?$uid:0;   
+        $cart = $this->displaycart($user_id, $sesid); 
+        if($uid){
+        if($cart['cartcount'] != 0){ 
             
-            if(array_key_exists('order_type',$shop['Order'])){
-			
-            $this->loadModel('Order');
- 
-            $this->Order->set($this->request->data);
-            if($this->Order->validates()) {
-                $order = $shop; 
-    
-                if($shop['Order']['order_type'] == 'paypal') {  
-           
-                    $val = $order['Order']['total'];
-                    $order['Order']['status'] = 1;
-                    $order['Order']['order_type'] = $shop['Order']['order_type'];
-                    $save = $this->Order->saveAll($order, array('validate' => 'first'));
-                    $email = $order['Order']['email'];
-                   
-                    
-                    if ($save) {
-                        $last_id = $this->Order->getLastInsertId();
-                        ///////////////////////////////////////////////payment////////////////////////////////////////////////
-                        echo ".<form name=\"_xclick\" action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">
+            
+            
+   
+        if ($this->request->is('post')) {    
+              
+            $amt = $cart['cartInfo']['total'] ;
+            $returnUrl = Router::url('/', true)."/stores/success";
+            $ipnNotificationUrl = Router::url('/', true)."/stores/ipn";
+          ///////////////////////////////////////////////payment////////////////////////////////////////////////
+                        echo ".<form name=\"_xclick\" action=\"https://www.sandbox.paypal.com/cgi-bin/webscr\" method=\"post\">
                     <input type=\"hidden\" name=\"cmd\" value=\"_xclick\">
-                    <input type=\"hidden\" name=\"email\" value=\"$email\">
-                    <input type=\"hidden\" name=\"business\" value=\"wearorganicclothing@gmail.com\">
+                    <input type=\"hidden\" name=\"email\" value=\"rupak-buyer@avainfotech.com\">
+                    <input type=\"hidden\" name=\"business\" value=\"rupak-facilitator@avainfotech.com\">
                     <input type=\"hidden\" name=\"currency_code\" value=\"USD\">
-                    <input type=\"hidden\" name=\"custom\" value=\"$last_id\">
-                    <input type=\"hidden\" name=\"amount\" value=\"$val\">
-                    <input type=\"hidden\" name=\"return\" value=\"http://rupak.crystalbiltech.com/shop/shop/success\">
-                    <input type=\"hidden\" name=\"notify_url\" value=\"http://rupak.crystalbiltech.com/shop/shop/ipn\"> 
+                    <input type=\"hidden\" name=\"amount\" value=\"$amt\">
+                    <input type=\"hidden\" name=\"return\" value=\"$returnUrl\">
+                    <input type=\"hidden\" name=\"notify_url\" value=\"$ipnNotificationUrl\"> 
                     </form>";
 //                    exit;
                         echo "<script>document._xclick.submit();</script>";
-                        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    }else {
-                    $errors = $this->Order->invalidFields();
-                    $this->set(compact('errors'));
-                }
-           
-                }else{
-               return $this->redirect(array('action' => 'address?panel=2'));        
-               $this->Session->setFlash('Please fill address field.', 'flash_error');    
-                }
+            
+           }
 
-            }else{
-                 return $this->redirect(array('action' => 'address?panel=2'));       
-               $this->Session->setFlash('Please fill address field.', 'flash_error');  
-            }
-            
-        
-		} else{	
-		 $this->Session->setFlash('Please fill address field.', 'flash_error');	
-			 return $this->redirect(array('action' => 'address?panel=2'));  
-				
-			
-			} 
-            
             
         }else{
-                 return $this->redirect(array('action' => 'address?panel=2'));       
-               $this->Session->setFlash('Try again.', 'flash_error');  
-            }
- 
-        $this->set(compact('shop'));
+           $this->Flash->error(__('Shopping Cart is empty'));  
+           return $this->redirect('/');    
+        }
+        }else{ 
+            $this->Flash->error(__('You must login first'));
+            return $this->redirect(array('action' => 'cart')); 
+        }
+      
 
     }
     
       public function success() {
         $shop = $this->request->session()->read('Shop');
-        $this->Cart->clear(); 
-        if(empty($shop)) { 
-            return $this->redirect('/');
-        }
-        
+        $this->Cart->clear();   
         $this->set(compact('shop'));
       }
+  
+      public function ipn() {  
+        $fc = fopen('ipn_data.txt', 'wb');
+        ob_start();
+        print_r($_POST);
+        $req = 'cmd=' . urlencode('_notify-validate');
+        foreach ($_POST as $key => $value) {
+            $value = urlencode(stripslashes($value));
+            $req .= "&$key=$value";
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://www.sandbox.paypal.com/cgi-bin/webscr');
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $req);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Host: www.developer.paypal.com'));
+        $res = curl_exec($ch);
+        curl_close($ch);
+        if (strcmp($res, "VERIFIED") == 0) {
+            $custom_field = $_POST['custom'];
+            $payer_email = $_POST['payer_email'];
+            $trn_id = $_POST['txn_id'];
+            $pay = $_POST['mc_gross'];
+            $this->loadModel('Orders');
+            $this->Orders->query("UPDATE `orders` SET `order_status` = 1, `payment_status` = '$res',`transaction_id`='$trn_id', `payment_gateway_price`='$pay' WHERE `id` ='$custom_field';");
+            $this->set('smtp_errors', "none");
+        } else if (strcmp($res, "INVALID") == 0) {
+            
+        } 
+        $xt = ob_get_clean();
+        fwrite($fc, $xt);
+        fclose($fc);
+        exit;
+         
+    }
+   
 
         
 }

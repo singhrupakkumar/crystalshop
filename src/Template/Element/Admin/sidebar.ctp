@@ -35,14 +35,7 @@
             </span>
           </a>
         </li>
-        
-        <!--li class="<?php if($this->request->params['controller'] == 'Stores' ) { echo "active"; }?>">
-          <a href="<?php echo $this->request->webroot; ?>admin/stores">
-            <i class="fa fa-shopping-bag"></i> <span>Stores</span>  
-            <span class="pull-right-container">  
-            </span>
-          </a>
-        </li-->
+ 
         
         <li class="<?php if($this->request->params['controller'] == 'Products' ) { echo "active"; }?>">
           <a href="<?php echo $this->request->webroot; ?>admin/products">
@@ -56,6 +49,13 @@
           <a href="<?php echo $this->request->webroot; ?>admin/categories">
             <i class="fa fa-tags"></i> <span>Category</span>  
             <span class="pull-right-container">
+            </span>
+          </a>
+        </li>
+       <li class="<?php if($this->request->params['controller'] == 'Orders' ) { echo "active"; }?>">
+          <a href="<?php echo $this->request->webroot; ?>admin/orders">
+            <i class="fa fa-first-order"></i> <span>Orders</span>  
+            <span class="pull-right-container">    
             </span>
           </a>
         </li>

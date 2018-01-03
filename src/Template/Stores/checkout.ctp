@@ -48,7 +48,7 @@
             	<h3>Checkout</h3>
             	</div>
  <!-----accordian-start-------->               
-      <div class="accordion-option">
+      <div class="accordion-option"> 
     <a href="javascript:void(0)" class="toggle-accordion active" accordion-id="#accordion"></a>
   </div>
   <div class="clearfix"></div>
@@ -140,72 +140,51 @@
         <div class="panel-body">
         	<div class="ordr_rvew">
             	<div class="lft_itm">
-            	<h3>Items(2)</h3>
+                <h3>Items(<?php if(isset($cart['cartInfo']['order_item_count'])){ echo count($cart['cartInfo']['order_item_count']);} ?>)</h3>
                 	</div>
                    <div class="rght_dte">
-                   	<h3>12/12/2017</h3>
+                   	<h3><?php echo date('d-m-Y'); ?></h3>
                    	</div>
             	</div> 
-                
+                <?php if(!empty($cart['products'])){ 
+                    foreach($cart['products'] as $item){
+                        
+                        
+                    ?>
                 <div class="ordr_rvew">
             	<div class="lft_itm">
-                	<div class="cart_chknt">
-                  <img src="images/cart_stn1.png">
-                  </div>
-                  <h4 class="spn_hdng">Lorem Ipsum is a dummy text</h4>
-                  <p class="para_chktxt">Lorem ipsum is a dummy text and easily understand</p>
+                <div class="cart_chknt">
+                   <?php if($item['product']['image']){ ?>  
+                    <img src="<?php echo $item['product']['image']; ?>" class="ful_lnght">
+                     <?php }else{ ?>
+                    <img src="<?php echo $this->request->webroot."images/products/no-image.jpg"; ?>" class="ful_lnght">
+                     <?php } ?>  
+                
+                  </div> 
+                  <h4 class="spn_hdng"><?php if(isset($item['product']['name'])){ echo $item['product']['name']; } ?></h4>
+                  <p class="para_chktxt"><?php if(isset($item['product']['description'])){ echo $item['product']['description']; } ?></p>
                 	</div>
                    <div class="rght_dte">
-                   	<h3>$40</h3>
+                   	<h3>$<?php if(isset($item['product']['description'])){ echo $item['product']['price']; } ?></h3> 
                    	</div>
             	</div>
-                
-                <div class="ordr_rvew">
-            	<div class="lft_itm">
-                	<div class="cart_chknt">
-                  <img src="images/cart_stn1.png">
-                  </div>
-                  <h4 class="spn_hdng">Lorem Ipsum is a dummy text</h4>
-                  <p class="para_chktxt">Lorem ipsum is a dummy text and easily understand</p>
-                	</div>
-                   <div class="rght_dte">
-                   	<h3>$40</h3>
-                   	</div>
-            	</div> 
-                
+                <?php } } ?>
+
                <div class="ordr_rvew">
             	<div class="lft_itm">
                   <h4 class="spn_hdng">Order Subtotal</h4>
                 	</div>
                    <div class="rght_dte">
-                   	<h3>$40</h3>
+                   	<h3>$<?php if(isset($cart['cartInfo']['subtotal'])){ echo $cart['cartInfo']['subtotal'];} ?></h3>
                    	</div>
-            	</div>
-                
-                <div class="ordr_rvew">
-            	<div class="lft_itm">
-                  <h4 class="spn_hdng">Shipping</h4>
-                	</div>
-                   <div class="rght_dte">
-                   	<h3>$40</h3>
-                   	</div>
-            	</div>
-                
-                <div class="ordr_rvew">
-            	<div class="lft_itm">
-                  <h4 class="spn_hdng">Sales Tax</h4>
-                	</div>
-                   <div class="rght_dte">
-                   	<h3>$40</h3>
-                   	</div>
-            	</div>
-                
+            	</div> 
+          
                 <div class="ordr_rvew">
             	<div class="lft_itm">
                   <h4 class="spn_hdng">Total</h4>
                 	</div>
                    <div class="rght_dte">
-                   	<h3>$40</h3>
+                       <h3>$<?php if(isset($cart['cartInfo']['total'])){ echo $cart['cartInfo']['total'];} ?></h3>
                    	</div>
             	</div>
                 
@@ -215,11 +194,14 @@
                 	<h4>Shipping Address</h4>
                     
                     <address>
-                      Written by <a href="mailto:webmaster@example.com">Jon Doe</a>.<br> 
-                      Visit us at:<br>
-                      Example.com<br>
-                      Box 564, Disneyland<br>
-                      USA
+                     <?php if(isset($name)){ echo $name; } ?><br>
+                     <?php if(isset($email)){ echo $email; } ?><br>
+                     <?php if(isset($phone)){ echo $phone; } ?><br>
+                      <?php if(isset($address)){ echo $address; } ?><br>
+                     <?php if(isset($city)){ echo $city; } ?><br>
+                     <?php if(isset($state)){ echo $state; } ?><br>
+                     <?php if(isset($zip)){ echo $zip; } ?>
+                       
                       </address>
                 	</div>
               	</div>  
@@ -228,14 +210,30 @@
         </div>
       </div>
     </div>
+
+    <!-----tab4 payment-------->
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingfour">
+        <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsefour" aria-expanded="true" aria-controls="collapsefour">
+         <span class="rund_1">4</span>Pay Now With Paypal
+        </a>
+      </h4>
+      </div>
+      <div id="collapsefour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingfour">
+        <div class="panel-body">
+            <form action="<?php echo $this->request->webroot."stores/payment" ?>" method="post">
+                <button type="submit" class="btn btn-success lft_grn">Pay Now</button>	 
+            </form>    
+        </div>
+      </div>
+    </div>
+
+
  
   </div>
- <!-----accordian-end-------->   
- <a href="#" class="blu_drk">
-         <span class="rund_1">4</span>Pay Now With Paypal
 
-        </a>
-        	</div>
+        	</div> 
     	</div>
 	</div>  
 <script>

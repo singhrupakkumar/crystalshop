@@ -2,14 +2,14 @@
 <div class="add_pro">
     <?= $this->Flash->render() ?> 
     <div class="add_hding">
-        <h3>Edit Your Product</h3> 
+        <h3>Add Your Product</h3>
     </div>
     <div class="container">
         <div class="row">
             <div class="covr_dels">
                 <?= $this->Form->create($product, array('enctype' => 'multipart/form-data','class'=>'form-horizontal','id' => 'addproductform')) ?>
               
-                    <div class="form-group">  
+                    <div class="form-group">
                         <label class="control-label col-sm-2" for="email">Title:</label> 
                         <div class="col-sm-10">
                             <?php echo $this->Form->control('name', ['class' => 'form-control','placeholder'=>'Enter title here' ,'label' => false]); ?>
@@ -20,7 +20,7 @@
                         <label class="control-label col-sm-2" for="category">Category:</label>     
                         <div class="col-sm-10">
                          <?php echo $this->Form->control('cat_id',['class' => 'vov_slct','label'=>false]);?>     
-                        </div>  
+                        </div>
                     </div>
 
 
@@ -28,31 +28,12 @@
                         <label class="control-label col-sm-2" for="pwd">Condition:</label>
                         <div class="col-sm-10">          
                             <select class="con_wth" name="conditions" id="conditions">
-                                <option value="New" <?php if($product['conditions']=='New'){ echo "selected"; } ?>>New</option>
-                                <option value="Old" <?php if($product['conditions']=='Old'){ echo "selected"; } ?>>Old</option>
+                                <option value="New">New</option>
+                                <option value="Old">Old</option>
                             </select>
                         </div>
                     </div> 
                     
-                      <div class="form-group">
-                        <label class="control-label col-sm-2" for="pwd">Image:</label> 
-                        <div class="col-sm-10">            
-                            <div class="upld_phts" id="selectedFiles">  
-                                 <input type="file" name="image" id="image" class="form-control">
-                            
-                            </div>
-                            <div class="singleimage"> 
-                        
-                               <div class="col-sm-2">
-                                <div class="lrge_pic">
-                                 <img src="<?php echo $this->request->webroot ?>images/products/<?php echo $product['image'] ?>" id="realimage">
-                                </div>  
-                               
-                               </div>
-                       
-                            </div> 
-                        </div>
-                    </div>
                       
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="pwd">Gallery:</label> 
@@ -64,16 +45,8 @@
                             
                             </div>
                             <div class="st_upld"> 
-                              <?php foreach($product['galleries'] as $gallery){ ?>  
-                               <div class="col-sm-2">
-                                <div class="lrge_pic">
-                                 <img src="<?php echo $this->request->webroot ?>images/gallery/<?php echo $gallery['image'] ?>"><span data-file='<?php echo $gallery['image'] ?>' data-id="<?php echo $gallery['id'] ?>" class='remove_img' title='Click to remove' style='cursor:pointer;'><i class="fa fa-trash-o" aria-hidden="true"></i>
-</span><br clear=\"left\"/>
-                                </div> 
-                               
-                               </div>
-                                <?php } ?>   
-                            </div>
+
+                            </div> 
                         </div>
                     </div>
 
@@ -116,7 +89,7 @@
                         <div class="col-sm-3"> 
                          <button type="button" id="convert" class="btn btn-success cntr_grn sve_lf">Convert</button>
                         </div> 
-                    </div>          
+                    </div>   
                     <!--div class="form-group">
                         <label class="control-label col-sm-2" for="pwd">Return Option:</label>
                         <div class="col-sm-10">          
@@ -167,7 +140,7 @@
 
 
                         </div>
-                    </div-->    
+                    </div-->  
 
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="pwd">Shipping Details:</label>
@@ -228,43 +201,16 @@
 
 var selDiv = "";
 var storedFiles = [];
-var storedFilessingle = [];
  
 $(document).ready(function() {
     $("#files").on("change", handleFileSelect);
-    $("#image").on("change", handleFileSelectsingle);
 
     selDiv = $(".st_upld");  
-    selDivsingl = $(".singleimage");  
     $("#addproductform").on("submit", handleForm); 
 
     $("body").on("click", ".selFile", removeFile);
 });
 
-function handleFileSelectsingle(e){
-    
-    
-        var files = e.target.files;
-
-    var filesArr = Array.prototype.slice.call(files);
-
-    filesArr.forEach(function(f) {          
-
-        if(!f.type.match("image.*")) {
-            return;
-        }
-        storedFilessingle.push(f);
-
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $('#realimage').attr('src',e.target.result);    
-
-        }
-        reader.readAsDataURL(f); 
-    });
-
-    
-}
 function handleFileSelect(e) {
     var files = e.target.files;
 
@@ -314,30 +260,25 @@ function handleForm(e) {
     data.append('cat_id', $("#cat-id").val());
     data.append('price', $("#price").val()); 
     data.append('quantity', $("#quantity").val());  
-    data.append('conditions', $("#conditions").val());         
+    data.append('conditions', $("#conditions").val());     
     data.append('delivery_details', $("#delivery-details").val());    
     for(var i=0, len=storedFiles.length; i<len; i++) {
         data.append('images[]', storedFiles[i]); 
-    }
-    if(storedFilessingle[0]== null){
-    data.append('image', 1);     
-    }else{
-    data.append('image', storedFilessingle[0]); 
     }
          
     var xhr = new XMLHttpRequest();
     
  
-    xhr.open('POST', '<?php echo $this->request->webroot ?>products/edit/<?php echo $product['id']; ?>', true);      
+    xhr.open('POST', '<?php echo $this->request->webroot ?>products/addsellproduct', true);  
 
     $(".loadingmessage").show();          
 
     xhr.onload = function(e) {  
         if(this.status == 200) {  
             $(".loadingmessage").hide();
-            $(".success").html('<div class="alert alert-success">Product saved successfully</div>');  
-             setTimeout(function(){  window.location.reload(); }, 1000);    
-        }  
+            $(".success").html('<div class="alert alert-success">Product add successfully</div>'); 
+     
+        }
     }
     xhr.send(data);
 }
@@ -355,27 +296,7 @@ function removeFile(e) {
 
 /**** Multiple image Preview (END) ***/ 
 
-
-$(".remove_img").click(function(){
-     var id = $(this).attr('data-id');  
-     
-        $.ajax({
-      url: '<?php echo $this->request->webroot ?>products/gallerydelete',
-      data: {id: id},
-      method: 'post',
-      dataType: 'json',
-      success: function(response){
-        if(response.status ===true){
-            alert('Deleted')
-           setTimeout(function(){  window.location.reload(); }, 1000);  
-        }else{
-            alert('Error in image deletion'); 
-        }
-      }
-   });
-    
-});
-</script>    
+</script> 
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/tinymce/4.1.6/tinymce.min.js"></script>
 <script>
@@ -388,4 +309,4 @@ toolbar: [
 "undo redo | styleselect | bold italic | link | alignleft aligncenter alignright | charmap code" | "media"
 ]
 });
-</script>   
+</script>  

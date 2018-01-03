@@ -28,7 +28,7 @@
                 
                   <?php echo $this->Form->control('user_id',['class' => 'form-control','label'=>'Seller']);?>
                   <?php echo $this->Form->control('cat_id',['class' => 'form-control','label'=>'Category']);?>
-                  <?php echo $this->Form->control('price',['class' => 'form-control']);?>
+                  <?php echo $this->Form->control('price',['class' => 'form-control','min'=>1]);?> 
                   <?php echo $this->Form->control('quantity',['class' => 'form-control']);?>   
                   <?php echo $this->Form->control('description',['class' => 'form-control']);?>   
                   <?php echo $this->Form->control('image',['class' => 'form-control','type'=>'file']);?>

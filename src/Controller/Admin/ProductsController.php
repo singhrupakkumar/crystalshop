@@ -33,7 +33,7 @@ class ProductsController extends AppController
 
         }
 
-        $this->Auth->allow(['slugify']); 
+        $this->Auth->allow(['slugify','gallery']); 
 
         $this->authcontent();
     ini_set('memory_limit', '-1');    
@@ -227,6 +227,15 @@ class ProductsController extends AppController
 
         $this->set(compact('products'));
         $this->set('_serialize', ['products']);
+    }
+    
+    public function gallery($id = null){  
+        $gallery = $this->Products->get($id, [
+            'contain' => ['Categories', 'Users','Galleries']
+        ]);
+    
+        $this->set('gallery', $gallery);
+        $this->set('_serialize', ['gallery']);
     }
 
     /**

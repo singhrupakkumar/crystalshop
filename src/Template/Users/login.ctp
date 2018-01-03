@@ -27,7 +27,7 @@
       <input id="password" type="password" class="form-control ctrl_smn" name="password" placeholder="Password" required="required">
     </div>
     <p class="mymessage"></p>
-    <div class="g-recaptcha cpta_tnm" data-sitekey="6Lef5j0UAAAAADt47q0_rrHhl3BfaFQBtP2O6UBM"></div> 
+    <div class="g-recaptcha cpta_tnm" id="gcapcha" data-sitekey="6Lef5j0UAAAAADt47q0_rrHhl3BfaFQBtP2O6UBM"></div> 
     <?= $this->Form->button(__('Sign In'),['class'=>'btn btn-success cntr_grn','type'=>'button','id'=>'loginbutton']); ?> 
     <?= $this->Form->end() ?> 
   
@@ -62,6 +62,13 @@
                 });
   event.preventDefault();    
 });
+
+jQuery("#password").keyup(function(event) {
+    if (event.keyCode === 13) {
+        jQuery("#loginbutton").click();
+    }
+});
+
 </script>    
 
 

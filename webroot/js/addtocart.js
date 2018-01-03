@@ -48,7 +48,7 @@ myvar += '   <tr>'+
 '      <td data-label="PRICE">$'+ value.price +'</td>'+
 '      <td data-label="DELIVERY DETAIL">'+
 '      <h3 class="fre_colr">Free</h3>'+
-'      <span class="delvr_bsns">Delivered in 7-8 business days.</span>'+
+'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>'+
 '      </td>'+
 '      <td data-label="REMOVE" class="trsh_sze"><i class="fa fa-trash remove_item" id=' + value.product.id + ' aria-hidden="true"></i></td>'+
 '    </tr> ';
@@ -131,7 +131,7 @@ myvar += '   <tr>'+
 '      <td data-label="PRICE">$'+ value.price +'</td>'+
 '      <td data-label="DELIVERY DETAIL">'+
 '      <h3 class="fre_colr">Free</h3>'+
-'      <span class="delvr_bsns">Delivered in 7-8 business days.</span>'+
+'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>'+
 '      </td>'+
 '      <td data-label="REMOVE" class="trsh_sze"><i class="fa fa-trash remove_item" id=' + value.product.id + ' aria-hidden="true"></i></td>'+
 '    </tr> ';
@@ -220,7 +220,7 @@ myvar += '   <tr>'+
 '      <td data-label="PRICE">$'+ value.price +'</td>'+
 '      <td data-label="DELIVERY DETAIL">'+
 '      <h3 class="fre_colr">Free</h3>'+
-'      <span class="delvr_bsns">Delivered in 7-8 business days.</span>'+
+'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>'+
 '      </td>'+
 '      <td data-label="REMOVE" class="trsh_sze"><i class="fa fa-trash remove_item" id=' + value.product.id + ' aria-hidden="true"></i></td>'+
 '    </tr> ';
@@ -306,7 +306,7 @@ myvar += '   <tr>'+
 '      <td data-label="PRICE">$'+ value.price +'</td>'+
 '      <td data-label="DELIVERY DETAIL">'+
 '      <h3 class="fre_colr">Free</h3>'+
-'      <span class="delvr_bsns">Delivered in 7-8 business days.</span>'+
+'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>'+
 '      </td>'+
 '      <td data-label="REMOVE" class="trsh_sze"><i class="fa fa-trash remove_item" id=' + value.product.id + ' aria-hidden="true"></i></td>'+
 '    </tr> ';
@@ -350,4 +350,4 @@ myvar += '  </tbody>'+
 
   
       
-});  
+});    

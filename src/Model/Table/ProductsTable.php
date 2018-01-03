@@ -50,6 +50,10 @@ class ProductsTable extends Table
             'joinType' => 'INNER'
         ]);
         
+       $this->hasMany('Galleries', [   
+             'foreignKey' => 'product_id'
+         ]);
+            
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'

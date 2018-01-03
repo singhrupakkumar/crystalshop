@@ -118,7 +118,7 @@
 
 <script>
 $().ready(function() {
-	$("#user-form").validate({
+	var form = $("#user-form").validate({
 		rules: {
 			name: "required",
 			email: {
@@ -162,7 +162,7 @@ $().ready(function() {
         
 
    jQuery("#signupbutton").click(function(event) {
-            
+          if(form.form()){  
           jQuery.ajax({
                     url: '<?php echo $this->request->webroot ;?>users/capchaverify', 
                     data: jQuery('#user-form').serialize(),
@@ -181,9 +181,16 @@ $().ready(function() {
                         } 
                     }
                 });
+                }                 
   event.preventDefault();    
 });
    
-        
+jQuery("#password2").keyup(function(event) {
+    if (event.keyCode === 13) {
+        jQuery("#signupbutton").click(); 
+    }
+});
+ 
+ 
 });
 </script>

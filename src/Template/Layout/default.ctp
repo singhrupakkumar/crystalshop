@@ -41,10 +41,10 @@ $cakeDescription = '';
  <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700,700i" rel="stylesheet"> 
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src='https://www.google.com/recaptcha/api.js' async defer></script>    
- <?= $this->Html->script(array('jquery.min.js', 'bootstrap.min.js', 'jquery-ui.min.js')) ?>  
+ <?= $this->Html->script(array('jquery.min.js', 'bootstrap.min.js', 'jquery-ui.min.js', 'jquery.dataTables.min', 'dataTables.bootstrap.min.js')) ?>  
  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>     
  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>  
-   <?php echo $this->Html->script(array('addtocart.js'), array('inline' => false)); ?>
+   <?php echo $this->Html->script(array('addtocart.js'), array('inline' => false)); ?>  
  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <style>
        .alert-danger{text-align: center;}
@@ -69,14 +69,57 @@ $cakeDescription = '';
         }
         #added_items h4{text-align: center; }
         .stock {color: red;} 
-    </style> 
-  <script>
+            
+    </style>   
+  <script>      
   $( function() {  
     $( "#dob" ).datepicker();
   } );
- </script>
+  
+  $(document).ready(function(){
+		$('#example2').DataTable({
+			'paging'      : true,
+			'lengthChange': false,
+			'searching'   : true,
+			'ordering'    : false,
+			'info'        : true,
+			'autoWidth'   : false,
+			'order'		  : [[ 1, "desc" ]]
+		});
+	});  
+ </script>  
   </head>
   <body>
+                <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  
+  
+ 
+                <ul>
+                     <?php if(!$loggeduser){ ?>
+                    <li class="sgn_rht active"><a class="" href="<?php echo $this->request->webroot ?>users/login">Sign In</a></li> 
+                    <li class="<?php  if($this->request->params['action'] == 'add' ) { echo "active"; }?>"><a class="" href="<?php echo $this->request->webroot ?>users/add">Sign Up</a>
+                    <?php }else{ ?>
+                    <li class="<?php  if($this->request->params['action'] == 'myaccount' ) { echo "active"; }?>"><a class="" href="<?php echo $this->request->webroot ?>users/myaccount">My Account</a>
+                        <ul>
+                            <li class="<?php  if($this->request->params['action'] == 'myproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>users/myproduct">My Products</a></li>
+                            <li class="<?php  if($this->request->params['action'] == 'freesaleproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>products/freesaleproduct">Add Free Sale Product</a></li>
+                        </ul>
+                    </li>
+                    <li class="active"><a class="" href="<?php echo $this->request->webroot ?>users/logout">Logout</a>   
+                <?php } ?>  
+            	</ul>
+           
+  
+  
+  
+<!--  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>-->
+</div>
+<span class="menu-icon" onclick="openNav()">&#9776;</span>
+      <div class="loader" style="display:none;"></div>           
  <!---------header---------->
   <header class="bg-hdr">
  
@@ -109,6 +152,7 @@ $cakeDescription = '';
                     </div>
                 </div>
             </div>
+
             <div class="cart">
             <a href="<?php echo $this->request->webroot ?>stores/cart">   
              <div class="cart-icn">
@@ -118,17 +162,8 @@ $cakeDescription = '';
             <div class="cart-txt">Cart</div>
              </a>   
             </div>
-            <div class="sgn_up">
-                <ul>
-                     <?php if(!$loggeduser){ ?>
-                    <li class="sgn_rht active"><a class="ble_rqst" href="<?php echo $this->request->webroot ?>users/login">Sign In</a></li> 
-                    <li class="active"><a class="ble_rqst" href="<?php echo $this->request->webroot ?>users/add">Sign Up</a>
-                    <?php }else{ ?>
-                    <li class="active"><a class="ble_rqst" href="<?php echo $this->request->webroot ?>users/myaccount">My Account</a></li>
-                    <li class="active"><a class="ble_rqst" href="<?php echo $this->request->webroot ?>users/logout">Logout</a>   
-                <?php } ?>  
-            	</ul>
-            </div>
+          
+            
           </div>
           
          </div> 
@@ -160,9 +195,9 @@ $cakeDescription = '';
             <ul class="nav navbar-nav navbar-right">
                 <li class="<?php  if($this->request->params['action'] == 'index' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>stores/index">Home</a></li>
                 <li class="<?php  if($this->request->params['action'] == 'contact' ) { echo "active"; }?>"><a href="#">Contact Us</a></li> 
-                <li><a href="#">How To Sell Your Products</a></li>
+                <li class="<?php  if($this->request->params['action'] == 'addsellproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>products/addsellproduct">How To Sell Your Products</a></li>
                <!-- <li><a href="#">Promote Your Product</a></li>-->
-            </ul>
+            </ul>      
             
         </div>
     </nav>
@@ -174,7 +209,7 @@ $cakeDescription = '';
  </header>  
   <!--------banner section------->
  <?= $this->fetch('content') ?>      
-<!-----------footer-section-------------->
+<!-----------footer-section--------------> 
 <div class="footer_section">
 	<div class="uper_ftr">
 	<div class="container">
@@ -184,7 +219,8 @@ $cakeDescription = '';
             	<img src="<?php echo $this->request->webroot; ?>images/website/logo_fnl.png">
             	</div>
         	</div>
-            <div class="col-sm-8">
+            <div class="col-sm-8"> 
+                <div class="message" style="text-align:center;font-weight: bold;color:#49BA64;"></div>   
              <div class="ftr_dvde">
               <div class="col-sm-3">
               	<div class="privcy_sction">
@@ -232,12 +268,14 @@ $cakeDescription = '';
                        
                     </div>
                     <ul>
-                    <li>
-                    <div class="cntn_cvr">
-                        <div class="search-container">
-                            <form action="">
-                              <input type="text" placeholder="Your email address" name="search">
-                              <button type="submit" class="submit_align">Submit</button>  
+                  
+                    <li> 
+                    <div class="cntn_cvr"> 
+                        <div class="search-container"> 
+                            
+                            <form  method="post" id="subscribe">
+                              <input id="email" type="email" name="email" class="form-control" placeholder="Email Address">
+                              <button type="button" id="nwsltr" name="nwsltr" class="submit_align">Submit</button>  
                             </form>
                          </div>
                     </div>
@@ -367,7 +405,7 @@ $cakeDescription = '';
             return pattern.test(email);
         }
 
-        jQuery('#nwsltr').on("click", function ($) {    
+        jQuery('#nwsltr').on("click", function ($) {     
             if (!valid_email_address(jQuery("#email").val()))
             {
                 jQuery(".message").html('Please make sure you enter a valid email address.');
@@ -436,6 +474,16 @@ $cakeDescription = '';
 //			.appendTo(ul)
 //	};
 	</script> 
+    
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script>
 
 </body>
 </html>     
