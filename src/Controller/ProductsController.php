@@ -367,7 +367,8 @@ class ProductsController extends AppController
     
       public function freesaleproduct(){  
       if($this->Auth->user('id')){ 
-          if($this->request->is('post')){  
+          if($this->request->is('post')){
+              if(!empty($saleproduct)){
              $this->Products->updateAll(array('free_sale' =>0), array('user_id' =>$this->Auth->user('id')));    
              $saleproduct = $this->request->data['saleproduct'];  
              $product = $this->Products->get($saleproduct);  
@@ -376,7 +377,11 @@ class ProductsController extends AppController
                  $this->Flash->success(__('The product has been Added on free sale.'));
              }else{
                 $this->Flash->error(__('The product could not be saved. Please, try again.'));   
-             }      
+             }
+             
+              }else{
+                $this->Flash->error(__('Please select product.'));      
+              }  
           }  
         $userproduct  = $this->Products->find('all',array('contain'=>['Users'],'conditions'=>array('Products.user_id'=>$this->Auth->user('id'))));
         $userproduct  = $userproduct->all();   
@@ -408,13 +413,13 @@ class ProductsController extends AppController
             $exits = $this->Carts->find('all',array('conditions'=>array('AND'=>array('Carts.product_id'=>$id,'Carts.sessionid'=>$this->request->session()->id()))));
             $exits = $exits->first(); 
             if(!empty($exits)){
-              $this->Flash->success(__('This Product already added in your shopping cart.'));   
+              $this->Flash->success(__('Product is already added in your cart.'));   
              // $product = true; 
             }else{
             $product = $this->Cart->add($id, $quantity, $productmodId,$uid); 
                 if(!empty($product)) { 
-                    $this->Flash->success(__($product['name'] . ' was added to your shopping cart.'));
-                } else {
+                    $this->Flash->success(__($product['name'] . ' is added to your cart successfully.'));
+                } else {  
                      $this->Flash->error(__('Unable to add this product to your shopping cart.'));
 
                 } 
@@ -435,12 +440,15 @@ class ProductsController extends AppController
      if ($this->request->is('post')) {
             
                 $image = $this->request->data['images'][0];
- 
+                if(!empty($image['name'])){
 	        $name = time().$image['name'];
 		$tmp_name = $image['tmp_name'];
 		$upload_path = WWW_ROOT.'images/products/'.$name;
 		move_uploaded_file($tmp_name, $upload_path);
             $this->request->data['image'] = $name;
+                }else{  
+                    $this->request->data['image'] = '';
+                }
             $this->request->data['user_id'] = $this->Auth->user('id');  
             $this->request->data['slug'] =$this->slugify($this->request->data['name']);
             $product = $this->Products->patchEntity($product, $this->request->getData());

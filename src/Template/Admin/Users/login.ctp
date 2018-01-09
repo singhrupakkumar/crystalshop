@@ -40,7 +40,7 @@
 	}
 	.users-login form div[class*="input"] input[type="text"],
 	.users-login form div[class*="input"] input[type="password"]{
-		width: 100%;
+		width: 96%;
 		height: 40px;
 		padding: 7px 11px;
 		font-size: 14px;
@@ -79,10 +79,13 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+ 
 </style>
-<div class="users-login">
+<div class="users-login ">
+
      <div class="user_avtar">
-         <img src="img/registration.png">
+         <img src="<?php echo $this->request->webroot;?>img/registration.png">
      </div> 
 
     <?= $this->Form->create() ?>
@@ -92,4 +95,5 @@
         ?>
 		<?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
+	
 </div>

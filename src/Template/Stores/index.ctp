@@ -1,13 +1,14 @@
  <!--------banner section------->
    <div class="banner_sction">
-      <?= $this->Flash->render() ?>        
+           
    <img src="<?php echo $this->request->webroot; ?>images/website/sctn.png">
     <div class="btn_sell">
-    <button type="button" class="btn btn-success">Sell Your Products</button> 
+        <a href="<?php echo $this->request->webroot ?>products/freesaleproduct"><button type="button" class="btn btn-success">Sell Your Products</button> </a>
     	</div>
 	</div>
 
 <div class="slidr_section">
+ <?= $this->Flash->render() ?>  
    <div class="slidr_heading">
    <h4>Today's Top Seller</h4>
    	</div>
@@ -104,48 +105,29 @@
    <span class="sub_artcle">Lorem ipsum is a dummy text</span>
    	</div>
 	<div class="container">
-    	<div class="row">
+    	<div class="row">  
+              <?php if(!empty($articles)){
+              
+                foreach($articles as $article){  
+              ?>  
         	<div class="col-sm-12">
             	<div class="detail_recnt">
-                	<h4>What Makes a Precious Gem Stone Valuable</h4>
-                    <p>If you or your loved one is superstitious, consider the myths and beliefs surrounding gem stones when choosing that special gift for them. It appears there's much more to each precious gem stone than it's clarity and price..�  <a href="#" class="read_lst">Read More</a></p>
+                        <h4><?php if(isset($article['title'])){ echo $article['title']; } ?></h4>  
+                        
+                                 <?php  
+                                        $string = strip_tags($article['description']);
+                                        if (strlen($string) > 250) {    
+                                            $stringCut = substr($string, 0, 250);
+                                            $string = substr($stringCut, 0, strrpos($stringCut, ' ')).'... <a href="'.$this->request->webroot.'articles/view/'.$article['id'].'" class="read_lst">Read More</a>'; 
+                                        }
+                                        ?>
+                  <?php if(isset($string)){ echo $string; } ?>      
                 	</div>
             	</div>
+              <?php } }  ?>        
                 
-                <div class="col-sm-12">
-            	<div class="detail_recnt">
-                	<h4>Lucky Chinese Horoscope Gem Stones: The First Six Chinese Horoscope Gems</h4>
-                    <p>When the Chinese heavenly god and the Chinese earth god decided to create Chinese Astrology and associate Chinese horoscope signs with animals of planet earth, they concluded that each Chinese... <a href="#" class="read_lst">Read More</a> </p>
-                	</div>
-            	</div>
-                
-                <div class="col-sm-12">
-            	<div class="detail_recnt">
-                	<h4>Beaded Gem Stone Jewelry - Dare to be Distinctive </h4>
-                    <p>When a woman wears jewelry, she does so to complement and accentuate her beauty and to adorn herself with something unique. Beaded gem stone jewelry has the attributes to perform all these functions...  <a href="#" class="read_lst">Read More</a></p>
-                	</div>
-            	</div>
-                
-                <div class="col-sm-12">
-            	<div class="detail_recnt">
-                	<h4>Traditional Monthly and Zodiac Gem Stones</h4>
-                    <p>Nobody is completely sure where the tradition of birth gem stones comes from but many biblical scholars and anthropologists seem to think that their original assignments... <a href="#" class="read_lst">Read More</a> </p>
-                	</div>
-            	</div>
-                
-                <div class="col-sm-12">
-            	<div class="detail_recnt">
-                	<h4>Can A Gem Stone Change Fate?</h4>
-                    <p>To counteract the adverse affects of vibrations of planets, or to enhance the beneficial planetary vibrations on the human system the occultists advice the use of gem stones...  <a href="#" class="read_lst">Read More</a></p>
-                	</div>
-            	</div>
-                
-                 <div class="col-sm-12">
-            	<div class="detail_recnt">
-                	<h4>How to Care For Gem Stones </h4>
-                    <p>Making the investment in quality gem stones is only the first step towards life-long enjoyment of the jewel. Like any other valued item, gems will look better and last longer...  <a href="#" class="read_lst">Read More</a></p>
-                	</div>
-            	</div>
+                 
+              
                 <div class="see_txt"> 
            <a href="#">Promote Your Products<i class="fa fa-angle-right" aria-hidden="true"></i></a>
           </div>

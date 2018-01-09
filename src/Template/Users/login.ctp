@@ -12,8 +12,13 @@
 	<div class="container">
 
     	<div class="row">
-                      <?= $this->Flash->render() ?>      
+                     
         	 <div class="sgnup_heading">
+             <div class="col-sm-12">
+             <div class="sign-flash">
+              <?= $this->Flash->render() ?>   
+              </div>
+              </div>   
    <h4>Sign In to Earth Vendors</h4>  
    	</div> 
     <div class="frm_sgncvr">

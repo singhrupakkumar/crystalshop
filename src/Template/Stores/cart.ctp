@@ -1,5 +1,5 @@
 <!--------banner section-------> 
-<div class="sgn_bner">
+<div class="sgn_bnerview">  
     <?= $this->Flash->render() ?>  
     <!--img src="<?php echo $this->request->webroot; ?>images/website/cart_bner.jpg">
     <div class="uper_sgnlyer">  

@@ -6,11 +6,15 @@
     </div>
 </div>
 <!--------sign_up_section------->
-<?= $this->Flash->render() ?>  
 <div class="frm_sgnup">
     <div class="container">
         <div class="row">
             <div class="sgnup_heading">
+                    <div class="col-sm-12">
+             <div class="sign-flash">
+              <?= $this->Flash->render() ?>   
+              </div>
+              </div>  
                 <h4>Forgot Password</h4>
             </div> 
             <div class="frm_sgncvr">

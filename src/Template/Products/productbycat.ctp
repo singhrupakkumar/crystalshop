@@ -11,12 +11,13 @@
     <div class="container">
         <div class="row">
             <div class="slidr_heading">
-                <h4><?php if(isset($cat['name'])){ echo $cat['name']; } ?> Products</h4>
+                <h4><?php if(isset($cat['name'])){ echo $cat['name']; } ?></h4>
+                <P><?php if(isset($cat['description'])){ echo $cat['description']; } ?></P>  
             </div>
             
              <div class="col-sm-4">
                 <div class="rfne_txt">
-                    <h4>Refine your search</h4>
+                    <h4>REFINE YOUR SEARCH</h4>
                 </div>
                 <div class="by_heding">
                     <span>By Seller</span>
@@ -52,7 +53,7 @@
            
             <div class="col-sm-8">
                 <div class="borx_txt">
-                    <h4><span class="numbr_text"><?php if(!empty($products)){ echo count($products); } ?></span> Results</h4>
+                    <h4><span class="numbr_text">(<?php if(!empty($products)){ echo count($products); } ?>)</span> Results</h4>
                 </div>
                 <div class="brod_cvr">
                     

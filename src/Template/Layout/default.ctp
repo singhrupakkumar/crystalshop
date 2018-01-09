@@ -24,10 +24,10 @@ $cakeDescription = '';
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= $cakeDescription ?> Earth Vendors</title>   
 <link rel="icon" type="image/x-icon" href="<?php echo $this->request->webroot."images/website/favicon-32x32.png";?>" />
-<?= $this->Html->css( array('custom/bootstrap.min.css','custom/font-awesome.min.css','custom/style.css','custom/slick.css','custom/slick-theme.css') ) ?>
+<?= $this->Html->css( array('custom/bootstrap.min.css','custom/font-awesome.min.css','custom/style.css','custom/slick.css','custom/slick-theme.css','docsupport/chosen.css') ) ?>  
 <?= $this->fetch('meta') ?>
 <?= $this->fetch('css') ?>
-<?= $this->fetch('script') ?>
+<?= $this->fetch('script') ?>  
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -41,7 +41,8 @@ $cakeDescription = '';
  <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700,700i" rel="stylesheet"> 
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src='https://www.google.com/recaptcha/api.js' async defer></script>    
- <?= $this->Html->script(array('jquery.min.js', 'bootstrap.min.js', 'jquery-ui.min.js', 'jquery.dataTables.min', 'dataTables.bootstrap.min.js')) ?>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js" type="text/javascript"></script>
+ <?= $this->Html->script(array('jquery.min.js', 'bootstrap.min.js', 'jquery-ui.min.js', 'jquery.dataTables.min', 'dataTables.bootstrap.min.js','docsupport/chosen.js')) ?>      
  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>     
  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>  
    <?php echo $this->Html->script(array('addtocart.js'), array('inline' => false)); ?>  
@@ -73,7 +74,7 @@ $cakeDescription = '';
     </style>   
   <script>      
   $( function() {  
-    $( "#dob" ).datepicker();
+    $( "#dob" ).datepicker({ changeYear: true });    
   } );
   
   $(document).ready(function(){
@@ -97,28 +98,29 @@ $cakeDescription = '';
  
                 <ul>
                      <?php if(!$loggeduser){ ?>
-                    <li class="sgn_rht active"><a class="" href="<?php echo $this->request->webroot ?>users/login">Sign In</a></li> 
-                    <li class="<?php  if($this->request->params['action'] == 'add' ) { echo "active"; }?>"><a class="" href="<?php echo $this->request->webroot ?>users/add">Sign Up</a>
+                    <li class="sgn_rht active"><a class="" href="<?php echo $this->request->webroot ?>users/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a></li> 
+                    <li class="<?php  if($this->request->params['action'] == 'add' ) { echo "active"; }?>"><a class="" href="<?php echo $this->request->webroot ?>users/add"><i class="fa fa-sign-out" aria-hidden="true"></i> Sign Up</a></li>
                     <?php }else{ ?>
-                    <li class="<?php  if($this->request->params['action'] == 'myaccount' ) { echo "active"; }?>"><a class="" href="<?php echo $this->request->webroot ?>users/myaccount">My Account</a>
+                    <li class="<?php  if($this->request->params['action'] == 'myaccount' ) { echo "active"; }?>"><a class="" href="<?php echo $this->request->webroot ?>users/myaccount"><i class="fa fa-user" aria-hidden="true"></i> My Account</a>
                         <ul>
-                            <li class="<?php  if($this->request->params['action'] == 'myproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>users/myproduct">My Products</a></li>
-                            <li class="<?php  if($this->request->params['action'] == 'freesaleproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>products/freesaleproduct">Add Free Sale Product</a></li>
+                            <li class="<?php  if($this->request->params['action'] == 'myproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>users/myproduct"><i class="fa fa-product-hunt" aria-hidden="true"></i> My Products</a></li>
+                            <li class="<?php  if($this->request->params['action'] == 'freesaleproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>products/freesaleproduct"><i class="fa fa-plus-square" aria-hidden="true"></i> Add Bonus Product</a></li>
                         </ul>
                     </li>
-                    <li class="active"><a class="" href="<?php echo $this->request->webroot ?>users/logout">Logout</a>   
+                    <li class="<?php  if($this->request->params['action'] == 'changepassword' ) { echo "active"; }?>">
+                     <a href="<?php echo $this->request->webroot; ?>users/changepassword"><i class="fa fa-key" aria-hidden="true"></i> Change Password</a>  
+                    </li> 
+                      <li class="<?php  if($this->request->params['action'] == 'edit' ) { echo "active"; }?>">
+                   <a href="<?php echo $this->request->webroot; ?>users/edit"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a>   
+                    </li> 
+                    <li class="active"><a class="" href="<?php echo $this->request->webroot ?>users/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                    
+                    
                 <?php } ?>  
             	</ul>
-           
-  
-  
-  
-<!--  <a href="#">About</a>
-  <a href="#">Services</a>
-  <a href="#">Clients</a>
-  <a href="#">Contact</a>-->
-</div>
-<span class="menu-icon" onclick="openNav()">&#9776;</span>
+
+</div> 
+<?php if($loggeduser){ ?><span class="menu-icon" onclick="openNav()">&#9776;</span><?php } ?>
       <div class="loader" style="display:none;"></div>           
  <!---------header---------->
   <header class="bg-hdr">
@@ -162,6 +164,15 @@ $cakeDescription = '';
             <div class="cart-txt">Cart</div>
              </a>   
             </div>
+            <div class="sgn_up">
+             <?php if(!$loggeduser){ ?>   
+             <ul>
+                <li class="sgn_rht active"><a class="ble_rqst" href="<?php echo $this->request->webroot ?>users/login"> Sign In</a></li> 
+                <li class="<?php  if($this->request->params['action'] == 'add' ) { echo "active"; }?>"><a class="ble_rqst" href="<?php echo $this->request->webroot ?>users/add">Sign Up</a></li>   
+            	</ul>  
+             <?php } ?>   
+            </div>
+         
           
             
           </div>
@@ -206,6 +217,7 @@ $cakeDescription = '';
   </div>
   
   </div>
+  
  </header>  
   <!--------banner section------->
  <?= $this->fetch('content') ?>      
@@ -274,8 +286,8 @@ $cakeDescription = '';
                         <div class="search-container"> 
                             
                             <form  method="post" id="subscribe">
-                              <input id="email" type="email" name="email" class="form-control" placeholder="Email Address">
-                              <button type="button" id="nwsltr" name="nwsltr" class="submit_align">Submit</button>  
+                              <input id="email" type="email" name="email" class="form-control" placeholder="Your email address">
+                              <button type="button" id="nwsltr" name="nwsltr" class="submit_align">SUBRCIBE</button>  
                             </form>
                          </div>
                     </div>

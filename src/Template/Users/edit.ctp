@@ -10,6 +10,11 @@
     <div class="container">
         <div class="row">
             <div class="sgnup_heading">
+                  <div class="col-sm-12">
+             <div class="sign-flash">
+              <?= $this->Flash->render() ?>   
+              </div>
+              </div>  
                 <h4>Edit Profile</h4>
             </div> 
             <div class="brdr_edt">
@@ -34,10 +39,10 @@
                                 <?php echo $this->Form->control('name', ['class' => 'form-control ctrl_smn lft_hldr', 'label' => false,'placeholder'=>'Full Name']); ?>
                             </div> 
                         
-                             <!--div class="input-group">
+                             <div class="input-group">
                                 <span class="input-group-addon brdr_trns"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
-                                <?php echo $this->Form->control('email', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Email Address']); ?>
-                            </div-->
+                                <?php echo $this->Form->control('email', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Email Address','readonly']); ?>
+                            </div>
 
                            <div class="input-group">
                                <span class="input-group-addon brdr_trns"><i class="glyphicon glyphicon-user"></i></span>

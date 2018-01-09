@@ -68,6 +68,14 @@
           </a>
         </li>
         
+        <li class="<?php if($this->request->params['controller'] == 'Articles' ) { echo "active"; }?>">
+          <a href="<?php echo $this->request->webroot; ?>admin/articles">
+            <i class="fa fa-pencil-square-o"></i> <span>Articles</span>  
+            <span class="pull-right-container">  
+            </span>
+          </a>  
+        </li>
+        
         <li class="<?php if($this->request->params['controller'] == 'Settings' ) { echo "active"; }?>">
           <a href="<?php echo $this->request->webroot; ?>admin/settings">
             <i class="fa fa-cog"></i> <span>Settings</span>  

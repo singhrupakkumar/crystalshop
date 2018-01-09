@@ -64,8 +64,8 @@
                 </div>
             	</div>
         	</div>
-              <a href="<?php echo $this->request->webroot; ?>users/changepassword"><button type="button" class="btn btn-success lft_grn">Change Password</button></a>   
-             <a href="<?php echo $this->request->webroot; ?>users/edit"><button type="button" class="btn btn-success lft_grn"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</button></a> 
+            
+              
     	</div>
         	</div>
     	</div>

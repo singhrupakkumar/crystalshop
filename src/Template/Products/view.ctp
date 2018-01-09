@@ -1,5 +1,5 @@
 <!--------banner section------->
-<div class="sgn_bner">
+<div class="sgn_bnerview">
      <?= $this->Flash->render() ?>    
     <!--img src="<?php echo $this->request->webroot; ?>images/website/detil_bnr.jpg"-->
    
@@ -80,17 +80,17 @@
                     </div>  
 
                     <div class="cont_dnm">
-                        <div class="col-sm-2" style="padding: 0px;">
+                        <span class="countdw" >
                             <div class="label">Countdown:</div>
-                        </div>
-                        <div class="col-sm-10" style="padding: 0px;">
+                        </span>
+                        <span class="countnmbr" >
                             <div class="label_desc">Hurry, only <?php if(isset($product['quantity'])){ echo $product['quantity'];} ?> left!</div>
-                        </div>
+                        </span> 
                     </div>   
 
                     <div class="qty_bnt">
                          <?php echo $this->Form->create(NULL, array('url' => array('controller' => 'products', 'action' => 'addtocart'))); ?> 
-                        <div class="col-sm-4" style="padding: 0px;">
+                        <div class="col-sm-3" style="padding: 0px;">
                             <div class="qty_nmbr">
                                 <span>QTY</span>
 
@@ -100,7 +100,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-8" style="padding: 0px;">
+                        <div class="col-sm-9" style="padding: 0px;">
                             <div class="btn_crd">
                                
                                 <?php echo $this->Form->control('id', array('type' => 'hidden', 'value' => $product['id'])); ?>       

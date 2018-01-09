@@ -3,7 +3,7 @@ jQuery(document).ready(function () {
  jQuery('#cartcount').html(data['data']['cartcount']); 
   var myvar = '';
  if(data['data']['cartcount'] == "0"){     
-  myvar += '<h4>Shopping Cart is empty</h4>'; 
+  myvar += '<img src="http://rupak.crystalbiltech.com/crystal/img/NoDataAvailable.png" alt="img" />';   
  }else{
  myvar = '<div class="table_boundry">'+
 '<table>'+
@@ -58,7 +58,7 @@ myvar += '      </td>'+
 myvar += '  </tbody>'+
 '</table>'+
 '<div class="ttl_est">'+
-'  	<h3>Estimated Total:<span>$'+data['data']['cartInfo']['total']+'</span></h3>'+
+'  	<h3>Estimated Total: <span>$'+data['data']['cartInfo']['total']+'</span></h3>'+
 '</div>'+
 '    '+
 '<div class="cntinue_alst">'+
@@ -88,7 +88,7 @@ myvar += '  </tbody>'+
  jQuery('#cartcount').html(data['data']['cartcount']); 
   var myvar = '';
  if(data['data']['cartcount'] == "0"){    
-  myvar += '<h4>Shopping Cart is empty</h4>'; 
+  myvar += '<img src="http://rupak.crystalbiltech.com/crystal/img/NoDataAvailable.png" alt="img" />'; 
  }else{
  myvar = '<div class="table_boundry">'+
 '<table>'+
@@ -143,7 +143,7 @@ myvar += '      </td>'+
 myvar += '  </tbody>'+
 '</table>'+
 '<div class="ttl_est">'+
-'  	<h3>Estimated Total:<span>$'+data['data']['cartInfo']['total']+'</span></h3>'+
+'  	<h3>Estimated Total: <span>$'+data['data']['cartInfo']['total']+'</span></h3>'+
 '</div>'+
 '    '+
 '<div class="cntinue_alst">'+
@@ -179,7 +179,7 @@ myvar += '  </tbody>'+
               jQuery('#cartcount').html(data['data']['cartcount']); 
   var myvar = '';
  if(data['data']['cartcount'] == "0"){    
-  myvar += '<h4>Shopping Cart is empty</h4>'; 
+  myvar += '<img src="http://rupak.crystalbiltech.com/crystal/img/NoDataAvailable.png" alt="img" />'; 
  }else{
  myvar = '<div class="table_boundry">'+
 '<table>'+
@@ -234,7 +234,7 @@ myvar += '      </td>'+
 myvar += '  </tbody>'+
 '</table>'+
 '<div class="ttl_est">'+
-'  	<h3>Estimated Total:<span>$'+data['data']['cartInfo']['total']+'</span></h3>'+
+'  	<h3>Estimated Total: <span>$'+data['data']['cartInfo']['total']+'</span></h3>'+
 '</div>'+
 '    '+
 '<div class="cntinue_alst">'+
@@ -267,7 +267,7 @@ myvar += '  </tbody>'+
                 
   var myvar = '';
  if(data['data']['cartcount'] == "0"){    
-  myvar += '<h4>Shopping Cart is empty</h4>'; 
+  myvar += '<img src="http://rupak.crystalbiltech.com/crystal/img/NoDataAvailable.png" alt="img" />'; 
  }else{
  myvar = '<div class="table_boundry">'+
 '<table>'+
@@ -322,7 +322,7 @@ myvar += '      </td>'+
 myvar += '  </tbody>'+
 '</table>'+
 '<div class="ttl_est">'+
-'  	<h3>Estimated Total:<span>$'+data['data']['cartInfo']['total']+'</span></h3>'+
+'  	<h3>Estimated Total: <span>$'+data['data']['cartInfo']['total']+'</span></h3>'+
 '</div>'+
 '    '+
 '<div class="cntinue_alst">'+
@@ -349,7 +349,7 @@ myvar += '  </tbody>'+
         
         
         
-           
+               
                
         
       

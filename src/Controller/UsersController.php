@@ -98,6 +98,7 @@ class UsersController extends AppController {
             if ($new_user) {
 
                 if (isset($user)) {
+                        
                     
 
                         $ms = 'You are registered recently with email ID <strong>' . $post['email'] . '</strong> on Earth Vendors Shop.';
@@ -364,7 +365,7 @@ class UsersController extends AppController {
         $responseData = json_decode($verifyResponse);  
         if($responseData->success){           
              $response['status'] = true;
-             $response['msg'] = 'Verify success';   
+             $response['msg'] = '';   
         }else{
            $response['status'] = false;
            $response['msg'] = 'Robot verification failed, please try again.';  
@@ -483,7 +484,7 @@ class UsersController extends AppController {
 
             if (empty($user)) {
 
-                $this->Flash->error(__('Please enter valid email address'));
+                $this->Flash->error(__('Enter regsitered email address to reset you password'));
             } else {
 
                 if ($user->email) {
@@ -495,19 +496,17 @@ class UsersController extends AppController {
 
 
                     $this->Users->updateAll(array('tokenhash' => $hash), array('id' => $user->id));
+                    $refer_link =  $burl . $url ; 
+                     $email = new Email('default');
 
-                    $ms = "User<br/>";
-
-                    $ms.='<a href=' . $burl . $url . '>Click Here To Reset Your Password</a><br/>';
-
-                    $email = new Email('default');
-
-                    $email->from(['rupak@avainfotech.com' => 'Earth Vendors']) 
-                            ->emailFormat('html')
-                            ->template('default', 'default')
-                            ->to($user->email)
-                            ->subject('Reset Your Password')
-                            ->send($ms);
+                 $send = $email->from(['rupak@avainfotech.com' => 'Earth Vendors']) 
+                        ->emailFormat('html')
+                        ->template('forgot')
+                        ->to($user->email)
+                        ->subject('Reset Your Password')
+                        ->viewVars(array('link' => $refer_link)) 
+                        ->viewVars(array('user' => $user))  
+                        ->send();  
 
 
 
@@ -565,7 +564,7 @@ class UsersController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             if (isset($this->request->data['password1'])) {
                 if ($this->request->data['password'] != $this->request->data['password1']) {
-                    $this->Flash->success(__('New and confirm password does not match'));
+                    $this->Flash->error(__('New and confirm password does not match'));
                     return;
                 }
             }
@@ -580,7 +579,7 @@ class UsersController extends AppController {
                         return $this->redirect(['action' => 'changepassword']);
                     }
                 } else {
-                    $this->Flash->success(__('Invalid Password, Try again'));
+                    $this->Flash->error(__('Invalid Password, Try again'));
                     if (isset($_GET['route'])) {
                         return $this->redirect(['action' => 'edit', $id]);
                     } else {
@@ -588,7 +587,7 @@ class UsersController extends AppController {
                     }
                 }
             } else {
-                $this->Flash->success(__('Old Password did not match'));
+                $this->Flash->error(__('Old Password did not match'));
                 if (isset($_GET['route'])) {
                     return $this->redirect(['action' => 'edit', $id]);
                 } else {

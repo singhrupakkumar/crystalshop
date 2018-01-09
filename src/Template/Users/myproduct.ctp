@@ -9,6 +9,9 @@
 
                 <!-----pro-table-------->               
                 <div class="table_prodct">
+				
+                    <?php if(!empty($userdata['products'])){ ?>
+					
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -33,8 +36,15 @@
                                          <?php } ?> 
                                     </div>
                                     <div class="mypr_txt">
+                                        <?php  
+                                        $string = strip_tags($product['description']);
+                                        if (strlen($string) > 30) {
+                                            $stringCut = substr($string, 0, 30);
+                                            $string = substr($stringCut, 0, strrpos($stringCut, ' ')).'...'; 
+                                        }
+                                        ?>
                                         <h4><?php if(isset($product['name'])){ echo $product['name']; } ?></h4>
-                                        <p><?php if(isset($product['description'])){ echo substr(strip_tags($product['description']),10); } ?></p> 
+                                        <p><?php if(isset($string)){ echo $string; } ?></p> 
                                     </div>
 
 
@@ -44,7 +54,7 @@
                                 <td data-label="Price">$<?php if(isset($product['price'])){ echo $product['price']; } ?></td>
                                 <td class="actions">
                                     <?= $this->Html->link(
-                                         'view<span class="sr-only">' . __('View') . '</span>',
+                                         'View<span class="sr-only">' . __('View') . '</span>',
                                          ['controller'=>'products','action' => 'view', $product->slug],
                                          ['escape' => false, 'title' => __('View'), 'class' => 'btn btn-info btn-xs']
                                      ) ?>  
@@ -60,9 +70,10 @@
                             </tr>
                             <?php } } ?>      
                         </tbody>  
-                    </table>
-
-
+                    </table> 
+					
+                    <?php  }else{ echo '<div class="col-sm-12"><div class="blankimg"><img src="'.$this->request->webroot.'/img/no_product_5.png" class="img-responsive"></div></div>'; }  ?>  
+					
                 </div>
             </div>
         </div>

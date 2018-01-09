@@ -48,11 +48,10 @@ class StoresController extends AppController
      */
     public function index()
     {
-    
-      
-        
+
         $this->loadModel('Products');
         $this->loadModel('Categories'); 
+        $this->loadModel('Articles');   
         $products = $this->Products->find('all',['contain'=>['Categories'], 'conditions' => ['Products.status' => 1]]);
         $features = $products->all(); 
         $features = $features->toArray();
@@ -73,7 +72,13 @@ class StoresController extends AppController
        
         $categories = $categories->all(); 
         $categories = $categories->toArray(); 
-   
+        
+        $articles = $this->Articles->find('all',['contain'=>['Products'], 'conditions' => ['Articles.status' => 1],'limit' =>6,'order'=>['Articles.id'=>'DESC']]);
+        $articles = $articles->all();   
+        $articles = $articles->toArray();       
+        $this->set('articles', $articles);
+        $this->set('_serialize', ['articles']);      
+
         $this->set('features', $features);
         $this->set('_serialize', ['features']);
         $this->set('categories', $categories);
