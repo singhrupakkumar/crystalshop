@@ -1,28 +1,32 @@
-<section class="help-sec">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="helpbox">
-					<h1><?php if($term->title){ echo $term->title; }?></h1>
-				
-				</div>
-			</div>
-			
-			
-		</div>
-	</div>
+<div class="faq-banner">
+    <div class="faq-img">
+        <img class="img-responsive" src="<?php echo $this->request->webroot; ?>images/website/policy.png" alt="" border="0">
+        <h3><?php if ($term->title) {
+    echo $term->title;  
+} ?></h3>
+    </div>
+</div>    
 
-</section>
+<!-- 	--------------------------section---------------------- -->
+<div class="terms">
+    <div class="container">
 
+        <div class="row">
 
-<section class="help-sec2">
-<div class="container">
+            <div class="col-sm-12">
+                <div class="cndn-txt">
+                    <h4><?php if ($term->title) {
+    echo $term->title;
+} ?></h4>
+                </div></div>
 
-	<div class="row">
-		<div class="help-content">
-                     <?php if($term->content){ echo $term->content; }?>
-		</div>
-	</div><!-- end one row-->
-        
-   
-</section> 
+            <div class="col-sm-12">
+<?php if ($term->content) {
+    echo $term->content;
+} ?>
+
+            </div>
+        </div>
+
+    </div>
+</div>  

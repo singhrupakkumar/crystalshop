@@ -1,6 +1,6 @@
  <!--------banner section------->
-   <div class="banner_sction">
-           
+   <div class="banner_sction">  
+     <?= $this->Flash->render() ?>         
    <img src="<?php echo $this->request->webroot; ?>images/website/sctn.png">
     <div class="btn_sell">
         <a href="<?php echo $this->request->webroot ?>products/freesaleproduct"><button type="button" class="btn btn-success">Sell Your Products</button> </a>
@@ -8,7 +8,7 @@
 	</div>
 
 <div class="slidr_section">
- <?= $this->Flash->render() ?>  
+
    <div class="slidr_heading">
    <h4>Today's Top Seller</h4>
    	</div>
@@ -102,7 +102,7 @@
 <div class="recent_section">
 <div class="slidr_heading">
    <h4>Recent Articles</h4>
-   <span class="sub_artcle">Lorem ipsum is a dummy text</span>
+   <span class="sub_artcle"></span>
    	</div>
 	<div class="container">
     	<div class="row">  
@@ -129,7 +129,7 @@
                  
               
                 <div class="see_txt"> 
-           <a href="#">Promote Your Products<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+           <a href="<?php echo $this->request->webroot; ?>articles/add">Promote Your Products<i class="fa fa-angle-right" aria-hidden="true"></i></a>
           </div>
         	</div> 
     	</div>

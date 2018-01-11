@@ -56,6 +56,16 @@ class OrdersController extends AppController
         $this->set(compact('orders'));
         $this->set('_serialize', ['orders']); 
     }
+    
+        public function view($id = null)    
+    {
+        $order = $this->Orders->get($id, [
+            'contain' => ['OrderItems'=>['Users','Products'],'Users']            
+        ]);
+ 
+        $this->set('order', $order); 
+        $this->set('_serialize', ['order']);    
+    }
 
 
    

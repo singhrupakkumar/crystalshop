@@ -1,6 +1,6 @@
 <?php
 namespace App\Controller;
-  
+    
 use App\Controller\AppController;
 
 use Cake\Event\Event; 
@@ -73,7 +73,7 @@ class StoresController extends AppController
         $categories = $categories->all(); 
         $categories = $categories->toArray(); 
         
-        $articles = $this->Articles->find('all',['contain'=>['Products'], 'conditions' => ['Articles.status' => 1],'limit' =>6,'order'=>['Articles.id'=>'DESC']]);
+        $articles = $this->Articles->find('all',['contain'=>['Categories'], 'conditions' => ['Articles.status' => 1],'limit' =>6,'order'=>['Articles.id'=>'DESC']]);
         $articles = $articles->all();   
         $articles = $articles->toArray();       
         $this->set('articles', $articles);

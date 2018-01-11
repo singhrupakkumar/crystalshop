@@ -97,7 +97,7 @@ $cakeDescription = '';
   
  
                 <ul>
-                     <?php if(!$loggeduser){ ?>
+                     <?php if(!$loggeduser){ ?>  
                     <li class="sgn_rht active"><a class="" href="<?php echo $this->request->webroot ?>users/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a></li> 
                     <li class="<?php  if($this->request->params['action'] == 'add' ) { echo "active"; }?>"><a class="" href="<?php echo $this->request->webroot ?>users/add"><i class="fa fa-sign-out" aria-hidden="true"></i> Sign Up</a></li>
                     <?php }else{ ?>
@@ -110,8 +110,19 @@ $cakeDescription = '';
                     <li class="<?php  if($this->request->params['action'] == 'changepassword' ) { echo "active"; }?>">
                      <a href="<?php echo $this->request->webroot; ?>users/changepassword"><i class="fa fa-key" aria-hidden="true"></i> Change Password</a>  
                     </li> 
+                    <li class="<?php  if($this->request->params['action'] == 'changepassword' ) { echo "active"; }?>">    
+                     <a href="<?php echo $this->request->webroot; ?>users/paymenthistory"><i class="fa fa-history" aria-hidden="true"></i> Payment History</a>  
+                    </li>
+                    
+                    <li class="<?php  if($this->request->params['action'] == 'changepassword' ) { echo "active"; }?>">        
+                     <a href="<?php echo $this->request->webroot; ?>orders/orderhistory"><i class="fa fa-first-order" aria-hidden="true"></i> Order History</a>  
+                    </li> 
+                    
                       <li class="<?php  if($this->request->params['action'] == 'edit' ) { echo "active"; }?>">
                    <a href="<?php echo $this->request->webroot; ?>users/edit"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a>   
+                    </li> 
+                   <li class="<?php  if($this->request->params['action'] == 'edit' ) { echo "active"; }?>">   
+                   <a href="<?php echo $this->request->webroot; ?>articles/index"><i class="fa fa-pencil" aria-hidden="true"></i> My Article</a>    
                     </li> 
                     <li class="active"><a class="" href="<?php echo $this->request->webroot ?>users/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
                     
@@ -134,26 +145,33 @@ $cakeDescription = '';
         	<div class="blnk-mbl"></div>  
         </div>
         <div class="col-sm-6"> 
-    			  <div class="input-group seacrh-inpt"  id="adv-search">
-                <input type="text" class="form-control top_mgn" placeholder="Search for anything" />
+            <form action="<?php echo $this->request->webroot; ?>products/search" method="get">     
+    	 <div class="input-group seacrh-inpt"  id="adv-search">
+             <input type="text" class="form-control top_mgn" name="search" placeholder="Search for anything" />
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
                         <div class="dropdown dropdown-lg">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    All category<span class="caret"></span></button>
-                            <div class="dropdown-menu dropdown-menu-right" role="menu">
-                            <select>
-                                <option>1</option>
-                                <option>1</option>
-                                <option>1</option>
-                                <option>1</option>
+                    <button type="button" class="btn btn-default" data-toggle="dropdown" aria-expanded="false" style="padding:0;">
+                    <select name="catid" style="    border: 0;
+    line-height: 30px;
+    height: 32px;">
+                              <option value="0">Choose One</option> 
+                                <?php if(isset($categories)){   
+                                    foreach($categories as $cat){
+                                    ?>  
+                                <option value="<?php if(isset($cat['id'])){ echo $cat['id']; } ?>"><?php if(isset($cat['name'])){ echo $cat['name'];} ?></option>
+                                <?php }   
+                                }
+                                ?>
                              </select>
-                            </div>
+                    </button>
+                          
                         </div>
-                        <button type="button" class="btn defult_btn2 serch-icn"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        <button type="submit" class="btn defult_btn2 serch-icn"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                     </div>
                 </div>
             </div>
+          </form>  
 
             <div class="cart">
             <a href="<?php echo $this->request->webroot ?>stores/cart">   
@@ -205,9 +223,9 @@ $cakeDescription = '';
         <div id="navbarCollapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="<?php  if($this->request->params['action'] == 'index' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>stores/index">Home</a></li>
-                <li class="<?php  if($this->request->params['action'] == 'contact' ) { echo "active"; }?>"><a href="#">Contact Us</a></li> 
-                <li class="<?php  if($this->request->params['action'] == 'addsellproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>products/addsellproduct">How To Sell Your Products</a></li>
-               <!-- <li><a href="#">Promote Your Product</a></li>-->
+                <li class="<?php  if($this->request->params['action'] == 'contact' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>staticpages/contact">Contact Us</a></li> 
+                <li class="<?php  if($this->request->params['action'] == 'addsellproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>products/addsellproduct">Selling Your Products</a></li>
+                 <li class="<?php  if($this->request->params['action'] == 'add' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>articles/add">Promote Your Products</a></li>  
             </ul>      
             
         </div>
@@ -228,7 +246,7 @@ $cakeDescription = '';
     	<div class="row">
         <div class="col-sm-4">
         	<div class="logo_pic">
-            	<img src="<?php echo $this->request->webroot; ?>images/website/logo_fnl.png">
+            	<a href="<?php echo $this->request->webroot ?>stores/index"><img src="<?php echo $this->request->webroot; ?>images/website/logo_fnl.png"></a>
             	</div>
         	</div>
             <div class="col-sm-8"> 
@@ -241,7 +259,7 @@ $cakeDescription = '';
                        
                     </div>
                     <ul>
-                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="<?php echo $this->request->webroot ?>staticpages/term">Terms & Conditions</a></li>
                     </ul>
                 	</div>
                </div>
@@ -253,8 +271,8 @@ $cakeDescription = '';
                        
                     </div>
                     <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="<?php echo $this->request->webroot ?>staticpages/faq">FAQ</a></li>  
+                    <li><a href="<?php echo $this->request->webroot ?>staticpages/contact">Contact Us</a></li>       
                     </ul>
                 	</div>
                </div>
@@ -266,9 +284,9 @@ $cakeDescription = '';
                        
                     </div>
                     <ul>
-                    <li><a href="#">Become a seller</a></li>
-                    <li><a href="#">write an article</a></li>
-                    <li><a href="#">promote yourself</a></li>
+                    <li><a href="<?php echo $this->request->webroot ?>users/add">Become a seller</a></li>
+                    <li><a href="<?php echo $this->request->webroot ?>articles/add">Write an article</a></li>
+                    <li><a href="<?php echo $this->request->webroot ?>articles/add">Promote Yourself</a></li>  
                     </ul>
                 	</div>
                </div>
@@ -306,8 +324,8 @@ $cakeDescription = '';
           	</div>
         	</div>
     	</div>
-	</div>
-<script type="text/javascript" src="<?php echo $this->request->webroot;?>js/slick.js"></script>
+	</div> 
+    <script type="text/javascript" src="<?php echo $this->request->webroot;?>js/slick.js"></script>
 
      <script type="text/javascript">
     $(document).on('ready', function() {

@@ -137,6 +137,13 @@ class AppController extends Controller
 		
 		$this->set(compact('firstpage'));
                 $this->set('_serialize', ['firstpage']);
+                
+                $this->loadModel('Categories');
+		$categories = $this->Categories->find('all',['conditions'=>['Categories.status'=>1]]);    
+		$categories = $categories->all()->toArray();
+		
+		$this->set(compact('categories'));
+                $this->set('_serialize', ['categories']);
 		
 		/*************************************/
 

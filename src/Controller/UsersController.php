@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Controller;
+namespace App\Controller;  
 
 use App\Controller\AppController;
 use Cake\Event\Event;
@@ -30,9 +29,11 @@ class UsersController extends AppController {
 
 
 
-        $this->Auth->allow(['add', 'login', 'forgot', 'reset', 'contact', 'newsletter','capchaverify' ,'gplogin', 'signup','fblogin','referearn','invitecode','wallet']);  
+        $this->Auth->allow(['add', 'login', 'forgot', 'reset', 'contact',
+            'newsletter','capchaverify' ,'gplogin', 'signup','fblogin','referearn',
+            'invitecode','paymenthistory','emailverify']);  
 
-        $this->authcontent(); 
+        $this->authcontent();   
     } 
 
  
@@ -86,9 +87,9 @@ class UsersController extends AppController {
 
             $this->request->data['username'] = $this->request->data['email'];
 
-            $post = $this->request->getData();
+            $post = $this->request->getData();   
 
-            $post['status'] = '1';
+            $post['status'] = '0';
             $post['role'] = 'user';  
 
             $user = $this->Users->patchEntity($user, $post);
@@ -97,42 +98,51 @@ class UsersController extends AppController {
 
             if ($new_user) {
 
-                if (isset($user)) {
+                if (isset($user)) { 
+                    $burl = Router::fullbaseUrl();
+                    $hash = md5(time() . rand(111999999999999999999999999, 99999999999999999999999999999999999999999));
+                    $url = Router::url(['controller' => 'users', 'action' => 'emailverify'. '/' . $user->id . '/' . $hash]);
+                    $this->Users->updateAll(array('tokenhash' => $hash), array('id' => $user->id));
+                    $refer_link =  $burl . $url ; 
+                     $email = new Email('default');   
+
+                 $send = $email->from(['rupak@avainfotech.com' => 'Earth Vendors']) 
+                        ->emailFormat('html')
+                        ->template('invite')
+                        ->to($user->email)
+                        ->subject('Welcome to Earth Vendors')
+                        ->viewVars(array('link' => $refer_link)) 
+                        ->viewVars(array('user' => $user))    
+                        ->send();   
+
                         
+                        $this->Flash->success(__('You have been registered successfully check email for account verification.'));   
                     
-
-                        $ms = 'You are registered recently with email ID <strong>' . $post['email'] . '</strong> on Earth Vendors Shop.';
-
-                        $email = new Email('default');
-                        $email->from(['rupak@avainfotech.com' => 'Earth Vendors']) 
-                                ->emailFormat('html')
-                                ->template('default', 'default')
-                                ->to($user->email)
-                                ->subject('Regarding User Registration')
-                                ->send($ms);
-                  
                 }
+                
+                
+                
 
-                if (!filter_var($this->request->data['email'], FILTER_VALIDATE_EMAIL) === false) {
-
-                    $this->Auth->config('authenticate', [
-
-                        'Form' => ['fields' => ['username' => 'email', 'password' => 'password']]
-                    ]);
-                    $this->Auth->constructAuthenticate();
-                    $this->request->data['email'] = $this->request->data['email'];
-
-                }
-
-                $user = $this->Auth->identify();
-
-                if ($user) {
-                    $this->Auth->setUser($user);
-                  
-                  $this->Flash->success(__('You have been registered successfully.'));   
-                    return $this->redirect($this->Auth->redirectUrl());   
-                }
-  
+//                if (!filter_var($this->request->data['email'], FILTER_VALIDATE_EMAIL) === false) {
+//
+//                    $this->Auth->config('authenticate', [
+//
+//                        'Form' => ['fields' => ['username' => 'email', 'password' => 'password']]
+//                    ]);
+//                    $this->Auth->constructAuthenticate();
+//                    $this->request->data['email'] = $this->request->data['email'];
+//
+//                }
+//
+//                $user = $this->Auth->identify();
+//
+//                if ($user) {
+//                    $this->Auth->setUser($user);
+//                  
+//                  $this->Flash->success(__('You have been registered successfully.'));   
+//                    return $this->redirect($this->Auth->redirectUrl());   
+//                }
+//    
             } else {
 
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
@@ -145,8 +155,30 @@ class UsersController extends AppController {
 
         $this->set('_serialize', ['user']);
     }
+    
+        public function emailverify ($user_id = null,$token = null){ 
 
-    public function signup() {
+           if(!empty($user_id)){
+
+             $useractive = $this->Users->find('all',['conditions'=>['Users.id'=>$user_id]]);
+             
+             $useractive = $useractive->first();
+             if($useractive['status']==1){
+               return $this->redirect(['controller' => 'stores', 'action' => 'index']);      
+             }
+             
+             if($useractive['tokenhash'] ==  $token){  
+             $this->Users->updateAll(array('tokenhash' =>' ','status'=>1), array('id' => $user_id));    
+             $this->Flash->success(__('Your account has been activated, go for login.'));  
+              return $this->redirect(['controller' => 'stores', 'action' => 'index']);      
+             }else{ 
+             $this->Flash->error(__('Token has been expired. Please, try again.'));        
+             } 
+               
+           }
+        }
+        
+        public function signup() {
 
         $response = array();
 
@@ -496,6 +528,7 @@ class UsersController extends AppController {
 
 
                     $this->Users->updateAll(array('tokenhash' => $hash), array('id' => $user->id));
+                    
                     $refer_link =  $burl . $url ; 
                      $email = new Email('default');
 
@@ -669,7 +702,31 @@ class UsersController extends AppController {
         $this->set(compact('contact'));
         $this->set('_serialize', ['contact']);
     }
-
+    
+     public function paymenthistory() {
+         $this->loadModel('Orders');
+         $this->loadModel('OrderItems');  
+         $uid = $this->Auth->user('id');
+         if (empty($uid)) {      
+            $this->redirect('/');
+        }
+       $orderitems  = $this->OrderItems->find('all', ['conditions' => ['OrderItems.seller_id' => $uid]]);
+       $orderitems  = $orderitems->all();  
+        $orderid = array();
+       foreach($orderitems as $item){
+           $orderid[] = $item['order_id'];  
+       }
+   
+       $orderid = $orderid?$orderid:0;
+       
+      $order = $this->Orders->find('all',['contain'=>['Users'],'conditions'=>['Orders.id in'=>$orderid]]);         
+      $orderhistory = $order->all(); 
+   
+    
+        $this->set(compact('orderhistory'));
+        $this->set('_serialize', ['orderhistory']);  
+        
+     }    
    /***********Newsletter*****************/
 
     public function newsletter() {

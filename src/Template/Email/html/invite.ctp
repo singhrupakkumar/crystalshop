@@ -1,49 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
-<body>
-    <div class="main-page" style="width:100%; float:left"> 
-        <div class="container" style="width:100%; display: table; margin:0 auto;">
-            <table class="main-table" width="600px;" align="center" cellpadding="0" cellspacing="0" style="border: 1px solid #FE938C;">
-                <thead style="width:100%;">
-                    <tr style="width:100%; background-color:#f2f2f2;">
-                        <th style="height:50px; font-size:19px; text-transform:uppercase; color:#ff6767; padding:0px 10px; font-family: sans-serif;">Invite Code</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="width:100%; text-align:center; padding:0px 10px;">
-                            <h1 style="text-transform:uppercase; font-family: sans-serif;">Logo</h1>   
-                            <p style="color:#9b9b9b; line-height:19px; font-family: sans-serif;">Hi <?php  echo $email; ?>,<br/>Your friend invite to you for <br />Affiliate Shop<br/> Please use this referral code for the Affiliate Shop account registration and get benefits </p>
-                        </td>
-                    </tr>
-					<tr style="width:100%;">
-						<td style="width:100%;">			 			
-							<table style="width:100%;" cellpadding="0" cellspacing="0">
-							
-									<tr>
-								
-										<td style="padding:10px 10px;text-align:center;">
-                                                                                    <a style="text-decoration: none; font-family: sans-serif; font-size: 14px; color: #fff; padding: 10px 15px; background-color: #FE938C; border-radius: 100px; margin:12px 0px;"href="<?php echo $link; ?>">Click Here</a><br/>
-									 <p style="color:#9b9b9b; line-height:19px; font-family: sans-serif;">
-									 Copy this link and paste in url <br/>
-									<span style="color: blue;"><?php echo $link; ?></span>
-									 </p>
-									 
-										</td>
-									</tr>
-								
-							</table>
-						</td>
-					</tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Earth Vendors</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500" rel="stylesheet"> 
+<meta name="viewport" content="width"
+</head>  
+    
+
+
+<body style="padding:15px 0; background: url(http://rupak.crystalbiltech.com/crystal/img/bgplait.png) repeat #dddddd;
+		margin:0px auto;
+		font-family: 'Roboto', sans-serif;
+		font-weight:400;
+		background-size: 160px;">  
+<table width="600" border="0" cellpadding="10" cellspacing="0" style="margin:0px auto; background:#fffefb; text-align:center;">
+  <tr style="background:#fff;">
+    <td style="text-align:center; padding-top:2px; padding-bottom:2px; border-bottom:2px solid #5786a6; padding:0;">
+    	<img src="http://rupak.crystalbiltech.com/crystal/img/emaillogo.png" alt="img" />
+    </td>
+  </tr>  
+  <tr>
+<td>
+<h2 style="font-weight:500;
+                margin-bottom:1px;">Hi <?php if(isset($user['name'])){ echo $user['name']; } ?>,</h2> 
+<h2 style="margin-top:0; font-weight:500;
+		margin-bottom:1px;">Your E-mail Address has been Confirmed.</h2>
+
+
+
+<p style="color:#666;
+		font-size:14px;">To complete your registration, please confirm your E-mail Address by clicking below button: </p>
+
+
+
+    </td> 
+  </tr>    
+  
+  <tr>
+  	<td><a  class="btn defult_btn"  style="display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle; text-decoration:none;background-color: #1a8e79 !important;
+
+	border-color: #1a8e79 !important;
+
+	color: #fff !important;
+
+	border-radius: 4px;
+
+	transition: all 0.5s ease-in;" href="<?php echo $link; ?>">Click Here</a>      
+
+  </td>
+  </tr>  
+  
+  
+  
+
+</table>
+
+
+
+
+
 </body>
 </html>
+
+  

@@ -95,9 +95,10 @@ class ArticlesController extends AppController
             }
             $this->Flash->error(__('The articles could not be saved. Please, try again.'));
         }
-        $products = $this->Articles->Products->find('list');    
-        $this->set(compact('articles','products'));
-        $this->set('_serialize', ['articles','products']);
+        $categories = $this->Articles->Categories->find('list');         
+      
+        $this->set(compact('articles','categories'));    
+        $this->set('_serialize', ['articles','categories']);  
     }
 
     /**
@@ -121,9 +122,9 @@ class ArticlesController extends AppController
             }
             $this->Flash->error(__('The articles could not be saved. Please, try again.'));
         }
-        $products = $this->Articles->Products->find('list');   
-        $this->set(compact('articles','products'));
-        $this->set('_serialize', ['articles','products']);          
+        $categories = $this->Articles->Categories->find('list');     
+        $this->set(compact('articles','categories'));
+        $this->set('_serialize', ['articles','categories']);            
     }
 
     /**

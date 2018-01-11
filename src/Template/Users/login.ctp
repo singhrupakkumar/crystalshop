@@ -35,6 +35,7 @@
     </div>
     <p class="mymessage"></p>
     <div class="g-recaptcha cpta_tnm" id="gcapcha" data-sitekey="6Lef5j0UAAAAADt47q0_rrHhl3BfaFQBtP2O6UBM"></div> 
+     
     <?= $this->Form->button(__('Sign In'),['class'=>'btn btn-success cntr_grn','type'=>'button','id'=>'loginbutton']); ?> 
     <?= $this->Form->end() ?> 
   
@@ -48,7 +49,7 @@
 
 <script>
    jQuery("#loginbutton").click(function(event) {
-            
+           
           jQuery.ajax({
                     url: '<?php echo $this->request->webroot ;?>users/capchaverify', 
                     data: jQuery('#login-form').serialize(),
@@ -56,7 +57,7 @@
                     dataType: "json",
                     success: function (msg) {    
                         if (msg.status === true) 
-                        {
+                        { 
                             jQuery(".mymessage").html(msg.msg); 
                             jQuery("#login-form").submit();  
                         }

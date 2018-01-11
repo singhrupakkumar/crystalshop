@@ -1,84 +1,115 @@
-<section class="content-header">
-    <h1>
-    Static Pages
-    <small></small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Edit Static Pages</li>
-    </ol>
-</section>
+<!--------banner section------->
+<div class="sgn_bner">
+    <img src="<?php echo $this->request->webroot; ?>images/website/sgn_bner.jpg">  
+    <div class="uper_sgnlyer">
+        <h4>Seller Write An Article</h4>  
+    </div>
+</div>
+<!--------sign_up_section------->
+<div class="frm_sgnup">
+    <div class="container">
+        <div class="row">
+            <div class="slrart_heading">
+                <div class="col-sm-12">
+             <div class="sign-flash">
+              <?= $this->Flash->render() ?>   
+              </div>
+              </div>   
+                <h4>Seller Write An Article</h4>
+                <p></p>
+            </div> 
+            <div class="frm_sgncvr">
+                <span class="req_fld">All Fields Are Required</span>
 
-<section class="content">
-	<div class="row">
-        <div class="col-xs-12">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Edit Static Pages</h3>
+               <?= $this->Form->create($articles, ['id' => 'page-form', 'enctype' => 'multipart/form-data']) ?>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="email">Title</label>
+                        <div class="col-sm-10">
+                             <?php echo $this->Form->control('title', ['class' => 'form-control','placeholder'=>'Enter title here','label' => false]); ?> 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="pwd">Category</label>
+                        <div class="col-sm-10">          
+                             <?php 
+                              echo $this->Form->control('cat_id', ['options' => $categories, 'empty' => true,'class' => 'form-control', 'label' => false]);   ?>  
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="pwd">Body</label>
+                        <div class="col-sm-10">          
+                           <?php echo $this->Form->control('description', ['class' => 'form-control','placeholder'=>'Write an articles between 500 and 800 words','label' => false]); ?> 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="pwd">Keywords</label>
+                        <div class="col-sm-10"> 
+                             <?php echo $this->Form->control('keyword', ['class' => 'form-control', 'label' => false,'placeholder'=>'Enter keywords separate by comma(,)', 'contenteditable' => false]); ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="pwd">Outbound Link</label>
+                        <div class="col-sm-10">
+                          <?php echo $this->Form->control('outboundlink', ['class' => 'form-control','placeholder'=>'Web address for your website, video, etc', 'label' => false, 'contenteditable' => false]); ?>  
+                         
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="pwd">Linking Text</label>
+                        <div class="col-sm-10"> 
+                            <?php echo $this->Form->control('linkingtext', ['class' => 'form-control','placeholder'=>'What text do want to
+                                   connect with the above URL', 'label' => false, 'contenteditable' => false]); ?> 
+                        
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="pwd">Author</label>
+                        <div class="col-sm-10">
+                            
+                            <?php 
+                            
+                            if(isset($articles['author'])){ $uname = $articles['author']; }else{  
+                                $uname = $loggeduser['name'];        
+                            }    
+                            echo $this->Form->control('author', ['class' => 'form-control','placeholder'=>'Enter author name','value'=>$uname ,'label' => false, 'contenteditable' => false]); ?>
+                        </div>
+                    </div>
+                    <div class="form-group">        
+                        <div class="col-sm-offset-2 col-sm-10">  
+                            <?= $this->Form->button(__('Submit Article'), ['class' => 'btn btn-success cntr_grn adj_fx']) ?>
+                              
+                        </div>
+                    </div>
+                <?= $this->Form->end() ?>   
+
             </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <?= $this->Form->create($staticpage, ['id' => 'page-form', 'enctype' => 'multipart/form-data']) ?>
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Title</label>
-                  <?php echo $this->Form->control('title', ['class' => 'form-control', 'label' => false]); ?>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Image</label>
-                  <?php echo $this->Form->control('image', ['type' => 'file', 'label' => false, 'id' => 'profilePic']); ?>
-                </div>
-                <?php if($staticpage['image'] != ''){ ?>
-                <img src="<?php echo $this->request->webroot; ?>images/staticpages/<?php echo $staticpage['image']; ?>" style="width: 190px; margin-bottom: 20px;
-" class="previewHolder"/>
-                <?php }else{ ?>
-                <img src="<?php echo $this->request->webroot; ?>images/staticpages/no_image.jpg" style="width: 190px; margin-bottom: 20px;
-" class="previewHolder"/>
-                <?php } ?>
-                
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Content</label>
-                  <?php echo $this->Form->control('content', ['class' => 'form-control', 'label' => false, 'contenteditable' => false]); ?>
-                </div>
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <?= $this->Form->button(__('Submit'), ['class' => 'btn btn-success']) ?>
-              </div>
-            <?= $this->Form->end() ?>
-          </div>
         </div>
     </div>
-</section> 
-
+</div>   
 <script>
 $().ready(function() {
 	$("#page-form").validate({
 		rules: {
 			title: "required",
-			content: "required"
+			image: {
+				required: true,
+				extension: "|jpg|jpeg|png",
+			},
+			description: "required"
 		},
 		messages: {
 			title: "Please enter Title",
-			content: "Please enter Content"	
+			image: {
+				required: "Please Select Image First",
+				extension: "Only jpg, jpeg and png formats are accepted"
+			},
+			description: "Please enter Content"	
 		}
 	});
-});
-
-function readURL(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      $('.previewHolder').attr('src', e.target.result);
-    }
-
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-
-$("#profilePic").change(function() {
-  readURL(this);
 });
 </script>      
 
@@ -93,4 +124,4 @@ toolbar: [
 "undo redo | styleselect | bold italic | link | alignleft aligncenter alignright | charmap code" | "media"
 ]
 });
-</script>
+</script>  

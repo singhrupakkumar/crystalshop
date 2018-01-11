@@ -1,28 +1,30 @@
-<section class="help-sec">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="helpbox">
-					 <h1><?php if($faq->title){ echo $faq->title; }?></h1>
-				
-				</div>
-			</div>
-			
-			
-		</div>
-	</div>
+<div class="faq-banner">
+    <div class="faq-img">
+        <img class="img-responsive" src="<?php echo $this->request->webroot; ?>images/website/faq.png" alt="" border="0">
+        <h3><?php if ($faq->title) {
+    echo $faq->title;
+} ?></h3>
+    </div>
+</div>    
+<!-- ---------------------------section------------------------- -->
+<div class="faq">
+    <div class="container">
 
-</section>  
+        <div class="row">
 
+            <div class="col-sm-12">
+                <div class="fq-txt">
+                    <h4><?php if ($faq->title) {
+    echo $faq->title;
+} ?></h4></div>
+            </div>
 
-<section class="help-sec2">
-<div class="container">
+            <div class="col-sm-12">
+<?php if ($faq->content) {
+    echo $faq->content;
+} ?>
+            </div>
+        </div>
 
-	<div class="row">
-		<div class="help-content">
-                     <?php if($faq->content){ echo $faq->content; }?>
-		</div>
-	</div><!-- end one row-->
-        
-   
-</section> 
+    </div>
+</div>

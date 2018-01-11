@@ -249,7 +249,7 @@ function handleFileSelect(e) {
 } 
    
 function handleForm(e) {
-    e.preventDefault();
+    e.preventDefault();  
     var data = new FormData();
    
     var title = $("#name").val();  

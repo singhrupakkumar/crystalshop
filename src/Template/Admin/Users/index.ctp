@@ -45,6 +45,7 @@
                         ['action' => 'view', $user['id']],
                         ['escape' => false, 'title' => __('View'), 'class' => 'btn btn-info btn-xs']
                     ) ?>
+                      
                     <?= $this->Html->link(
                         '<span class="fa fa-pencil"></span><span class="sr-only">' . __('Edit') . '</span>',
                         ['action' => 'edit', $user['id']],

@@ -45,14 +45,14 @@ class OrderItemsTable extends Table
             'joinType' => 'INNER'
         ]);
 
-		$this->belongsTo('Products', [      
+	$this->belongsTo('Products', [      
             'foreignKey' => 'product_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER'  
         ]); 
 	$this->belongsTo('Users', [       
             'foreignKey' => 'seller_id',
             'joinType' => 'INNER'
-        ]);
+        ]); 
 			
     
  

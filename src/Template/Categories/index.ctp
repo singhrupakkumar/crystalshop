@@ -1,10 +1,3 @@
-<!--------banner section------->
-<div class="banner_ctrgy">
-    <img src="<?php echo $this->request->webroot; ?>images/website/ctgry_bngle.jpg">
-    <div class="bnr_txt">
-        <h3>Categories Page</h3> 
-    </div>
-</div>
 <!-----------category_lst--------------->
 <div class="categry_sction">
     <div class="container">

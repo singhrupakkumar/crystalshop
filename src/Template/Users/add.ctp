@@ -8,10 +8,14 @@
         
   <img src="<?php echo $this->request->webroot; ?>images/website/sgn_bner.jpg">
     	<div class="uper_sgnlyer">
+               <div class="col-sm-12">
+             <div class="sign-flash">
+              <?= $this->Flash->render() ?>   
+              </div>
+              </div>  
         <h4>seller sign up for free</h4>
         	</div>
-  	</div>
-<?= $this->Flash->render() ?>        
+  	</div>     
 <!--------sign_up_section------->
 <div class="frm_sgnup">
 	<div class="container">

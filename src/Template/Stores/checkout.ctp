@@ -48,6 +48,11 @@
 	<div class="container">
     	<div class="row">
         	<div class="chk_hder">
+                    <div class="col-sm-12">
+                        <div class="sign-flash">
+                         <?= $this->Flash->render() ?>   
+                        </div>    
+                   </div>  
             	<h3>Checkout</h3>
             	</div>
  <!-----accordian-start-------->               
@@ -122,7 +127,7 @@
                   <label for="zip">Zip Code</label>
                   <input type="number" class="form-control" id="zip" value="<?php if(isset($zip)){ echo $zip; } ?>" placeholder="Zip Code" name="zip">
                 </div> 
-                <div class="row">
+                 <div class="form-group stret_lese less_mrgn">
                      <p class="mymessage"></p>       
                 </div>
                 <button type="button" id="saveaddress" class="btn btn-success scss_cntn">Save</button> 

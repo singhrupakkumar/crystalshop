@@ -28,6 +28,7 @@
                   <th>Title</th>
                   <th>Description</th>
                   <th>Created</th>
+                  <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,7 +37,6 @@
                 foreach($articles as $article): ?>
                 <tr>
                   <td><?php echo $article['id']; ?></td>
-                  <td><?php echo $article['product']['name']; ?></td>
                   <td><?php echo $article['title']; ?></td>
                   <td><?php echo $article['description']; ?></td>
                   <td><?php echo $article['created']; ?></td>

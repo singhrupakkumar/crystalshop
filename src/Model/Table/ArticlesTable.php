@@ -77,9 +77,8 @@ class ArticlesTable extends Table
 		// $this->hasMany('Products')
             // ->setForeignKey('user_id')  
             // ->setDependent(true);  
-			
-		 $this->belongsTo('Products', [   
-            'foreignKey' => 'product_id',    
+        $this->belongsTo('Categories', [           
+            'foreignKey' => 'cat_id',    
             'joinType' => 'INNER'
         ]); 
 

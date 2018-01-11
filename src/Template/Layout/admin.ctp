@@ -8,7 +8,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     
     <?= $this->Html->css(array('custom/bootstrap.min.css', 'custom/font-awesome.min.css', 'custom/ionicons.min.css', 'custom/AdminLTE.min.css', 'custom/_all-skins.min.css', 'custom/morris.css', 'custom/jquery-jvectormap.css', 'custom/bootstrap-datepicker.min.css', 'custom/daterangepicker.css', 'custom/bootstrap3-wysihtml5.min.css', 'custom/dataTables.bootstrap.min.css')) ?>
-    
+      
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     
@@ -49,7 +49,7 @@
     
         <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <?php echo $this->fetch('content') ?>
+        <?php   echo $this->fetch('content') ?>
     </div>
     
     <?= $this->element('Admin/footer') ?>

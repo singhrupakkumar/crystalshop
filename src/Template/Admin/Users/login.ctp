@@ -1,6 +1,6 @@
 <style type="text/css">
 	.message.error{
-		width: 30%;
+		width: 50%;
 		display: table;
 		float: none;
 		margin: 0 auto;
@@ -12,7 +12,7 @@
 		font-family: arial; 
 	}
 	.users-login{
-		width: 30%;
+		width: 50%;
 		float: none;
 		display: table;
 		margin: 0 auto;
@@ -81,12 +81,17 @@
 }
 
  
-</style>
+</style>  
 <div class="users-login ">
 
      <div class="user_avtar">
          <img src="<?php echo $this->request->webroot;?>img/registration.png">
      </div> 
+      <div class="col-sm-12">
+             <div class="sign-flash">
+              <?= $this->Flash->render() ?>   
+              </div>
+      </div>  
 
     <?= $this->Form->create() ?>
         <?php

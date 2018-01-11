@@ -21,17 +21,38 @@
             <?= $this->Form->create($articles, ['id' => 'page-form', 'enctype' => 'multipart/form-data']) ?>
               <div class="box-body">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Product</label>
-                  <?php echo $this->Form->control('product_id', ['class' => 'form-control', 'label' => false]); ?>
-                </div>
+                  <label for="exampleInputEmail1">Category</label>
+                   <?php 
+                              echo $this->Form->control('cat_id', ['options' => $categories, 'empty' => true,'class' => 'form-control', 'label' => false]);   ?> 
+                </div>  
                 <div class="form-group">
                   <label for="exampleInputEmail1">Title</label>
-                  <?php echo $this->Form->control('title', ['class' => 'form-control', 'label' => false]); ?>
+                  <?php echo $this->Form->control('title', ['class' => 'form-control', 'label' => false]); ?> 
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Description</label>
                   <?php echo $this->Form->control('description', ['class' => 'form-control', 'label' => false, 'contenteditable' => false]); ?>
-                </div>  
+                </div> 
+                 
+                <div class="form-group">
+                  <label for="keyword">Keyword</label>
+                  <?php echo $this->Form->control('keyword', ['class' => 'form-control', 'label' => false, 'contenteditable' => false]); ?>
+                </div> 
+                  
+                <div class="form-group">
+                  <label for="outboundlink">Outbound Link</label>
+                  <?php echo $this->Form->control('outboundlink', ['class' => 'form-control', 'label' => false, 'contenteditable' => false]); ?>
+                </div> 
+                
+                <div class="form-group">
+                  <label for="linkingtext">Linking Text</label>
+                  <?php echo $this->Form->control('linkingtext', ['class' => 'form-control', 'label' => false, 'contenteditable' => false]); ?>
+                </div>    
+                <div class="form-group">
+                  <label for="author">Author</label>  
+                  <?php echo $this->Form->control('author', ['class' => 'form-control', 'label' => false, 'contenteditable' => false]); ?>
+                </div>   
+                  
               </div>
               <!-- /.box-body -->
 

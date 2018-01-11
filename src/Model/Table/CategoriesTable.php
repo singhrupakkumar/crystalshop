@@ -36,7 +36,7 @@ class CategoriesTable extends Table
         parent::initialize($config);
 
         $this->setTable('categories');
-        $this->setDisplayField('name');
+        $this->setDisplayField('name'); 
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

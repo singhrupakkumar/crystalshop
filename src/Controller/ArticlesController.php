@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Routing\Router; 
 /**
  * Staticpages Controller
  *
@@ -13,9 +14,9 @@ use Cake\Event\Event;
 class ArticlesController extends AppController
 {
 	
-	public function beforeFilter(Event $event) {
+	public function beforeFilter(Event $event) { 
         parent::beforeFilter($event);
-        $this->Auth->allow(['view']);
+        $this->Auth->allow(['view','add','index']);
         $this->authcontent();
     } 
 	
@@ -26,8 +27,11 @@ class ArticlesController extends AppController
      */
     public function index()
     {
-        $articles = $this->paginate($this->Articles);
-
+          $this->paginate = [
+            'contain' => ['Categories'],'conditions'=>['Articles.user_id'=>$this->Auth->user('id')]  
+        ];  
+        $articles = $this->paginate($this->Articles)->toArray();  
+ 
         $this->set(compact('articles'));
         $this->set('_serialize', ['articles']);
     }
@@ -70,16 +74,24 @@ class ArticlesController extends AppController
     {
         $articles = $this->Articles->newEntity();
         if ($this->request->is('post')) {
-            $articles = $this->Articles->patchEntity($articles, $this->request->getData());
-            if ($this->Articles->save($articles)) {
-                $this->Flash->success(__('The articles has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+            $post = $this->request->data;  
+            if(!empty($this->Auth->user('id'))){
+             $post['user_id'] =  $this->Auth->user('id');
+            }else{  
+                  $post['user_id'] = 0;  
             }
-            $this->Flash->error(__('The articles could not be saved. Please, try again.'));
+            $articles = $this->Articles->patchEntity($articles, $post);
+            if ($this->Articles->save($articles)) {  
+                $this->Flash->success(__('The articles has been saved.'));
+            }else{
+              $this->Flash->error(__('The articles could not be saved. Please, try again.'));    
+            }
+          
         }
-        $this->set(compact('articles'));
-        $this->set('_serialize', ['articles']);
+        
+         $categories = $this->Articles->Categories->find('list');      
+        $this->set(compact('articles','categories'));
+        $this->set('_serialize', ['articles','categories']);
     }
 
     /**
@@ -94,6 +106,8 @@ class ArticlesController extends AppController
         $articles = $this->Articles->get($id, [
             'contain' => []
         ]);
+        
+        if($articles['user_id'] == $this->Auth->user('id')){
         if ($this->request->is(['patch', 'post', 'put'])) {
             $articles = $this->Articles->patchEntity($articles, $this->request->getData());
             if ($this->Articles->save($articles)) {
@@ -103,8 +117,13 @@ class ArticlesController extends AppController
             }
             $this->Flash->error(__('The articles could not be saved. Please, try again.'));
         }
-        $this->set(compact('articles'));
-        $this->set('_serialize', ['articles']);    
+        }else{ 
+          $this->Flash->error(__('You have a no authorize to access.'));
+          return $this->redirect(['action' => 'index']);   
+        }
+       $categories = $this->Articles->Categories->find('list');    
+        $this->set(compact('articles','categories'));
+        $this->set('_serialize', ['articles','categories']);     
     }
 
     /**

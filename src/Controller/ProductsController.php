@@ -207,17 +207,17 @@ class ProductsController extends AppController
             
             
              $products = $products->all(); 
-             $products = $products->toArray();
+             $products = $products->toArray();  
 
             if(count($products) == 1) {
-                return $this->redirect(array('controller' => 'products', 'action' => 'view/'.$products[0]['id']));
+                return $this->redirect(array('controller' => 'products', 'action' => 'view/'.$products[0]['slug']));
             }
             
          
             $terms1 = array_diff($terms1, array(''));
             $this->set(compact('products', 'terms1'));
         }
-        $this->set(compact('search'));
+        $this->set(compact('search'));  
 
         if ($this->request->is('ajax')) {
             $this->layout = false;
@@ -389,8 +389,12 @@ class ProductsController extends AppController
         }else {
            return $this->redirect(['controller' => 'stores', 'action' => 'index']);    
         }
-        $this->set(compact('userproduct'));      
-        $this->set('_serialize', ['userproduct']);  
+        
+       $bonus = $this->Products->find('all',['contain' => ['Categories','Users'],'conditions'=>['Products.user_id'=>$this->Auth->user('id'),'Products.free_sale'=>1]]) ;
+       $bonus = $bonus->first();   
+
+        $this->set(compact('userproduct','bonus'));      
+        $this->set('_serialize', ['userproduct','bonus']);    
     } 
     
     
@@ -533,6 +537,46 @@ class ProductsController extends AppController
     echo json_encode($response);
     exit;
         
+    }
+    
+    public function savereview(){
+            $this->loadModel('Reviews');
+           if ($this->request->is('post')) {
+//            $product_id = $this->request->data['product_id'];
+//            $name  = $this->request->data['name'];
+//            $email = $this->request->data['email'];
+//            $punctuality =  $this->request->data['punctuality'];
+//            $text =  $this->request->data['text'];
+//            $uid = $this->request->data['Review']['uid'];
+//            
+//            $this->request->data['Review']['product_id'] = $product_id;
+//            $this->request->data['Review']['name'] = $name;
+//            $this->request->data['Review']['email'] = $email;
+//           // $this->request->data['Review']['food_quality'] = $food_quality;
+//            //$this->request->data['Review']['price'] = $price;
+//            $this->request->data['Review']['punctuality'] = $punctuality;
+//           // $this->request->data['Review']['courtesy'] = $courtesy;
+//            $this->request->data['Review']['text'] = $text;
+//            $this->request->data['Review']['uid'] = $uid;
+//	if(isset($_POST['prod_avg_rate'])){
+//		$reve	= $_POST['prod_avg_rate'];
+//		$av_reiew = $reve?$reve:1;
+//   $this->Product->updateAll(array('Product.avg_rating' =>$av_reiew),
+//    array('Product.id' => $product_id));
+//	}
+//            $cnt = $this->Review->find('count', array('conditions' => array('AND' => array('Review.uid' => $uid, 'Review.product_id' => $product_id))));
+//            if ($cnt == 0) {
+//                $this->Review->save($this->request->data);
+//               $this->Session->setFlash('Thanks for review', 'flash_success');
+//               return $this->redirect('http://' .$_POST['server']);
+//            } else {
+//                
+//               $this->Session->setFlash('You have been already submitted the review', 'flash_success');
+//               return $this->redirect('http://' .$_POST['server']);
+//            }
+//         
+      }  
+  
     }
      
      

@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Mailer\Email;
 use Cake\Event\Event;
 /**
  * Staticpages Controller
@@ -15,7 +16,7 @@ class StaticpagesController extends AppController
 	
 	public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        $this->Auth->allow(['view']);
+        $this->Auth->allow(['view','faq','contact']);    
         $this->authcontent();
     }
 	
@@ -137,8 +138,46 @@ class StaticpagesController extends AppController
        $this->set('_serialize', ['aboutus']);   
     }
     
-     public function contact(){
+    public function contact(){
         
+           
+     $this->loadModel('Contacts');
+     $contact = $this->Contacts->newEntity();
+    if($this->request->is('post')){    
+       if(!empty($this->request->data['email'])){        
+        
+          $contact = $this->Contacts->patchEntity($contact, $this->request->getData());
+            if ($this->Contacts->save($contact)) {
+
+                $ms = '<table width="200" border="1"><tr><th scope="row">Name</th><td>' . $this->request->data['name'] . '</td></tr><tr><th scope="row">Email</th><td>' . $this->request->data['email'] . '</td></tr><tr><th scope="row">Subject</th><td>' . $this->request->data['subject'] . '</td></tr><th scope="row">Message</th><td>' . $this->request->data['message'] . '</td></tr></table>';
+
+
+                $email = new Email('default');
+
+                $email->from(['rupak@avainfotech.com' => 'Earth Vendors'])
+                        ->emailFormat('html')
+                        ->template('default', 'default')
+                        ->to('rupak@avainfotech.com')
+                        ->subject('Contact Us Enquiry')
+                        ->send($ms);
+
+
+                $this->Flash->success(__('Your Enquiry has been sent successfully.'));
+            } else {  
+                $this->Flash->error(__('The contact could not be saved. Please, try again.'));
+            } 
+           
+       }else{
+        $this->Flash->error(__('Email is requred'));    
+       } 
+  
+    }   
+       $contact = $this->Staticpages->find('all',['conditions'=>['Staticpages.position'=>'contact','Staticpages.status'=>1]]);
+       $contact = $contact->first(); 
+       
+       $this->set(compact('contact'));   
+       $this->set('_serialize', ['contact']);          
+    
     }
     public function term(){
        $term = $this->Staticpages->find('all',['conditions'=>['Staticpages.position'=>'terms-and-conditions','Staticpages.status'=>1]]);
