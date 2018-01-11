@@ -20,75 +20,84 @@
         <div class="col-xs-12">
         
         
-        <div class="box">
+        <div class="box ">
   <!-- /.box-header -->
   <?php if(!empty($bonus)){ ?>
+  
+
+  
+  
+    <div class="col-sm-12">
+	<div class="row">
   <div class="box-body no-padding">
-    <table class="table table-condensed">
+    <table class="table table-condensed freesaleproducttbl">
+	<thead>
+		<tr>
+			<th><?= __('Id') ?></th>
+			<th><?= __('Name') ?></th>
+			<th><?= __('Price') ?></th>
+			<th><?= __('Quantity') ?></th>
+			<th><?= __('Category') ?></th>
+			<th><?= __('Seller Name') ?></th>
+			<th><?= __('Description') ?></th>
+			<th><?= __('Image') ?></th>
+		</tr>
+		
+	</thead>
       <tbody>
         <tr>
+
           
-        </tr>
-        <tr>
-            <th><?= __('Id') ?></th>
             <td><?= $this->Number->format($bonus->id) ?></td>
-        </tr>
-        <?php if($bonus->name){ ?>
-        <tr>
-          <th><?= __('Name') ?></th>
+
           <td><?= h($bonus->name) ?></td>
-        </tr>
-        <?php } ?>
-        <?php if($bonus->price){ ?>
-        <tr>
-          <th><?= __('Price') ?></th>
+   
+     
+         
           <td><?= h($bonus->price) ?></td>
-        </tr>
-        <?php } ?> 
-        <?php if($bonus->quantity){ ?>
-        <tr>
-          <th><?= __('Quantity') ?></th>
+  
+     
+          
           <td><?= h($bonus->quantity) ?></td>
-        </tr>
-         <?php } ?>
-        <?php if($bonus->category->name){ ?>
-        <tr>
-          <th><?= __('Category') ?></th>
+       
+     
+         
           <td><?= h($bonus->category->name) ?></td>
-        </tr>
-         <?php } ?>
-        <?php if($bonus->user->name){ ?>
-        <tr>
-          <th><?= __('Seller Name') ?></th>
+ 
+    
+       
+         
           <td><?= h($bonus->user->name) ?></td>
-        </tr>
-        <?php } ?>
+
+   
         
         
-         <?php if($bonus->description){ ?>
-        <tr>
-          <th><?= __('Description') ?></th>
+    
+  
+        
           <td><?= h(strip_tags($bonus->description)) ?></td>
-        </tr>
-        <?php } ?>
+
+ 
         
-        <?php if($bonus->image){ ?>
-        <tr>
-          <th><?= __('Image') ?></th>
+       
+
+        
           <td>
                <?php if($bonus['image']){ ?>  
-                    <img src="<?php echo $this->request->webroot."images/products/".$bonus['image']; ?>" width="150">
+                    <img src="<?php echo $this->request->webroot."images/products/".$bonus['image']; ?>" width="50">
                      <?php }else{ ?>
-                    <img src="<?php echo $this->request->webroot."images/products/no-image.jpg"; ?>" width="150">
+                    <img src="<?php echo $this->request->webroot."images/products/no-image.jpg"; ?>" width="50">
                      <?php } ?> 
           </td>
         </tr>
-         <?php } ?>
+       
 
      
       </tbody>
     </table>
   </div>
+  </div>
+   </div>
   <?php }else{ 
       
       echo '<div class="col-sm-12"><div class="blankimg"><img src="'.$this->request->webroot.'/img/no_product_5.png" class="img-responsive"></div></div>';
@@ -108,7 +117,7 @@
                 <div class="ordr_bons">
                                         <?php        if(!empty($userproduct)){ ?>
                     <div class="bons_heading">
-                        <h3>Bonus Form</h3>
+                        <h3>Choose any one of your product as BONUS</h3>
                     </div>
 
                     <div class="dumy_form">
@@ -119,7 +128,7 @@
                     
                                         <select data-placeholder="Choose a Country..." class="chosen-select" tabindex="2" name="saleproduct" required="required">
                                                 
-                                            <option value=" ">Choose Product</option>
+                                            <option value="">Choose Product</option>  
                                             <?php  
                                             foreach($userproduct as $prod){?>  
                                             <option value="<?php echo $prod['id'];?>"><?php echo $prod['name'];?></option>
@@ -144,16 +153,16 @@
 
 </div>    
 
-<script>
+<script type="text/javascript">
     var config = {
-  '.chosen-select'           : {},
-  '.chosen-select-deselect'  : { allow_single_deselect: true },
-  '.chosen-select-no-single' : { disable_search_threshold: 10 },
-  '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
-  '.chosen-select-rtl'       : { rtl: true },
-  '.chosen-select-width'     : { width: '95%' }
-}
-for (var selector in config) {
-  $(selector).chosen(config[selector]);
-}
-    </script>
+      '.chosen-select'           : {},
+      '.chosen-select-deselect'  : { allow_single_deselect: true },
+      '.chosen-select-no-single' : { disable_search_threshold: 10 },
+      '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+      '.chosen-select-rtl'       : { rtl: true },
+      '.chosen-select-width'     : { width: '95%' }
+    }
+    for (var selector in config) {
+      $(selector).chosen(config[selector]);
+    }
+</script> 

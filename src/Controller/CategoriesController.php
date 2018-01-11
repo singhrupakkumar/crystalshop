@@ -41,9 +41,9 @@ class CategoriesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['ParentCategories'],
-            'limit' => 5
-        ];
+            'contain' => ['Products'],
+            'limit' => 6
+        ]; 
         $categories = $this->paginate($this->Categories);
 
         $this->set(compact('categories'));

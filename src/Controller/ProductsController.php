@@ -368,6 +368,7 @@ class ProductsController extends AppController
       public function freesaleproduct(){  
       if($this->Auth->user('id')){ 
           if($this->request->is('post')){
+              $saleproduct = $this->request->data['saleproduct'];  
               if(!empty($saleproduct)){
              $this->Products->updateAll(array('free_sale' =>0), array('user_id' =>$this->Auth->user('id')));    
              $saleproduct = $this->request->data['saleproduct'];  
@@ -394,7 +395,7 @@ class ProductsController extends AppController
        $bonus = $bonus->first();   
 
         $this->set(compact('userproduct','bonus'));      
-        $this->set('_serialize', ['userproduct','bonus']);    
+        $this->set('_serialize', ['userproduct','bonus']);     
     } 
     
     

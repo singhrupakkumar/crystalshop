@@ -77,9 +77,12 @@
                                         <li><i class="fa fa-star" aria-hidden="true"></i></li>
                                         <li>(629)</li>
                                     </ul>
-                                    <div class="btn_sell1">
-                                        <button type="button" class="btn btn-success scss_grn">Buy it Now</button>
-                                    </div>
+                                    <div class="btn_sell1">     
+                                    <?php echo $this->Form->create(NULL, array('url' => array('controller' => 'products', 'action' => 'addtocart'))); ?> 
+                                    <?php echo $this->Form->control('id', array('type' => 'hidden', 'value' => $item['id'])); ?>       
+                                    <?php echo $this->Form->button('Buy it Now', array('class' => 'btn btn-success scss_grn','id' => $item['id']));?>
+                                    <?php echo $this->Form->end(); ?> 
+                                     </div>
                                 </div>
 
                             </div>
