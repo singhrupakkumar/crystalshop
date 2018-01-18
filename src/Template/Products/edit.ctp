@@ -1,4 +1,104 @@
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css'>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js'></script>
+<script>
+/********gallery popup*******************/
+$( document ).ready(function() {
+$('.without-caption').magnificPopup({
+		type: 'image',
+		closeOnContentClick: true,
+		closeBtnInside: false,
+		mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
+		image: {
+			verticalFit: true
+		},
+		zoom: {
+			enabled: true,
+			duration: 300 // don't foget to change the duration also in CSS
+		}
+	});
 
+$('.with-caption').magnificPopup({
+		type: 'image',
+		closeOnContentClick: true,
+		closeBtnInside: false,
+		mainClass: 'mfp-with-zoom mfp-img-mobile',
+		image: {
+			verticalFit: true,
+			titleSrc: function(item) {
+				return item.el.attr('title') + ' &middot; <a class="image-source-link" href="'+item.el.attr('data-source')+'" target="_blank">image source</a>';
+			}
+		},
+		zoom: {
+			enabled: true
+		}
+	});
+}); 
+</script>
+
+<style>
+      
+.image-link {
+  cursor: -webkit-zoom-in;
+  cursor: -moz-zoom-in;
+  cursor: zoom-in;
+}
+
+
+/* This block of CSS adds opacity transition to background */
+.mfp-with-zoom .mfp-container,
+.mfp-with-zoom.mfp-bg {
+	opacity: 0;
+	-webkit-backface-visibility: hidden;
+	-webkit-transition: all 0.3s ease-out; 
+	-moz-transition: all 0.3s ease-out; 
+	-o-transition: all 0.3s ease-out; 
+	transition: all 0.3s ease-out;
+}
+
+.mfp-with-zoom.mfp-ready .mfp-container {
+		opacity: 1;
+}
+.mfp-with-zoom.mfp-ready.mfp-bg {
+		opacity: 0.8;
+}
+
+.mfp-with-zoom.mfp-removing .mfp-container, 
+.mfp-with-zoom.mfp-removing.mfp-bg {
+	opacity: 0;
+}
+
+
+
+/* padding-bottom and top for image */
+.mfp-no-margins img.mfp-img {
+	padding: 0;
+}
+/* position of shadow behind the image */
+.mfp-no-margins .mfp-figure:after {
+	top: 0;
+	bottom: 0;
+}
+/* padding for main container */
+.mfp-no-margins .mfp-container {
+	padding: 0;
+}
+
+
+
+/* aligns caption to center */
+.mfp-title {
+  text-align: center;
+  padding: 6px 0;
+}
+.image-source-link {
+  color: #DDD;
+}
+
+
+body { -webkit-backface-visibility: hidden; padding: 10px 30px; 
+  font-family: "Calibri", "Trebuchet MS", "Helvetica", sans-serif;
+}
+</style>
 <div class="add_pro">
     <?= $this->Flash->render() ?> 
     <div class="add_hding">
@@ -62,10 +162,14 @@
                       
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="pwd">Gallery:</label> 
-                        <div class="col-sm-10">          
+                        <div class="col-sm-10"> 
+						
+					
+						         
                             <span class="up_add">Add upto 6 more photos</span>
 
                             <div class="upld_phts" id="selectedFiles">  
+							 <button class="btn defult_btn">Upload a file</button>
                                  <input type="file" name="images[]" id="files" class="form-control" multiple>
                             
                             </div>
@@ -80,7 +184,7 @@
                                   ?>  
                                <div class="col-sm-2">
                                 <div class="lrge_pic">  
-                                 <img src="<?php echo $this->request->webroot ?>images/gallery/<?php echo $img; ?>"><span data-file='<?php echo $img; ?>' data-id="<?php echo $gallery['id'] ?>" class='remove_img' title='Click to remove' style='cursor:pointer;'><i class="fa fa-trash-o" aria-hidden="true"></i>
+                                 <a href="<?php echo $this->request->webroot ?>images/gallery/<?php echo $img; ?>" class="without-caption image-link"><img src="<?php echo $this->request->webroot ?>images/gallery/<?php echo $img; ?>"></a><span data-file='<?php echo $img; ?>' data-id="<?php echo $gallery['id'] ?>" class='remove_img' title='Click to remove' style='cursor:pointer;'><i class="fa fa-trash-o" aria-hidden="true"></i>
 </span><br clear=\"left\"/>
                                 </div> 
                                
@@ -133,57 +237,7 @@
                            
                         </div>  
                     </div>      
-                    <!--div class="form-group">
-                        <label class="control-label col-sm-2" for="pwd">Return Option:</label>
-                        <div class="col-sm-10">          
-                            <label class="radio-inline">
-                                <input type="radio" name="optradio">Return Accepted
-                            </label>
-                            <div class="cndtn">
-                                <h3>After receiving the item, your buyer should contact within.</h3>
-                                <select class="con_wth">
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="opel">Opel</option>
-                                    <option value="audi">Audi</option>
-                                </select>
-                            </div>
-
-                            <div class="rfnd">
-                                <h3>Refund will be given as.</h3>
-                                <select class="rfnd_slct">
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="opel">Opel</option>
-                                    <option value="audi">Audi</option>
-                                </select>
-                            </div>
-
-                            <div class="rfnd">
-                                <h3>Refund shipping will be paid by.</h3>
-                                <select class="rfnd_slct">
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="opel">Opel</option>
-                                    <option value="audi">Audi</option>
-                                </select>
-                            </div>
-
-                            <div class="rfnd">
-                                <h3>Additional return policy detail.</h3>
-                                <select class="rfnd_slct">
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="opel">Opel</option>
-                                    <option value="audi">Audi</option>
-                                </select>
-                            </div>
-
-
-
-
-                        </div>
-                    </div-->    
+                     
 
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="pwd">Shipping Details:</label>
@@ -400,6 +454,7 @@ $(".remove_img").click(function(){
    });
     
 });
+
 </script>    
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/tinymce/4.1.6/tinymce.min.js"></script>
@@ -413,4 +468,6 @@ toolbar: [
 "undo redo | styleselect | bold italic | link | alignleft aligncenter alignright | charmap code" | "media"
 ]
 });
+
+
 </script>   

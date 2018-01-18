@@ -16,7 +16,7 @@ class StaticpagesController extends AppController
 	
 	public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        $this->Auth->allow(['view','faq','contact']);    
+        $this->Auth->allow(['view','faq','contact','term']);    
         $this->authcontent();
     }
 	
@@ -162,7 +162,7 @@ class StaticpagesController extends AppController
                         ->send($ms);
 
 
-                $this->Flash->success(__('Your Enquiry has been sent successfully.'));
+                $this->Flash->success(__('Thank you for contacting us! We will get back to you shortly.'));      
             } else {  
                 $this->Flash->error(__('The contact could not be saved. Please, try again.'));
             } 

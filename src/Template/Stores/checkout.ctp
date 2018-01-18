@@ -1,44 +1,44 @@
 <?php
- if(isset($user->name)){
-     $name = $user->name;
- }elseif(isset($shippingaddress['name'])){
-     $name = $shippingaddress['name'];         
+ if(isset($shippingaddress['name'])){
+     $name = $shippingaddress['name'];
+ }elseif(isset($user->name)){
+     $name = $user->name;          
  }
  
-  if(isset($user->email)){
-     $email = $user->email;
- }elseif(isset($shippingaddress['email'])){
-     $email = $shippingaddress['email'];         
+  if(isset($shippingaddress['email'])){
+     $email = $shippingaddress['email'];
+ }elseif(isset($user->email)){    
+     $email = $user->email;         
  }
  
-  if(isset($user->phone)){
-     $phone = $user->phone;
- }elseif(isset($shippingaddress['phone'])){
-     $phone = $shippingaddress['phone'];         
+  if(isset($shippingaddress['phone'])){
+     $phone = $shippingaddress['phone'];
+ }elseif(isset($user->phone)){
+     $phone = $user->phone;         
  }
 
-  if(isset($user->address)){
-     $address = $user->address;
- }elseif(isset($shippingaddress['address'])){
-     $address = $shippingaddress['address'];         
+  if(isset($shippingaddress['address'])){
+     $address = $shippingaddress['address'];
+ }elseif(isset($user->address)){
+     $address = $user->address;           
  }
  
-   if(isset($user->city)){
-     $city = $user->city; 
- }elseif(isset($shippingaddress['city'])){
-     $city = $shippingaddress['city'];         
+   if(isset($shippingaddress['city'])){
+     $city = $shippingaddress['city']; 
+ }elseif(isset($user->city)){
+     $city = $user->city;             
  }
  
-    if(isset($user->state)){
-     $state = $user->state; 
- }elseif(isset($shippingaddress['state'])){
-     $state = $shippingaddress['state'];         
+    if(isset($shippingaddress['state'])){
+     $state = $shippingaddress['state']; 
+ }elseif(isset($user->state)){
+     $state = $user->state;           
  }
  
-    if(isset($user->zip)){
-     $zip = $user->zip; 
- }elseif(isset($shippingaddress['zip'])){
-     $zip = $shippingaddress['zip'];         
+    if(isset($shippingaddress['zip'])){
+     $zip = $shippingaddress['zip']; 
+ }elseif(isset($user->zip)){
+     $zip = $user->zip;                
  }
 ?>
 <style>
@@ -164,6 +164,7 @@
                     ?>
                 <div class="ordr_rvew">
             	<div class="lft_itm">
+                 <div class="col-sm-2">
                 <div class="cart_chknt">
                    <?php if($item['product']['image']){ ?>  
                     <img src="<?php echo $item['product']['image']; ?>" class="ful_lnght">
@@ -172,12 +173,15 @@
                      <?php } ?>  
                 
                   </div> 
+                   </div>
+                  <div class="col-sm-9">
                   <h4 class="spn_hdng"><?php if(isset($item['product']['name'])){ echo $item['product']['name']; } ?></h4>
                   <p class="para_chktxt"><?php if(isset($item['product']['description'])){ echo $item['product']['description']; } ?></p>
                 	</div>
                    <div class="rght_dte">
                    	<h3>$<?php if(isset($item['product']['description'])){ echo $item['product']['price']; } ?></h3> 
                    	</div>
+                    </div>
             	</div>
                 <?php } } ?>
 
@@ -295,7 +299,8 @@ $().ready(function() {
                     success: function (msg) {  
                         if (msg.status === true) 
                         {
-                            jQuery(".mymessage").html('<div class="alert alert-success">'+msg.msg+'</div>'); 
+                           jQuery(".mymessage").html('<div class="alert alert-success">'+msg.msg+'</div>'); 
+                           setTimeout(function(){  window.location.reload(); }, 1000);   
                         }
                         else
                         { 

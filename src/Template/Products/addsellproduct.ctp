@@ -33,7 +33,19 @@
                             </select>
                         </div>
                     </div> 
-                    
+                      <div class="form-group">
+                        <label class="control-label col-sm-2" for="pwd">Image:</label> 
+                        <div class="col-sm-10">            
+                            <div class="upld_phts" id="selectedFiles">  
+							 <button class="btn defult_btn">Upload a file</button>
+                                 <input type="file" name="image" id="image" class="form-control">
+                            
+                            </div>
+                            <div class="singleimage"> 
+     
+                            </div> 
+                        </div>
+                    </div>
                       
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="pwd">Gallery:</label> 
@@ -215,15 +227,44 @@
 
 var selDiv = "";
 var storedFiles = [];
+var storedFilessingle = [];
  
 $(document).ready(function() {
     $("#files").on("change", handleFileSelect);
+    $("#image").on("change", handleFileSelectsingle);
 
-    selDiv = $(".st_upld");  
+    selDiv = $(".st_upld");
+    selDivsingl = $(".singleimage");  
     $("#addproductform").on("submit", handleForm); 
 
     $("body").on("click", ".selFile", removeFile);
 });
+
+function handleFileSelectsingle(e){
+    
+    
+        var files = e.target.files;
+
+    var filesArr = Array.prototype.slice.call(files);
+
+    filesArr.forEach(function(f) {          
+
+        if(!f.type.match("image.*")) {
+            return;
+        }
+        storedFilessingle.push(f);
+
+        var reader = new FileReader();
+        reader.onload = function (e) {    
+             var html = "<div class='lrge_pic'><img src=\"" + e.target.result + "\"><span data-file='"+f.name+"' class='selFile' title='Click to remove'  style='cursor:pointer;'><i class='fa fa-trash-o' aria-hidden='true'></i></span><br clear=\"left\"/></div>";
+            selDivsingl.append(html);    
+
+        }
+        reader.readAsDataURL(f); 
+    });
+
+    
+}
 
 function handleFileSelect(e) {
     var files = e.target.files;
@@ -278,6 +319,12 @@ function handleForm(e) {
     data.append('delivery_details', $("#delivery-details").val());    
     for(var i=0, len=storedFiles.length; i<len; i++) {
         data.append('images[]', storedFiles[i]); 
+    }
+    
+     if(storedFilessingle[0]== null){ 
+    data.append('image', 1);     
+    }else{
+    data.append('image', storedFilessingle[0]);   
     }
          
     var xhr = new XMLHttpRequest();

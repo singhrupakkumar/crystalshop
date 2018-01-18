@@ -42,7 +42,7 @@ class CategoriesController extends AppController
     {
         $this->paginate = [
             'contain' => ['Products'],
-            'limit' => 6
+            'limit' => 12
         ]; 
         $categories = $this->paginate($this->Categories);
 

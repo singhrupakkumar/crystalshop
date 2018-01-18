@@ -35,20 +35,17 @@ class ReviewsController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index($id = null)
     {
-        $this->loadModel('Users');
+        $review = $this->Reviews->find('all', [
+                'contain'	=>	['Products'],
+                'conditions' => ['Reviews.product_id' => $id],
+                'order'		=>  ['Reviews.id' => 'desc']
+        ]);
 		
-		$trainers = $this->Users->find('all', [
-			'contain'	=>	['Reviews'],
-			'conditions' => ['Users.role' => 'trainer', 'Users.status' => 1],
-			'order'		=>  ['Users.id' => 'desc']
-		]);
-		
-		$trainers = $trainers->all()->toArray();
-
-        $this->set(compact('trainers'));
-        $this->set('_serialize', ['trainers']);
+	$review = $review->all()->toArray();  
+        $this->set(compact('review'));
+        $this->set('_serialize', ['review']);
     }
 
     /**

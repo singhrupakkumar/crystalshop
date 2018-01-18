@@ -15,10 +15,10 @@
               ?>  
         	<div class="col-sm-12">
             	<div class="detail_recnt">
-                        <h4><?php if(isset($article['title'])){ echo $article['title']; } ?> 
+                        <h4><?php if(isset($article['title'])){ echo $article['title']; } if($userdata['id'] == $article['user_id']){ ?> 
                             <a href="<?php echo $this->request->webroot; ?>articles/edit/<?php  echo $article['id'];?>"><i class="fa fa-pencil" aria-hidden="true"></i> </a>
-                            <?= $this->Form->postLink('<span class="fa fa-trash-o"></span><span class="sr-only">' . __('Delete') . '</span>', ['action' => 'delete', $article->id], ['escape' => false,'confirm' => __('Are you sure you want to delete # {0}?', $article->id),'class' => '']) ?>
-                            
+                        <?= $this->Form->postLink('<span class="fa fa-trash-o"></span><span class="sr-only">' . __('Delete') . '</span>', ['action' => 'delete', $article->id], ['escape' => false,'confirm' => __('Are you sure you want to delete # {0}?', $article->id),'class' => ''])  ?>
+                        <?php } ?>     
                         </h4>  
                         
                                  <?php  
@@ -39,4 +39,4 @@
             
         	</div>
     	</div>
-	</div>  
+	</div>    

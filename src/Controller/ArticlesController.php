@@ -16,7 +16,7 @@ class ArticlesController extends AppController
 	
 	public function beforeFilter(Event $event) { 
         parent::beforeFilter($event);
-        $this->Auth->allow(['view','add','index']);
+        $this->Auth->allow(['view','add','index','all']);
         $this->authcontent();
     } 
 	
@@ -30,6 +30,17 @@ class ArticlesController extends AppController
           $this->paginate = [
             'contain' => ['Categories'],'conditions'=>['Articles.user_id'=>$this->Auth->user('id')]  
         ];  
+        $articles = $this->paginate($this->Articles)->toArray();  
+ 
+        $this->set(compact('articles'));
+        $this->set('_serialize', ['articles']);
+    }
+    
+        public function all()
+    {
+          $this->paginate = [
+            'contain' => ['Categories'],'conditions'=>['Articles.status'=>1]  
+        ];    
         $articles = $this->paginate($this->Articles)->toArray();  
  
         $this->set(compact('articles'));
@@ -55,14 +66,14 @@ class ArticlesController extends AppController
 	
 	public function view($id = null){
 	
-		$page = $this->Articles->find('all', [
+		$articles = $this->Articles->find('all', [
 			'conditions' => ['Articles.id' => $id]
 		]);
+		      
+		$articles = $articles->first();
 		
-		$page = $page->first();
-		
-		$this->set('articles', $page);
-        $this->set('_serialize', ['page']);
+		$this->set('articles', $articles);
+        $this->set('_serialize', ['articles']);
 	}
 
     /**
@@ -72,6 +83,7 @@ class ArticlesController extends AppController
      */
     public function add()
     {
+       if(!empty($this->Auth->user('id'))) { 
         $articles = $this->Articles->newEntity();
         if ($this->request->is('post')) {
             $post = $this->request->data;  
@@ -89,9 +101,13 @@ class ArticlesController extends AppController
           
         }
         
+     }else{  
+          $this->Flash->error(__('Please login to the website in order to have access to the request.'));
+          return $this->redirect(['controller' => 'stores', 'action' => 'index']);      
+      }
          $categories = $this->Articles->Categories->find('list');      
         $this->set(compact('articles','categories'));
-        $this->set('_serialize', ['articles','categories']);
+        $this->set('_serialize', ['articles','categories']);   
     }
 
     /**

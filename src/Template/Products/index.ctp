@@ -70,16 +70,42 @@
                                 <span>$<?php if(isset($item['price'])){ echo $item['price']; } ?></span>    
                                 <div class="star_lst">
                                     <ul>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li>(629)</li>
+                                      <?php 
+                               $avg = 0;
+                               $avgRating = 0; 
+                            if(!empty($item['reviews'])){   
+                                $reviewcount = count($item['reviews']);  
+                                 
+                             foreach($item['reviews'] as $rt){
+
+                                   $avg += $rt['rating'];
+
+                                    }
+
+                                  $rate1 = $reviewcount?$reviewcount:1;
+                                  $avgRating = (int)$avg/$rate1; 
+                            }
+                                        
+                                     $i= round($avgRating);
+                                        
+                                        for($j=0;$j<$i;$j++){
+                                        ?>
+                                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                        
+                                 
+                                        <?php } for($h=0;$h<5-$i;$h++){?>  
+                                         
+                                         <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                        <?php 
+                                        
+                                        } 
+			                    ?> 
+                            <li>(<?php echo count($item['reviews']); ?>)</li> 
                                     </ul>
                                     <div class="btn_sell1">     
                                     <?php echo $this->Form->create(NULL, array('url' => array('controller' => 'products', 'action' => 'addtocart'))); ?> 
-                                    <?php echo $this->Form->control('id', array('type' => 'hidden', 'value' => $item['id'])); ?>       
+                                    <?php echo $this->Form->control('id', array('type' => 'hidden', 'value' => $item['id'])); ?>  
+                                    <?php echo $this->Form->control('seller_id', array('type' => 'hidden', 'value' => $item['user_id'])); ?>             
                                     <?php echo $this->Form->button('Buy it Now', array('class' => 'btn btn-success scss_grn','id' => $item['id']));?>
                                     <?php echo $this->Form->end(); ?> 
                                      </div>

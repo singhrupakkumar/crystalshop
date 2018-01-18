@@ -45,11 +45,10 @@ class ProductsTable extends Table
             'foreignKey' => 'cat_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Stores', [
-            'foreignKey' => 'store_id',
-            'joinType' => 'INNER'
-        ]);
-        
+      
+        $this->hasMany('Reviews', [   
+             'foreignKey' => 'product_id'
+         ]); 
        $this->hasMany('Galleries', [   
              'foreignKey' => 'product_id'
          ]);

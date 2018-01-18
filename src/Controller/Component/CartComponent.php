@@ -55,11 +55,10 @@ class CartComponent extends Component {
         $data['name'] = $product['name'];
         $data['weight'] = $product['weight'];
         $data['uid'] = $uid;
-        $data['price'] = $product['price'];
-        $data['price'] = $product['price'];
+        $data['price'] = $product['price'];    
         $data['quantity'] = $quantity; 
         $data['image'] = $product['image'];
-        $data['store_id'] = $product['store']['id'];
+        $data['seller_id'] = $product['user_id'];   
         $data['cat_id'] = $product['category']['id'];
         $data['subtotal'] = sprintf('%01.2f', $product['price'] * $quantity);
         $data['totalweight'] = sprintf('%01.2f', $product['weight'] * $quantity);
@@ -73,8 +72,8 @@ class CartComponent extends Component {
         $cartdata['uid'] = $uid;  
         $cartdata['product_id'] = $product['id'];
         $cartdata['image'] = $product['image'];
-        $cartdata['store_id'] = $product['store']['id'];  
-        $cartdata['cat_id'] = $product['category']['id']; 
+        $cartdata['seller_id'] = $product['user_id'];     
+        $cartdata['cat_id'] = $product['category']['id'];   
         $cartdata['name'] = $product['name'];
         $cartdata['weight'] = $product['weight'];
         $cartdata['weight_total'] = sprintf('%01.2f', $product['weight'] * $quantity);

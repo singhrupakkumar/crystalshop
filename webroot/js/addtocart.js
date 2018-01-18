@@ -26,7 +26,6 @@ myvar += '   <tr>'+
 '        	</div>'+
 '          <div class="cart_txt">'+
 '          	<h3>'+ value.product.name +'</h3>'+
-'            <p>'+ str +'</p>'+
 '          	</div>'+
 '      	</div>'+
 '        </td>'+
@@ -111,7 +110,6 @@ myvar += '   <tr>'+
 '        	</div>'+
 '          <div class="cart_txt">'+
 '          	<h3>'+ value.product.name +'</h3>'+
-'            <p>'+ str +'</p>'+
 '          	</div>'+
 '      	</div>'+
 '        </td>'+
@@ -202,7 +200,6 @@ myvar += '   <tr>'+
 '        	</div>'+
 '          <div class="cart_txt">'+
 '          	<h3>'+ value.product.name +'</h3>'+
-'            <p>'+ str +'</p>'+
 '          	</div>'+
 '      	</div>'+
 '        </td>'+
@@ -289,8 +286,7 @@ myvar += '   <tr>'+
 '        	<img src="'+ value.product.image +'">'+
 '        	</div>'+
 '          <div class="cart_txt">'+
-'          	<h3>'+ value.product.name +'</h3>'+
-'            <p>'+ str +'</p>'+
+'          	<h3>'+ value.product.name +'</h3>'+ 
 '          	</div>'+
 '      	</div>'+
 '        </td>'+
@@ -355,7 +351,7 @@ myvar += '  </tbody>'+
       
     }     
     
-
+  
   
       
 });    

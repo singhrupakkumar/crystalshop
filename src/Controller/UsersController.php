@@ -116,7 +116,7 @@ class UsersController extends AppController {
                         ->send();   
 
                         
-                        $this->Flash->success(__('You have been registered successfully check email for account verification.'));   
+                        $this->Flash->success(__('Registration done successfully. We have sent a verification mail to your registered email address, Please verify your account. Please be patient, as it may take some time to reach your inbox.'));   
                     
                 }
                 
@@ -321,7 +321,7 @@ class UsersController extends AppController {
 
            
        }else{
-           $this->Flash->error(__('You must login first.'));  
+           $this->Flash->error(__('Please login to the website in order to have access to the request.'));  
           return $this->redirect(['controller' => 'stores', 'action' => 'index']);    
        } 
 
@@ -734,14 +734,14 @@ class UsersController extends AppController {
          require ROOT.'/vendor/jhut89/mailchimp3php/src/mailchimpRoot.php';
         //ashu $api_key = "35833bae8881ce0ecced3fc3daa81482-us14";    
         //ashu $list_id = "1a2fe1e7c5";
-        $list_id = "5560075e9c";
+        $list_id = "15aa663281";  
 
       $post_params = ['email_address'=>$_POST['email'], 'status'=>'subscribed'];
 
-       $subscriber =  $mailchimp->lists($list_id)->members()->POST($post_params);
+       $subscriber =  $mailchimp->lists($list_id)->members()->POST($post_params);  
 
        // $subscriber = $Mailchimp_Lists->subscribe($list_id, array('email' => htmlentities($_POST['email'])));
-        if (!empty($subscriber->id)) {
+        if (!empty($subscriber->id)) {  
             echo "success";
         } else {
             echo "fail";

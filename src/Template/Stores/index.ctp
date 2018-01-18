@@ -1,10 +1,11 @@
  <!--------banner section------->
    <div class="banner_sction">  
-     <?= $this->Flash->render() ?>         
+         
    <img src="<?php echo $this->request->webroot; ?>images/website/sctn.png">
     <div class="btn_sell">
         <a href="<?php echo $this->request->webroot ?>products/freesaleproduct"><button type="button" class="btn btn-success">Sell Your Products</button> </a>
     	</div>
+		 <?= $this->Flash->render() ?>    
 	</div>
 
 <div class="slidr_section">
@@ -24,26 +25,53 @@
     <div style="width:174px; height:174px;"> 
        <a href="<?php echo $this->request->webroot."products/view/".$product['slug']; ?>"> 
        <?php if($product['image']){ ?> 
-      <img src="<?php echo $this->request->webroot."images/products/".$product['image']; ?>" class="ful_lnght">
+      <img src="<?php echo $this->request->webroot."images/products/".$product['image']; ?>" class="ful_lnght" title="<?php if(isset($product['name'])){ echo $product['name']; } ?>">
        <?php }else{ ?>
-      <img src="<?php echo $this->request->webroot."images/products/no-image.jpg"; ?>" class="ful_lnght">
+      <img src="<?php echo $this->request->webroot."images/products/no-image.jpg"; ?>" class="ful_lnght" title="<?php if(isset($product['name'])){ echo $product['name']; } ?>">      
        <?php } ?>
       </a>
        <div class="sld_txt">
-      <h5><?php if(isset($product['name'])){ echo $product['name']; } ?></h5> 
+      <h5><a href="<?php echo $this->request->webroot."products/view/".$product['slug']; ?>"> <?php if(isset($product['name'])){ echo $product['name']; } ?></a></h5>  
        <span>$<?php if(isset($product['price'])){ echo $product['price']; } ?></span>
        <div class="star_lst">
         <ul>
-      <li><i class="fa fa-star" aria-hidden="true"></i></li>
-       <li><i class="fa fa-star" aria-hidden="true"></i></li>
-        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-         <li><i class="fa fa-star" aria-hidden="true"></i></li>
-          <li><i class="fa fa-star" aria-hidden="true"></i></li>
-           <li>(629)</li>
+              <?php 
+              
+                             $avg = 0;
+                              $avgRating = 0; 
+                            if(!empty($product['reviews'])){   
+                                $reviewcount = count($product['reviews']);  
+                                 
+                             foreach($product['reviews'] as $rt){
+
+                                   $avg += $rt['rating'];
+
+                                    }
+
+                                  $rate1 = $reviewcount?$reviewcount:1;
+                                  $avgRating = (int)$avg/$rate1; 
+                            }
+                                    
+                                     $i= round($avgRating);
+                                        
+                                        for($j=0;$j<$i;$j++){
+                                        ?>
+                                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                        
+                                 
+                                        <?php } for($h=0;$h<5-$i;$h++){?>  
+                                         
+                                         <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                        <?php 
+                                        
+                                        } 
+			                    ?> 
+                            <li>(<?php echo count($product['reviews']); ?>)</li> 
       </ul>
       <div class="btn_sell1">   
       <?php echo $this->Form->create(NULL, array('url' => array('controller' => 'products', 'action' => 'addtocart'))); ?> 
-      <?php echo $this->Form->control('id', array('type' => 'hidden', 'value' => $product['id'])); ?>       
+      <?php echo $this->Form->control('id', array('type' => 'hidden', 'value' => $product['id'])); ?>
+      <?php echo $this->Form->control('seller_id', array('type' => 'hidden', 'value' => $product['user_id'])); ?>        
       <?php echo $this->Form->button('Buy it Now', array('class' => 'btn btn-success scss_grn','id' => $product['id']));?>
       <?php echo $this->Form->end(); ?>
     	</div>
@@ -90,9 +118,9 @@
          
           </ul>
           <div class="see_txt"> 
-           <a href="<?php echo $this->request->webroot."categories"; ?>">See More<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+           <a href="<?php echo $this->request->webroot."categories"; ?>">See More Categories<i class="fa fa-angle-right" aria-hidden="true"></i></a>  
           </div>
-          </div>
+          </div> 
           
           
         	</div>
@@ -128,10 +156,10 @@
                 
                  
               
-                <div class="see_txt"> 
-           <a href="<?php echo $this->request->webroot; ?>articles/add">Promote Your Products<i class="fa fa-angle-right" aria-hidden="true"></i></a>
-          </div>
-        	</div> 
+                <div class="see_txt">  
+                <a href="<?php echo $this->request->webroot; ?>articles/all">Read More Articles<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+               </div>  
+        	</div>     
     	</div>
 	</div>  
 <!-----------footer-section-------------->

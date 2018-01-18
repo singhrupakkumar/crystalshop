@@ -1,26 +1,13 @@
-<?php
-/**
-* @var \App\View\AppView $this
-*/
-?>
- <!--------banner section------->
-  <div class="sgn_bner">
-        
-  <img src="<?php echo $this->request->webroot; ?>images/website/sgn_bner.jpg">
-    	<div class="uper_sgnlyer">
-               <div class="col-sm-12">
-             <div class="sign-flash">
-              <?= $this->Flash->render() ?>   
-              </div>
-              </div>  
-        <h4>seller sign up for free</h4>
-        	</div>
-  	</div>     
-<!--------sign_up_section------->
+
 <div class="frm_sgnup">
 	<div class="container">
     	<div class="row">
-        	 <div class="sgnup_heading">
+       <div class="sgnup_heading">
+          <div class="col-sm-12">
+             <div class="sign-flash">  
+              <?= $this->Flash->render() ?>   
+              </div>
+              </div>      
    <h4>Sign Up to Earth Vendors</h4>
    	</div> 
     <div class="frm_sgncvr">
@@ -45,13 +32,21 @@
            
           <?php echo $this->Form->error('email', null, array('class' => 'label label-block label-danger text-left', 'wrap' => 'label')); ?>
     </div>
+    
+    <div class="input-group zip_full <?= ($this->Form->isFieldError('paypal_email'))? 'has-error': '' ; ?>">
+         <span class="input-group-addon brdr_trns"><i class="fa fa-envelope-o" aria-hidden="true"></i></span> 
+          <input name="paypal_email" id="paypal_email" class="form-control ctrl_smn" placeholder="Paypal Email Address" type="email" value="<?php echo isset($user['paypal_email']) ? $user['paypal_email'] : ''; ?>">
+           
+          <?php echo $this->Form->error('paypal_email', null, array('class' => 'label label-block label-danger text-left', 'wrap' => 'label')); ?>
+    </div>
  
     <div class="input-group zip_full">
       <span class="input-group-addon brdr_trns"><i class="fa fa-mobile fnt_inc" aria-hidden="true"></i></span>
        <?php echo $this->Form->control('phone', [
         'label' => false,
         'class' => 'form-control ctrl_smn',
-        'placeholder' => 'Phone Number'
+        'placeholder' => 'Phone Number',
+        'maxlength'=>12     
     ]); ?>
     </div>
     
@@ -121,6 +116,21 @@
 <!-----------footer-section-------------->
 
 <script>
+ 
+ function contactFormat(number){   
+  if(number.length == 3){
+      number = number+'-'
+  } else if (number.length == 7){
+      number = number+'-';
+  }
+  return number;
+}  
+   
+$("#phone").keyup(function(){ 
+var num = contactFormat($(this).val()); 
+ $(this).val(num)  ; 
+});   
+    
 $().ready(function() {
 	var form = $("#user-form").validate({
 		rules: {
@@ -129,9 +139,12 @@ $().ready(function() {
 				required: true,
 				email: true
 			},
-			phone: {
+                        paypal_email: { 
 				required: true,
-				digits: true
+				email: true
+			},
+			phone: {
+				required: true  
 			},
 			password1: { 
 				required: true,
@@ -153,7 +166,8 @@ $().ready(function() {
 		messages: {
 			name: "Please enter your name",
 			email: "Please enter a valid email address",
-			phone: "Please enter valid phone number",
+                        paypal_email:"Please enter a valid paypal email address",
+			phone: "Please enter valid phone number format (000-000-0000)",
 			password1: "Password is required",
 			password: {
 				equalTo: "Password and confirm password should be same"

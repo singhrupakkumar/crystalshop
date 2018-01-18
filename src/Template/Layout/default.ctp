@@ -122,7 +122,7 @@ $cakeDescription = '';
                    <a href="<?php echo $this->request->webroot; ?>users/edit"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Profile</a>   
                     </li> 
                    <li class="<?php  if($this->request->params['action'] == 'edit' ) { echo "active"; }?>">   
-                   <a href="<?php echo $this->request->webroot; ?>articles/index"><i class="fa fa-pencil" aria-hidden="true"></i> My Article</a>    
+                   <a href="<?php echo $this->request->webroot; ?>articles/index"><i class="fa fa-pencil" aria-hidden="true"></i> My Articles</a>      
                     </li> 
                     <li class="active"><a class="" href="<?php echo $this->request->webroot ?>users/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
                     
@@ -148,14 +148,12 @@ $cakeDescription = '';
             <form action="<?php echo $this->request->webroot; ?>products/search" method="get">     
     	 <div class="input-group seacrh-inpt"  id="adv-search">
              <input type="text" class="form-control top_mgn" name="search" placeholder="Search for anything" />
-                <div class="input-group-btn">
+                <div class="input-group-btn selctprdt">
                     <div class="btn-group" role="group">
                         <div class="dropdown dropdown-lg">
-                    <button type="button" class="btn btn-default" data-toggle="dropdown" aria-expanded="false" style="padding:0;">
-                    <select name="catid" style="    border: 0;
-    line-height: 30px;
-    height: 32px;">
-                              <option value="0">Choose One</option> 
+                   
+                    <select name="catid" style=" border: 0;   line-height: 30px;  height: 34px; width: 100px; border-left: 1px solid #ccc;">
+                              <option value="0">All Categories</option>   
                                 <?php if(isset($categories)){   
                                     foreach($categories as $cat){
                                     ?>  
@@ -164,7 +162,7 @@ $cakeDescription = '';
                                 }
                                 ?>
                              </select>
-                    </button>
+                   
                           
                         </div>
                         <button type="submit" class="btn defult_btn2 serch-icn"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
@@ -249,8 +247,7 @@ $cakeDescription = '';
             	<a href="<?php echo $this->request->webroot ?>stores/index"><img src="<?php echo $this->request->webroot; ?>images/website/logo_fnl.png"></a>
             	</div>
         	</div>
-            <div class="col-sm-8"> 
-                <div class="message" style="text-align:center;font-weight: bold;color:#49BA64;"></div>   
+            <div class="col-sm-8">                 
              <div class="ftr_dvde">
               <div class="col-sm-3">
               	<div class="privcy_sction">
@@ -306,7 +303,8 @@ $cakeDescription = '';
                             <form  method="post" id="subscribe">
                               <input id="email" type="email" name="email" class="form-control" placeholder="Your email address">
                               <button type="button" id="nwsltr" name="nwsltr" class="submit_align">SUBRCIBE</button>  
-                            </form>
+                            </form> 
+                            <div class="message fotermessg" ></div>   
                          </div>
                     </div>
                     </li>
@@ -466,45 +464,11 @@ $cakeDescription = '';
         });
         
         $(document).ready(function(){ 
-                $('.flash-msg').delay(5000).fadeOut('slow');
-        });
+                $('.flash-msg').delay(8000).fadeOut('slow');
+        }); 
         
     </script> 
-
-    
-    <script> 
-//    jQuery("#s").autocomplete({
-//		minLength: 2,
-//		select: function(event, ui) {
-//			jQuery("#s").val(ui.item.label);
-//			jQuery("#searchform").submit();
-//		},
-//		source: function (request, response) {
-//			jQuery.ajax({
-//				url: 'https://rupak.crystalbiltech.com/affiliate/products/searchjson',
-//				data: {
-//					term: request.term
-//				},
-//				dataType: "json",
-//				success: function(data) {
-//					response(jQuery.map(data, function(el, index) {
-//						return {
-//							value: el.name,
-//							name: el.name,
-//							image: el.image
-//						};
-//					}));
-//				}
-//			});
-//		}
-//	}).data("ui-autocomplete")._renderItem = function (ul, item) {
-//		return jQuery("<li></li>")
-//			.data("item.autocomplete", item) 
-//			.append("<a><img width='40' src='https://rupak.crystalbiltech.com/affiliate/images/products/" + item.image + "' /> " + item.name + "</a>")
-//			.appendTo(ul)
-//	};
-	</script> 
-    
+   
 <script>
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";

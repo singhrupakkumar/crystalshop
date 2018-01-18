@@ -107,6 +107,7 @@ class AppController extends Controller
         ]);
 
 	$userdata = $this->Auth->user();
+     
         $this->set('loggeduser', $userdata);
 	$path = Router::url('/', true); 
         $this->set('fullurl',$path);	

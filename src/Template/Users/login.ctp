@@ -1,14 +1,5 @@
-<!--------banner section------->
-  <div class="sgn_bner">
-      
-  <img src="<?php echo $this->request->webroot; ?>images/website/sgn_bner.jpg">
-    	<div class="uper_sgnlyer">
-        <h4>Sign In</h4>
-        	</div>
-  </div> 
   
-<!--------sign_up_section------->
-<div class="frm_sgnup">
+<div class="frm_sgnup">  
 	<div class="container">
 
     	<div class="row">

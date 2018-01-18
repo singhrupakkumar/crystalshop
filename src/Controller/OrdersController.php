@@ -44,17 +44,16 @@ class OrdersController extends AppController
             $this->redirect('/');
         }    
         
-       $orderitems  = $this->OrderItems->find('all', ['conditions' => ['OrderItems.seller_id' => $uid]]);
-       $orderitems  = $orderitems->all();  
-        $orderid = array();
-       foreach($orderitems as $item){
-           $orderid[] = $item['order_id'];  
-       }
-       $orderid = $orderid?$orderid:0;  
-        $sellorder = $this->Orders->find('all',['contain'=>['Users'],'conditions'=>['Orders.id in'=>$orderid]]);         
+//       $orderitems  = $this->OrderItems->find('all', ['conditions' => ['OrderItems.seller_id' => $uid]]);
+//       $orderitems  = $orderitems->all();  
+//        $orderid = array();
+//       foreach($orderitems as $item){
+//           $orderid[] = $item['order_id'];  
+//       }
+//       $orderid = $orderid?$orderid:0;  
+        $sellorder = $this->Orders->find('all',['contain'=>['Users'],'conditions'=>['Orders.seller_id'=>$uid]]);         
         $sellorder = $sellorder->all();  
-        
-            
+
         $this->paginate = [
             'contain' => ['OrderItems','Users'],'conditions'=>['Orders.uid'=>$this->Auth->user('id')]  
         ];

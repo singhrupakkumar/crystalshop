@@ -1,11 +1,4 @@
-<div class="faq-banner">
-    <div class="faq-img">
-        <img class="img-responsive" src="<?php echo $this->request->webroot; ?>images/website/faq.png" alt="" border="0">
-        <h3><?php if ($faq->title) {
-    echo $faq->title;
-} ?></h3>
-    </div>
-</div>    
+
 <!-- ---------------------------section------------------------- -->
 <div class="faq">
     <div class="container">

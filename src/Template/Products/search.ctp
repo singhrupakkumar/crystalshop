@@ -16,16 +16,23 @@
 
 <div class="row">
 
-    <div class="center_box">
+    <div class="container">
 <?php echo $this->Form->create('Product', array('type' => 'GET')); ?>
 
-<div class="col col-sm-4 col-sm-offset-3">
-    <?php echo $this->Form->input('search', array('label' => false, 'div' => false, 'class' => 'form-control', 'autocomplete' => 'off', 'value' => $search)); ?>
+<div class="col-sm-4 col-sm-offset-4">
+   
+
+
+ <div class="search-pg" >
+  <div class="form-group">
+     <?php echo $this->Form->input('search', array('label' => false, 'div' => false, 'class' => 'form-control', 'autocomplete' => 'off', 'value' => $search)); ?>
+   <?php echo $this->Form->button('Search', array('div' => false, 'class' => 'btn btn-sm btn-primary black ')); ?>
+  </div>
+
+  
+</div> 
 </div>
 
-<div class="col col-sm-3">
-    <?php echo $this->Form->button('Search', array('div' => false, 'class' => 'btn btn-sm btn-primary black')); ?>
-</div>
 
 <?php echo $this->Form->end(); ?>
 
@@ -39,9 +46,7 @@
 
 <?php endif; ?>
 
-<?php // echo $this->Html->script('search.js', array('inline' => false)); ?>
-
-<?php if(!empty($search)) : ?>
+<?php // echo $this->Html->script('search.js', array('inline' => false)); ?>   
 
 <?php $this->Html->addCrumb($search); ?>
 
@@ -65,14 +70,39 @@
                                 <h5><?php if(isset($item['name'])){ echo $item['name']; } ?></h5>
                                 <span>$<?php if(isset($item['price'])){ echo $item['price']; } ?></span>    
                                 <div class="star_lst">
-                                    <ul>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li>(629)</li>
-                                    </ul>
+                                   <ul>
+                                      <?php 
+                               $avg = 0;
+                               $avgRating = 0; 
+                            if(!empty($item['reviews'])){   
+                                $reviewcount = count($item['reviews']);  
+                                 
+                             foreach($item['reviews'] as $rt){
+
+                                   $avg += $rt['rating'];
+
+                                    }
+
+                                  $rate1 = $reviewcount?$reviewcount:1;
+                                  $avgRating = (int)$avg/$rate1; 
+                            }
+                                        
+                                     $i= round($avgRating);
+                                        
+                                        for($j=0;$j<$i;$j++){
+                                        ?>
+                                      <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                        
+                                 
+                                        <?php } for($h=0;$h<5-$i;$h++){?>  
+                                         
+                                         <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                        <?php 
+                                        
+                                        } 
+			                    ?> 
+                            <li>(<?php echo count($item['reviews']); ?>)</li>  
+                                    </ul>  
                                     <div class="btn_sell1">
                                         <button type="button" class="btn btn-success scss_grn">Buy it Now</button>
                                     </div>
@@ -82,31 +112,17 @@
                         </div>
                     </div> 
               
-                    <?php endforeach; ?> 
-                       <div class="paginator col-sm-12">  
-                            <ul class="pagination">
-                                <?= $this->Paginator->first('<< ' . __('first')) ?>
-                                <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                                <?= $this->Paginator->numbers() ?>
-                                <?= $this->Paginator->next(__('next') . ' >') ?>
-                                <?= $this->Paginator->last(__('last') . ' >>') ?>
-                            </ul>
-                            <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-                        </div>
+                    <?php endforeach; ?>   
+                 
                     <?php endif;?>  
                  
  
 
                 </div> 
-
-<br />
-<br />
-<br />
-
+ 
 <?php else: ?>
 
-<h3>No Results</h3>
+<?php echo '<div class="col-sm-12"><div class="blankimg"><img src="'.$this->request->webroot.'/img/search-not-found.jpg" class="img-responsive"></div></div>';  ?> 
 
-<?php endif; ?>
 <?php endif; ?>
 

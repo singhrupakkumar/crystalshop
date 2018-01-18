@@ -1,10 +1,4 @@
-<!--------banner section------->
-<div class="sgn_bner">
-    <img src="<?php echo $this->request->webroot; ?>images/website/sgn_bner.jpg">
-    <div class="uper_sgnlyer">
-        <h4>Edit Profile</h4>
-    </div>
-</div>
+  
 <!--------sign_up_section------->
 <div class="frm_sgnup">
     <div class="container">
@@ -43,6 +37,11 @@
                                 <span class="input-group-addon brdr_trns"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
                                 <?php echo $this->Form->control('email', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Email Address','readonly']); ?>
                             </div>
+                        
+                             <div class="input-group">
+                                <span class="input-group-addon brdr_trns"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                                <?php echo $this->Form->control('paypal_email', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Paypal Email Address']); ?> 
+                            </div>
 
                            <div class="input-group">
                                <span class="input-group-addon brdr_trns"><i class="glyphicon glyphicon-user"></i></span>
@@ -56,7 +55,7 @@
                         
                             <div class="input-group">
                               <span class="input-group-addon brdr_trns"><i class="fa fa-mobile fnt_inc" aria-hidden="true"></i></span>  
-                              <?php echo $this->Form->control('phone', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Phone Number']); ?>
+                              <?php echo $this->Form->control('phone', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Phone Number','maxlength'=>12]); ?>
                            </div>
                            <div class="input-group ">
                            <span class="input-group-addon brdr_trns"><i class="fa fa-calendar fnt_clng" aria-hidden="true"></i></span>  
@@ -105,18 +104,35 @@
 </div>
 
 <script>
+     function contactFormat(number){   
+  if(number.length == 3){
+      number = number+'-'
+  } else if (number.length == 7){
+      number = number+'-';
+  }
+  return number;
+}  
+   
+$("#phone").keyup(function(){ 
+var num = contactFormat($(this).val()); 
+ $(this).val(num)  ; 
+});  
    $(document).ready(function() {
-	$("#edit-form").validate({
+	$("#edit-form").validate({  
 		ignore: "",
 		rules: {
 			email: {
 				required: true,
 				email: true
 			},
+                        paypal_email: { 
+				required: true,
+				email: true
+			},
 			name: {required:true},
 			dob: {required:true},
-                        phone: {
-                            required:true,
+                        phone: { 
+                            required:true, 
                             number:true,
                         },
                         zip: {

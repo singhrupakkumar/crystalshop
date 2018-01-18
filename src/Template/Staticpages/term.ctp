@@ -1,12 +1,12 @@
-<div class="faq-banner">
+<!--div class="faq-banner">
     <div class="faq-img">
         <img class="img-responsive" src="<?php echo $this->request->webroot; ?>images/website/policy.png" alt="" border="0">
         <h3><?php if ($term->title) {
     echo $term->title;  
 } ?></h3>
     </div>
-</div>    
-
+</div-->    
+   
 <!-- 	--------------------------section---------------------- -->
 <div class="terms">
     <div class="container">

@@ -52,7 +52,7 @@ class StoresController extends AppController
         $this->loadModel('Products');
         $this->loadModel('Categories'); 
         $this->loadModel('Articles');   
-        $products = $this->Products->find('all',['contain'=>['Categories'], 'conditions' => ['Products.status' => 1]]);
+        $products = $this->Products->find('all',['contain'=>['Categories','Reviews'], 'conditions' => ['Products.status' => 1]]);
         $features = $products->all(); 
         $features = $features->toArray();
         /*************Categories*************/
@@ -61,7 +61,7 @@ class StoresController extends AppController
             'contain' => array(
                 'Products'
             ),
-            'limit' => 5,
+            'limit' => 4,
             'conditions' => array(
                 'Categories.status' => 1
             ),
@@ -289,9 +289,10 @@ class StoresController extends AppController
       public function displaycart($uid,$sid){
         $this->loadModel('Carts');
         $this->loadModel('Products');
+        $this->loadModel('Users');
         $shop = $this->Carts->find('all', array(
-       'contain' => array(
-                     'Products'
+       'contain' => array( 
+                     'Products',
                 ), 
            'conditions' => array(      
                'AND' => array(
@@ -302,6 +303,7 @@ class StoresController extends AppController
 
         $shop = $shop->all();  
         $shop = $shop->toArray(); 
+   
         $quantity = 0;
         $weight = 0;
         $subtotal = 0;
@@ -329,9 +331,9 @@ class StoresController extends AppController
                 $subtotal += $item['subtotal'];
                 $total += $item['subtotal']; 
                 
-                $storename = $this->Stores->find('all', array(
+                $storename = $this->Users->find('all', array(
                     'conditions' => array(
-                            'Stores.id' => $item['store_id']
+                            'Users.id' => $item['seller_id']  
                 )));
                 
                 $order_item_count++;   
@@ -349,7 +351,7 @@ class StoresController extends AppController
 			 
             $cart['cartInfo']=$d; 
 	    $cart['cartcount']= $quantity; 
-            $cart['store']= $storename; 
+            $cart['seller']= $storename;     
             $cart['products']=$cart_using_dates;
  
         } else {
@@ -373,6 +375,7 @@ class StoresController extends AppController
           $uid = $this->Auth->user('id'); 
           $user_id= $uid?$uid:0;
           $data = $this->displaycart($user_id, $sid); 
+       
 	
         if (!empty($data)) { 
             $response['error'] = "0";
@@ -531,7 +534,7 @@ class StoresController extends AppController
            $user = $user->first();
             
         }else{ 
-            $this->Flash->error(__('You must login first'));
+            $this->Flash->error(__('Please login to the website in order to have access to the request.'));  
             return $this->redirect(array('action' => 'cart')); 
         }
         $sesid = $this->request->session()->id(); 
@@ -545,28 +548,90 @@ class StoresController extends AppController
     }
     
     public function payment() {
-
-        $uid = $this->Auth->user('id');
-        $sesid = $this->request->session()->id(); 
+        $this->loadModel('Orders');
+        $this->loadModel('OrderItems');  
+        $this->loadModel('Users');    
+ 
+        $uid      = $this->Auth->user('id');
+        $sesid    = $this->request->session()->id(); 
+        $shipping = $this->request->session()->read('shippingaddress');
         $user_id = $uid?$uid:0;   
-        $cart = $this->displaycart($user_id, $sesid); 
+        $cart = $this->displaycart($user_id, $sesid);  
+        $user = $this->Users->find('all',['Users.id'=>$user_id]);
+        $user = $user->first();
+        
+        $ordername = $shipping['name']?$shipping['name']:$user['name'];
+        $orderemail = $shipping['email']?$shipping['email']:$user['email'];
+        $orderphone = $shipping['phone']?$shipping['phone']:$user['phone'];
+        $orderaddress = $shipping['address']?$shipping['address']:$user['address'];
+        $ordercountry = $user['country'];  
+        $ordercity = $shipping['city']?$shipping['city']:$user['city'];
+        $orderstate = $shipping['state']?$shipping['state']:$user['state'];  
+        $orderzip = $shipping['zip']?$shipping['zip']:$user['zip'];  
+
+        
+        $orderdata = array();     
         if($uid){
         if($cart['cartcount'] != 0){ 
-            
-            
-            
-   
-        if ($this->request->is('post')) {    
+
+        if ($this->request->is('post')) { 
+            $orders = $this->Orders->newEntity();       
+            $orderdata['uid'] = $uid;
+            $orderdata['name'] = $ordername;
+            $orderdata['email'] = $orderemail;
+            $orderdata['phone'] = $orderphone;
+            $orderdata['address'] = $orderaddress;
+            $orderdata['country'] = $ordercountry;
+            $orderdata['city'] = $ordercity;
+            $orderdata['state'] = $orderstate;
+            $orderdata['zip'] = $orderzip;  
+            $orderdata['seller_id'] = $cart['seller']['id'];
+            $orderdata['order_item_count'] = $cart['cartInfo']['order_item_count']; 
+            $orderdata['subtotal'] = $cart['cartInfo']['subtotal'];
+            $orderdata['total'] = $cart['cartInfo']['total'];  
+            $orders = $this->Orders->patchEntity($orders, $orderdata);
+            $save = $this->Orders->save($orders);  
+           if ($save) { 
+               $last_id = $save['id'];
+              foreach($cart['products'] as $orderitem){
+               $orderitems = $this->OrderItems->newEntity();         
+               $orderitemsave['seller_id'] = $orderitem['product']['user_id'] ;
+               $orderitemsave['order_id'] = $last_id; 
+               $orderitemsave['product_id'] = $orderitem['product_id'];  
+               $orderitemsave['name'] = $orderitem['name'];
+               $orderitemsave['image'] = $orderitem['image'];
+               $orderitemsave['quantity'] = $orderitem['quantity'];
+               $orderitemsave['weight'] = $orderitem['weight'];
+               $orderitemsave['price'] = $orderitem['price'];
+               $orderitemsave['subtotal'] = $orderitem['subtotal'];    
+               $orderitems = $this->OrderItems->patchEntity($orderitems, $orderitemsave);
+               $saveitem = $this->OrderItems->save($orderitems);              
+              }    
               
-            $amt = $cart['cartInfo']['total'] ;
-            $returnUrl = Router::url('/', true)."/stores/success";
-            $ipnNotificationUrl = Router::url('/', true)."/stores/ipn";
+               $data = $this->Orders->find('all', array('contain'=>array('Users','OrderItems'),'conditions' => array('Orders.id' => $last_id)));  
+               $data = $data->first()->toArray();         
+               $email = new Email('default');     
+
+                 $send = $email->from(['rupak@avainfotech.com' => 'Earth Vendors'])      
+                        ->emailFormat('html')
+                        ->template('orderconfirmation')
+                        ->cc('rupak@avainfotech.com')
+                        ->cc($cart['seller']['email']) 
+                        ->to($orderemail)
+                        ->subject('Order Confirmation')    
+                        ->viewVars(array('order' => $data))           
+                        ->send();        
+               
+               $amt = $cart['cartInfo']['total'] ;
+               $returnUrl = Router::url('/', true)."stores/success";  
+               $ipnNotificationUrl = Router::url('/', true)."stores/ipn";
           ///////////////////////////////////////////////payment////////////////////////////////////////////////
                         echo ".<form name=\"_xclick\" action=\"https://www.sandbox.paypal.com/cgi-bin/webscr\" method=\"post\">
                     <input type=\"hidden\" name=\"cmd\" value=\"_xclick\">
                     <input type=\"hidden\" name=\"email\" value=\"rupak-buyer@avainfotech.com\">
                     <input type=\"hidden\" name=\"business\" value=\"rupak-facilitator@avainfotech.com\">
                     <input type=\"hidden\" name=\"currency_code\" value=\"USD\">
+                    <input type=\"hidden\" name=\"custom\" value=\"$last_id\">
                     <input type=\"hidden\" name=\"amount\" value=\"$amt\">
                     <input type=\"hidden\" name=\"return\" value=\"$returnUrl\">
                     <input type=\"hidden\" name=\"notify_url\" value=\"$ipnNotificationUrl\"> 
@@ -575,24 +640,33 @@ class StoresController extends AppController
                         echo "<script>document._xclick.submit();</script>";
             
            }
-
-            
+        }
+               
         }else{
            $this->Flash->error(__('Shopping Cart is empty'));  
            return $this->redirect('/');    
         }
         }else{ 
-            $this->Flash->error(__('You must login first'));
+            $this->Flash->error(__('Please login to the website in order to have access to the request.'));  
             return $this->redirect(array('action' => 'cart')); 
         }
       
 
     }
     
-      public function success() {
-        $shop = $this->request->session()->read('Shop');
-        $this->Cart->clear();   
-        $this->set(compact('shop'));
+      public function success() { 
+
+        $shop     = $this->request->session()->read('Shop');
+        $uid      = $this->Auth->user('id');    
+        $sesid    = $this->request->session()->id(); 
+        $user_id = $uid?$uid:0; 
+        $cart = $this->displaycart($user_id, $sesid); 
+        if(empty($cart['products'])){    
+          $this->Flash->error(__('Shopping Cart is empty'));  
+           return $this->redirect('/');       
+        }  
+        $this->Cart->clear();     
+        $this->set(compact('shop','cart'));    
       }
   
       public function ipn() {  
@@ -626,7 +700,7 @@ class StoresController extends AppController
         } else if (strcmp($res, "INVALID") == 0) {
             
         } 
-        $xt = ob_get_clean();
+        $xt = ob_get_clean(); 
         fwrite($fc, $xt);
         fclose($fc);
         exit;

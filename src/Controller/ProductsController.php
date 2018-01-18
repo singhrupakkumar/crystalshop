@@ -35,17 +35,18 @@ class ProductsController extends AppController
 
 
 
-        $this->Auth->allow(['add','slugify' ,'gallerydelete','searchjson', 'search','view','index','addtocart','productbycat','promoteproduct','addsellproduct','currencyconverter']);          
+        $this->Auth->allow(['add','slugify' ,'gallerydelete','searchjson','clear' ,'search','view',
+            'index','addtocart','productbycat','promoteproduct','addsellproduct','currencyconverter','savereview']);            
 
-        $this->authcontent();    
+        $this->authcontent();        
     }
     
      private function slugify($str) {   
                 // trim the string
                 $str = strtolower(trim($str));
                 // replace all non valid characters and spaces with an underscore
-                $str = preg_replace('/[^a-z0-9-]/', '_', $str);
-                $str = preg_replace('/-+/', "_", $str);
+                $str = preg_replace('/[^a-z0-9-]/', '-', $str);
+                $str = preg_replace('/-+/', "-", $str);
         return $str;
      } 
     
@@ -72,7 +73,7 @@ class ProductsController extends AppController
         }else{
 
         $this->paginate = [
-            'contain' => ['Categories', 'Users']
+            'contain' => ['Categories', 'Users','Reviews']
         ];
             
         }
@@ -97,7 +98,7 @@ class ProductsController extends AppController
         $seller = $seller->first();
         $seller_id = $seller['id'];    
         $this->paginate = [
-            'contain' => ['Categories', 'Users'],
+            'contain' => ['Categories', 'Users','Reviews'],  
             'conditions'=>['AND'=>['Products.user_id'=>$seller_id,'Products.cat_id'=>$cat['id']]]
         ];  
         
@@ -136,10 +137,11 @@ class ProductsController extends AppController
     public function view($slug = null)
     {
     
-        $product = $this->Products->find('all', array('contain'=>array('Users'),
-                'conditions' => ['Products.slug'=>$slug] 
+        $product = $this->Products->find('all', array('contain'=>array('Users','Galleries','Reviews'=>'Users'),
+                'conditions' => ['Products.slug'=>$slug]   
             ));
         $product = $product->first(); 
+   
         $this->set('product', $product);
         $this->set('_serialize', ['product']);
     }
@@ -182,39 +184,59 @@ class ProductsController extends AppController
     
     
     public function search() { 
+              
         $search = null;
-        if(!empty($this->request->query['search']) || !empty($this->request->data['name'])) {
-            $search = empty($this->request->query['search']) ? $this->request->data['name'] : $this->request->query['search'];
+        if(!empty($this->request->query['search']) || !empty($this->request->data['name']) || !empty($this->request->query['catid'])) {
+            $search = empty($this->request->query['search']) ? isset($this->request->data['name']) : $this->request->query['search'];
             $search = preg_replace('/[^a-zA-Z0-9 ]/', '', $search);
+            if(isset($search)){
             $terms = explode(' ', trim($search));
-            $terms = array_diff($terms, array(''));
+            $terms = array_diff($terms, array('')); 
+            }  
             $conditions = array(
                 'Products.status' => 1
             );
+              
+           
+            if(!empty($this->request->query['catid'])){
+               $conditions = array(
+                'Products.cat_id' => $this->request->query['catid']
+            );
+            }  
+            
+           if(!empty($terms)){ 
             foreach($terms as $term) {
                 $terms1[] = preg_replace('/[^a-zA-Z0-9]/', '', $term);
                 $conditions[] = array('Products.name LIKE' => '%' . $term . '%');
             }
+           }   
             
+           
             
-            $products = $this->Products->find('all', array(
+ 
+            $products = $this->Products->find('all', array(  
                 'contain' => array(
-                    'Users'
+                    'Users',
+                    'Reviews'
                 ),
                 'conditions' => $conditions,
                 'limit' => 200,
             ));
-            
+ 
             
              $products = $products->all(); 
-             $products = $products->toArray();  
-
+             $products = $products->toArray(); 
+   
             if(count($products) == 1) {
-                return $this->redirect(array('controller' => 'products', 'action' => 'view/'.$products[0]['slug']));
+             
+                return $this->redirect(array('controller' => 'products', 'action' => 'view/'.$products[0]['slug'])); 
             }
             
-         
+         if(!empty($terms1)){
             $terms1 = array_diff($terms1, array(''));
+         }
+         
+       
             $this->set(compact('products', 'terms1'));
         }
         $this->set(compact('search'));  
@@ -335,7 +357,7 @@ class ProductsController extends AppController
         
         
      }else{  
-          $this->Flash->error(__('You must login first'));
+          $this->Flash->error(__('Please login to the website in order to have access to the request.'));  
           return $this->redirect(['controller' => 'stores', 'action' => 'index']);      
       }   
         $cats = $this->Products->Categories->find('treeList', ['limit' => 200]); 
@@ -375,7 +397,7 @@ class ProductsController extends AppController
              $product = $this->Products->get($saleproduct);  
              $product['free_sale'] = 1;
              if($this->Products->save($product)){
-                 $this->Flash->success(__('The product has been Added on free sale.'));
+                 $this->Flash->success(__('Product has been added as BONUS product.')); 
              }else{
                 $this->Flash->error(__('The product could not be saved. Please, try again.'));   
              }
@@ -401,10 +423,21 @@ class ProductsController extends AppController
     
     /************************Add to Cart module********************************/
     
+    public function clear() {
+    $sesid = $this->request->session()->id();
+    $uid = $this->Auth->user('id'); 
+      $this->Cart->clear();
+      $this->loadModel('Carts');
+      $this->Carts->deleteAll(array('Carts.uid'=>$uid,'Carts.sessionid'=>$sesid));
+      $this->Flash->error(__('All item(s) removed from your shopping cart'));    
+        return $this->redirect('/');
+    }
+    
       public function addtocart() {
         $this->loadModel('Carts');
         if ($this->request->is('post')) {
              $uid = $this->Auth->user('id');
+             $post_seller_id = $this->request->data['seller_id']; 
              if(!empty($uid)){ 
                $uid = $uid;  
              }else{
@@ -416,7 +449,34 @@ class ProductsController extends AppController
 
             $productmodId = isset($this->request->data['mods']) ? $this->request->data['mods'] : null;
             $exits = $this->Carts->find('all',array('conditions'=>array('AND'=>array('Carts.product_id'=>$id,'Carts.sessionid'=>$this->request->session()->id()))));
-            $exits = $exits->first(); 
+            $exits = $exits->first();   
+            
+            $cartfind = $this->Carts->find('all',array(
+                'conditions'=>array('Carts.uid'=>$uid,'Carts.sessionid'=>$this->request->session()->id())
+                )); 
+            $cartfind = $cartfind->first();   
+
+         	if($cartfind['seller_id'] != $post_seller_id && !empty($cartfind)){        
+               
+                    
+                    
+                    
+			echo "<script>if (window.confirm('Are you sure you want to change the seller? While adding item in the cart with the new seller, your previous cart items will be removed.?'))
+{
+   window.location.href='clear';   
+}
+else
+{
+  window.location.href='/crystal';  
+}</script>";
+			
+		}else{ 
+                          
+                             
+                
+            
+            
+            
             if(!empty($exits)){
               $this->Flash->success(__('Product is already added in your cart.'));   
              // $product = true; 
@@ -430,12 +490,15 @@ class ProductsController extends AppController
                 } 
             
             }
+            
+        }   
+            
         }  
         
         $this->redirect($this->referer());
     }
     
-    public function addsellproduct(){
+    public function addsellproduct(){  
       if(!empty($this->Auth->user('id'))) { 
         
        $this->loadModel('Galleries');   
@@ -443,17 +506,31 @@ class ProductsController extends AppController
       // $this->autoRender = false;        
 
      if ($this->request->is('post')) {
-            
-                $image = $this->request->data['images'][0];
-                if(!empty($image['name'])){
+         
+               if ($this->request->data['image'] != 1) {   
+                 
+
+                $image = $this->request->data['image'];
 	        $name = time().$image['name'];
 		$tmp_name = $image['tmp_name'];
 		$upload_path = WWW_ROOT.'images/products/'.$name;
 		move_uploaded_file($tmp_name, $upload_path);
-            $this->request->data['image'] = $name;
-                }else{  
-                    $this->request->data['image'] = '';
-                }
+                $this->request->data['image'] = $name;
+               }else {
+                    unset($this->request->data['image']);
+                } 
+         
+            
+//                $image = $this->request->data['images'][0];
+//                if(!empty($image['name'])){
+//	        $name = time().$image['name'];
+//		$tmp_name = $image['tmp_name'];
+//		$upload_path = WWW_ROOT.'images/products/'.$name;
+//		move_uploaded_file($tmp_name, $upload_path);
+//            $this->request->data['image'] = $name;
+//                }else{  
+//                    $this->request->data['image'] = '';
+//                }
             $this->request->data['user_id'] = $this->Auth->user('id');  
             $this->request->data['slug'] =$this->slugify($this->request->data['name']);
             $product = $this->Products->patchEntity($product, $this->request->getData());
@@ -491,7 +568,7 @@ class ProductsController extends AppController
      $this->set('_serialize', ['product','cats']);     
     }  
       }else{
-          $this->Flash->error(__('You must login first'));
+          $this->Flash->error(__('Please login to the website in order to have access to the request.'));     
           return $this->redirect(['controller' => 'stores', 'action' => 'index']);      
       }    
     }
@@ -541,43 +618,62 @@ class ProductsController extends AppController
     }
     
     public function savereview(){
-            $this->loadModel('Reviews');
-           if ($this->request->is('post')) {
-//            $product_id = $this->request->data['product_id'];
-//            $name  = $this->request->data['name'];
-//            $email = $this->request->data['email'];
-//            $punctuality =  $this->request->data['punctuality'];
-//            $text =  $this->request->data['text'];
-//            $uid = $this->request->data['Review']['uid'];
-//            
-//            $this->request->data['Review']['product_id'] = $product_id;
-//            $this->request->data['Review']['name'] = $name;
-//            $this->request->data['Review']['email'] = $email;
-//           // $this->request->data['Review']['food_quality'] = $food_quality;
-//            //$this->request->data['Review']['price'] = $price;
-//            $this->request->data['Review']['punctuality'] = $punctuality;
-//           // $this->request->data['Review']['courtesy'] = $courtesy;
-//            $this->request->data['Review']['text'] = $text;
-//            $this->request->data['Review']['uid'] = $uid;
-//	if(isset($_POST['prod_avg_rate'])){
-//		$reve	= $_POST['prod_avg_rate'];
-//		$av_reiew = $reve?$reve:1;
-//   $this->Product->updateAll(array('Product.avg_rating' =>$av_reiew),
-//    array('Product.id' => $product_id));
-//	}
-//            $cnt = $this->Review->find('count', array('conditions' => array('AND' => array('Review.uid' => $uid, 'Review.product_id' => $product_id))));
-//            if ($cnt == 0) {
-//                $this->Review->save($this->request->data);
-//               $this->Session->setFlash('Thanks for review', 'flash_success');
-//               return $this->redirect('http://' .$_POST['server']);
-//            } else {
-//                
-//               $this->Session->setFlash('You have been already submitted the review', 'flash_success');
-//               return $this->redirect('http://' .$_POST['server']);
-//            }
-//         
-      }  
-  
+       $this->loadModel('Reviews');
+        if ($this->request->is('post')) {
+        $product_id = $this->request->data['product_id'];
+        $punctuality =  $this->request->data['punctuality'];
+        $text =  $this->request->data['text'];
+        
+        $post = array();
+
+        if(!empty($this->Auth->user('id'))){
+           $uid =  $this->Auth->user('id');
+        }else{
+           $uid =  0;   
+        }  
+        $post['user_id'] = $uid ;
+        $post['text'] = $text ;
+        $post['rating'] = $punctuality ;
+        $post['product_id'] = $product_id ;    
+        
+        
+        $review = $this->Reviews->newEntity();
+        $cnt = $this->Reviews->find('all', array('conditions' => array('AND' => array('Reviews.user_id' => $uid, 'Reviews.product_id' => $product_id))));
+        $cnt = $cnt->first(); 
+        if (empty($cnt)) {
+             $review = $this->Reviews->patchEntity($review, $post);
+             if ($this->Reviews->save($review)) {
+                 
+                 
+                $datacnt = $this->Reviews->find('all', array('conditions' =>array('Reviews.product_id' => $product_id)));
+                $datacnt = $datacnt->all()->toArray();
+                $sum = 0;
+                foreach($datacnt as $datra ){
+                  $sum +=  $datra['rating'];
+                }
+        
+        $count = count($datacnt);
+        $avg = (int) $sum / (int)$count ; 
+                $av_reiew = $avg?$avg:1;
+                $this->Products->updateAll(array('ava_rating' =>$av_reiew),
+                 array('Products.id' => $product_id));   
+                 
+                 
+                 
+               $this->Flash->success(__('Thanks for review'));
+               return $this->redirect('http://' .$_POST['server']);
+             }else{
+               $this->Flash->error(__('Something Wrong. Try again!'));
+               return $this->redirect('http://' .$_POST['server']);     
+             }
+         
+        } else {   
+           $this->Flash->success(__('You have been already submitted the review')); 
+           return $this->redirect('http://' .$_POST['server']);
+        }
+
+  }  
+
     }
      
      

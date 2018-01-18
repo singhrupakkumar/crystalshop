@@ -28,8 +28,6 @@
                 <th scope="col"><?= $this->Paginator->sort('Name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Email') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Seller') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('Phone') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('Subtotal') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Total') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col" class="actions"><?= __('Status') ?></th>
@@ -45,11 +43,9 @@
                 <td data-label="Order name"><?= h($info->name) ?></td> 
                 <td data-label="Order email"><?= h($info->email) ?></td>
                 <td data-label="Order user name"><?= h($info->user->name) ?></td>
-                <td data-label="Order phone"><?= h($info->phone) ?></td>
-                <td data-label="Order subtotal"><?= h($info->subtotal) ?></td>
                 <td data-label="Order total"><?= h($info->total) ?></td>
-                 <td data-label="Order created"><?= h($info->created) ?></td>
-                <td data-label="Order order_status"><?php if($info->order_status == 1){ echo "Processing"; }elseif($info->order_status == 2){ echo "Pending";  }elseif($info->order_status == 3){ echo "Complete";  }elseif($info->order_status == 4){ echo "Cancel";  } ?></td> 
+                 <td data-label="Order created"><?= h($info->created) ?></td> 
+                <td data-label="Order order_status"><?php if($info->order_status == 1){ echo "Pending"; }elseif($info->order_status == 2){ echo "Processing";  }elseif($info->order_status == 3){ echo "Complete";  }elseif($info->order_status == 4){ echo "Cancel";  } ?></td> 
                
             </tr>
             <?php endforeach; ?>
@@ -95,8 +91,6 @@
                 <th scope="col"><?= $this->Paginator->sort('Order ID') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Email') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('Phone') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('Subtotal') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Total') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -109,15 +103,13 @@
             <tr>
                  <td data-label="Order ID"><a href="<?php  echo $this->request->webroot; ?>orders/view/<?php echo $info['id']; ?>"><?= $this->Number->format($info->id) ?></a></td>
                 <td data-label="Order name"><?= h($info->name) ?></td>
-                <td data-label="Order email"><?= h($info->email) ?> </td>
-                <td data-label="Order phone"> <?= h($info->phone) ?></td>
-                <td data-label="Order subtotal"><?= h($info->subtotal) ?></td>
+                <td data-label="Order email"><?= h($info->email) ?> </td>  
                 <td data-label="Order total"><?= h($info->total) ?></td>
                 <td data-label="Order created"><?= h($info->created) ?></td> 
                 <td data-label="Order actions" class="actions">
                         <select name="dlsts" class="dlsts">
-                                <option <?php if($info->order_status==1){ echo "selected"; } ?> value="<?php echo $info['uid'] . '-'.$info['id']. '-'.'1'; ?>">Processing</option>
-                                <option <?php if($info->order_status==2){ echo "selected"; } ?> value="<?php echo $info['uid'] . '-'.$info['id']. '-'.'2'; ?>">Pending</option>
+                                <option <?php if($info->order_status==1){ echo "selected"; } ?> value="<?php echo $info['uid'] . '-'.$info['id']. '-'.'1'; ?>">Pending</option>
+                                <option <?php if($info->order_status==2){ echo "selected"; } ?> value="<?php echo $info['uid'] . '-'.$info['id']. '-'.'2'; ?>">Processing</option>
                                 <option <?php if($info->order_status==3){ echo "selected"; } ?> value="<?php echo $info['uid'] . '-'.$info['id']. '-'.'3'; ?>">Complete</option>
                                 <option <?php if($info->order_status==4){ echo "selected"; } ?> value="<?php echo $info['uid'] . '-'.$info['id']. '-'.'4'; ?>">Cancel</option>  
                         </select>                  

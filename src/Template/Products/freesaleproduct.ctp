@@ -1,12 +1,13 @@
 <?= $this->Html->css( array('docsupport/style.css') ) ?>  
 <div class="smart_container">
+ <?= $this->Flash->render() ?>  
     <!--------------------Your Order_sec----------------------->
     <div class="ur_ordr_sec">   
         <div class="ur_order">
             <h1>Bonus Product</h1>              
         </div>        
     </div>
-  <?= $this->Flash->render() ?>   
+  
     <!----------------bonus_section--------------------->
     <div class="bons_sctn">
         <div class="container">
@@ -33,6 +34,7 @@
     <table class="table table-condensed freesaleproducttbl">
 	<thead>
 		<tr>
+			<th><?= __('Image') ?></th>
 			<th><?= __('Id') ?></th>
 			<th><?= __('Name') ?></th>
 			<th><?= __('Price') ?></th>
@@ -40,7 +42,7 @@
 			<th><?= __('Category') ?></th>
 			<th><?= __('Seller Name') ?></th>
 			<th><?= __('Description') ?></th>
-			<th><?= __('Image') ?></th>
+			
 		</tr>
 		
 	</thead>
@@ -49,6 +51,13 @@
 
           
             <td><?= $this->Number->format($bonus->id) ?></td>
+			<td>
+               <?php if($bonus['image']){ ?>  
+                    <img src="<?php echo $this->request->webroot."images/products/".$bonus['image']; ?>" width="50">
+                     <?php }else{ ?>
+                    <img src="<?php echo $this->request->webroot."images/products/no-image.jpg"; ?>" width="50">
+                     <?php } ?> 
+          </td>
 
           <td><?= h($bonus->name) ?></td>
    
@@ -75,20 +84,25 @@
     
   
         
-          <td><?= h(strip_tags($bonus->description)) ?></td>
+          <td>
+                       <?php  
+                                        $string = strip_tags($bonus->description);
+                                        if (strlen($string) > 20) {    
+                                            $stringCut = substr($string, 0, 20);
+                                            $string = substr($stringCut, 0, strrpos($stringCut, ' ')).'... <a href="'.$this->request->webroot.'products/view/'.$bonus->slug.'" class="read_lst">Read More</a>'; 
+                                        }
+                                        ?>
+                     
+                     
+              <?php if(isset($string)){ echo $string; } ?>         
+          </td>
 
  
         
        
 
         
-          <td>
-               <?php if($bonus['image']){ ?>  
-                    <img src="<?php echo $this->request->webroot."images/products/".$bonus['image']; ?>" width="50">
-                     <?php }else{ ?>
-                    <img src="<?php echo $this->request->webroot."images/products/no-image.jpg"; ?>" width="50">
-                     <?php } ?> 
-          </td>
+          
         </tr>
        
 

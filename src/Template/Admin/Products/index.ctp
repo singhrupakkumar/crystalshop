@@ -64,6 +64,11 @@
                         __('Gallery'),
                         ['action' => 'gallery', $product->id],
                         ['escape' => false, 'title' => __('Gallery'), 'class' => 'btn btn-warning btn-xs']
+                    ) ?>  
+                       <?= $this->Html->link(   
+                        __('Reviews'),
+                        ['controller'=>'reviews','action' => 'index', $product->id],
+                        ['escape' => false, 'title' => __('Reviews'), 'class' => 'btn btn-warning btn-xs']
                     ) ?>
                     <?= $this->Html->link(
                         '<span class="fa fa-pencil"></span><span class="sr-only">' . __('Edit') . '</span>',

@@ -13,45 +13,15 @@
 	<div class="row">
 	<div class="col-sm-8">
         <div class="art-txt"><h5><?php if(isset($articles['title'])){ echo $articles['title']; }?></h5>
-	<h6>By <span>DAVID MULER</span>  Submitted On June 09, 2017</h6></div>
-	<p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-has been the industry's standard dummy text ever since the 1500s, when an unknown 
-printer took a galley of type and scrambled it to make a type specimen book. It has 
-survived not only five centuries, but also the leap into electronic typesetting, remaining 
-essentially unchanged. It was popularised in the 1960s with the release of Letraset 
-sheets containing Lorem Ipsum passages, and more recently with desktop publishing 
-software like Aldus PageMaker including versions of Lorem Ipsum.</p></div>
-<div class="col-sm-4">
-<div class="article-bx">
-<img class="artc-img" src="<?php echo $this->request->webroot; ?>images/website/ylw.png"></div></div></div>
-<p>Lorem Ipsum is simply dummy text of The printing and typesetting industry. Lorem Ipsum 
-has been the industry's standard dummy text ever since the 1500s, when an unknown printer
- took a galley of type and scrambled it to make a type specimen book. It has survived not 
-only five centuries, but also the leap into electronic typesetting, remaining essentially 
-unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum   </p>
-<p>Lorem Ipsum is simply dummy text of The printing and typesetting industry. Lorem Ipsum 
-has been the industry's standard dummy text ever since the 1500s, when an unknown printer
- took a galley of type and scrambled it to make a type specimen book. It has survived not 
-only five centuries, but also the leap into electronic typesetting, remaining essentially 
-unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum   </p>
-<p>Lorem Ipsum is simply dummy text of The printing and typesetting industry. Lorem Ipsum 
-has been the industry's standard dummy text ever since the 1500s, when an unknown printer
- took a galley of type and scrambled it to make a type specimen book. It has survived not 
-only five centuries, but also the leap into electronic typesetting, remaining essentially 
-unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum   </p>
-<p>Lorem Ipsum is simply dummy text of The printing and typesetting industry. Lorem Ipsum 
-has been the industry's standard dummy text ever since the 1500s, when an unknown printer
- took a galley of type and scrambled it to make a type specimen book. It has survived not 
-only five centuries, but also the leap into electronic typesetting, remaining essentially 
-unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum   </p>
-<p>Lorem Ipsum is simply dummy text of The printing and typesetting industry. Lorem Ipsum 
-has been the industry's standard dummy text ever since the 1500s, when an unknown printer
- took a galley of type and scrambled it to make a type specimen book. It has survived not 
-only five centuries, but also the leap into electronic typesetting, remaining essentially 
-unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum   </p>
-	
-	
-	</div>
+	<h6>By <span><?php if(isset($articles['author'])){ echo $articles['author']; }?></span>  Submitted On <?php if(isset($articles['created'])){ echo $articles['created']; }?></h6></div>
+	</div>  
+        </div>  
+        <?php if(isset($articles['description'])){ echo $articles['description']; }?>  
+	  
+            <!--div class="keyword"><span>Keywords: </span><?php if(isset($articles['keyword'])){ echo $articles['keyword']; }?></div--><br/>  
+            <div class="outboundlink"><a target="_blank" href="<?php if(isset($articles['outboundlink'])){ echo $articles['outboundlink']; }?>" class="btn btn-success scss_grn"><?php if(isset($articles['linkingtext'])){ echo $articles['linkingtext']; }?> </a></div><br/>  
+          
+	</div>        
 	
 	</div>
 	</div>
