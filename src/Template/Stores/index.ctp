@@ -3,15 +3,15 @@
          
    <img src="<?php echo $this->request->webroot; ?>images/website/sctn.png">
     <div class="btn_sell">
-        <a href="<?php echo $this->request->webroot ?>products/freesaleproduct"><button type="button" class="btn btn-success">Sell Your Products</button> </a>
+        <a href="<?php echo $this->request->webroot ?>products/addsellproduct"><button type="button" class="btn btn-success"><?php if(isset($homepages[0]['value'])){ echo $homepages[0]['value']; } ?></button> </a>
     	</div>
-		 <?= $this->Flash->render() ?>    
+		 <?= $this->Flash->render() ?>        
 	</div>
 
 <div class="slidr_section">
 
    <div class="slidr_heading">
-   <h4>Today's Top Seller</h4>
+   <h4><?php if(isset($homepages[1]['value'])){ echo $homepages[1]['value']; } ?></h4>
    	</div>
 	<div class="container">
     	<div class="row">
@@ -21,8 +21,9 @@
       <?php if(!empty($features)){ 
           foreach($features as $product){ 
           ?>      
-        <div> 
-    <div style="width:174px; height:174px;"> 
+        <div>      
+
+    <div style="width:100%; height:174px; border: 1px solid #bababa;"> 
        <a href="<?php echo $this->request->webroot."products/view/".$product['slug']; ?>"> 
        <?php if($product['image']){ ?> 
       <img src="<?php echo $this->request->webroot."images/products/".$product['image']; ?>" class="ful_lnght" title="<?php if(isset($product['name'])){ echo $product['name']; } ?>">
@@ -69,10 +70,11 @@
                             <li>(<?php echo count($product['reviews']); ?>)</li> 
       </ul>
       <div class="btn_sell1">   
+      <?php if(isset($homepages[6]['value'])){ $buybtn = $homepages[6]['value']; }else{ $buybtn = "Buy it Now"; } ?>    
       <?php echo $this->Form->create(NULL, array('url' => array('controller' => 'products', 'action' => 'addtocart'))); ?> 
       <?php echo $this->Form->control('id', array('type' => 'hidden', 'value' => $product['id'])); ?>
       <?php echo $this->Form->control('seller_id', array('type' => 'hidden', 'value' => $product['user_id'])); ?>        
-      <?php echo $this->Form->button('Buy it Now', array('class' => 'btn btn-success scss_grn','id' => $product['id']));?>
+      <?php echo $this->Form->button($buybtn, array('class' => 'btn btn-success scss_grn','id' => $product['id']));?>
       <?php echo $this->Form->end(); ?>
     	</div>
        </div>
@@ -90,7 +92,7 @@
 <!------------shop_category-section---------------->
 <div class="shop_ctgry">
   <div class="slidr_heading">
-   <h4>Shop By Category</h4>
+   <h4><?php if(isset($homepages[2]['value'])){ echo $homepages[2]['value']; } ?></h4>
    	</div>
 	<div class="container">
     	<div class="row">
@@ -118,7 +120,7 @@
          
           </ul>
           <div class="see_txt"> 
-           <a href="<?php echo $this->request->webroot."categories"; ?>">See More Categories<i class="fa fa-angle-right" aria-hidden="true"></i></a>  
+           <a href="<?php echo $this->request->webroot."categories"; ?>"><?php if(isset($homepages[3]['value'])){ echo $homepages[3]['value']; } ?><i class="fa fa-angle-right" aria-hidden="true"></i></a>  
           </div>
           </div> 
           
@@ -129,7 +131,7 @@
 <!------------recent-section-------------->
 <div class="recent_section">
 <div class="slidr_heading">
-   <h4>Recent Articles</h4>
+   <h4><?php if(isset($homepages[4]['value'])){ echo $homepages[4]['value']; } ?></h4>
    <span class="sub_artcle"></span>
    	</div>
 	<div class="container">
@@ -157,7 +159,7 @@
                  
               
                 <div class="see_txt">  
-                <a href="<?php echo $this->request->webroot; ?>articles/all">Read More Articles<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                <a href="<?php echo $this->request->webroot; ?>articles/all"><?php if(isset($homepages[5]['value'])){ echo $homepages[5]['value']; } ?><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                </div>  
         	</div>     
     	</div>

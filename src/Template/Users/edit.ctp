@@ -39,7 +39,7 @@
                             </div>
                         
                              <div class="input-group">
-                                <span class="input-group-addon brdr_trns"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                                <span class="input-group-addon brdr_trns"><i class="fa fa-paypal" aria-hidden="true"></i></span> 
                                 <?php echo $this->Form->control('paypal_email', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Paypal Email Address']); ?> 
                             </div>
 
@@ -55,7 +55,7 @@
                         
                             <div class="input-group">
                               <span class="input-group-addon brdr_trns"><i class="fa fa-mobile fnt_inc" aria-hidden="true"></i></span>  
-                              <?php echo $this->Form->control('phone', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Phone Number','maxlength'=>12]); ?>
+                              <?php echo $this->Form->control('phone', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'123-456-1234','maxlength'=>12]); ?>
                            </div>
                            <div class="input-group ">
                            <span class="input-group-addon brdr_trns"><i class="fa fa-calendar fnt_clng" aria-hidden="true"></i></span>  
@@ -77,11 +77,12 @@
                            <div class="input-group cntr_ctl">
                               <!--<label for="exampleInputPassword1">Country</label> -->
                               <span class="input-group-addon brdr_trns"><i class="fa fa-flag" aria-hidden="true"></i></span>
-                                <select class="form-control form-select ajax-processed sel-country" id="edit-node-type" name="country" readonly="readonly">
-                               <option value="-1" selected="selected">Select Country</option>
+                              <select class="form-control form-select ajax-processed sel-country" id="edit-node-type" name="country" required="required">
+                               <option value="United States">United States</option>
                                <?php if(!empty($countries)){ ?>
                                <?php foreach($countries as $country){ ?>
-                               <?php if($user['country'] == $country['name']){ ?>
+                               <?php   
+                               if($user['country'] == $country['name']){ ?>
                                <option value="<?php echo $country['name']; ?>" selected="selected"><?php echo $country['name']; ?></option>
                                <?php }else{ ?>
                                <option value="<?php echo $country['name']; ?>"><?php echo $country['name']; ?></option>
@@ -132,8 +133,7 @@ var num = contactFormat($(this).val());
 			name: {required:true},
 			dob: {required:true},
                         phone: { 
-                            required:true, 
-                            number:true,
+                            required:true,  
                         },
                         zip: {
                             required:true,

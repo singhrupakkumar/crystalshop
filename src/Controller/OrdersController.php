@@ -108,6 +108,40 @@ class OrdersController extends AppController
 
         exit;  
     }
+    
+     public function ordercancel($id = null){     
+         
+         $order = $this->Orders->get($id);
+         $post['order_status'] = 4;
+         $order = $this->Orders->patchEntity($order, $post);
+        if ($this->Orders->save($order)) {  
+
+            $this->Flash->success(__('Order Cancel successfully.'));
+            
+        $data = $this->Orders->find('all', array('contain'=>array('Users','OrderItems','Seller'),'conditions' => array('Orders.id' => $id)));  
+        $data = $data->first()->toArray();     
+               
+               $email = new Email('default');     
+
+                 $send = $email->from(['rupak@avainfotech.com' => 'Earth Vendors'])      
+                        ->emailFormat('html')
+                        ->template('ordercancel')
+                        ->cc('rupak@avainfotech.com')
+                        ->cc($data['seller']['email']) 
+                        ->to($data['email']) 
+                        ->subject('Order Cancellation')    
+                        ->viewVars(array('order' => $data))           
+                        ->send();    
+ 
+
+        } else {    
+            $this->Flash->error(__('Unable to Cancel.'));
+
+        }
+        return $this->redirect(['action' => 'orderhistory']);  
+        
+        
+    }
 
    
 }

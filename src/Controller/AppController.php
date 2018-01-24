@@ -131,6 +131,7 @@ class AppController extends Controller
                 $this->set('_serialize', ['globalsettings']);    
 		
 		/*************************************/
+           
 		
 		$this->loadModel('Staticpages');
 		$firstpage = $this->Staticpages->find('all');
@@ -140,11 +141,11 @@ class AppController extends Controller
                 $this->set('_serialize', ['firstpage']);
                 
                 $this->loadModel('Categories');
-		$categories = $this->Categories->find('all',['conditions'=>['Categories.status'=>1]]);    
-		$categories = $categories->all()->toArray();
+		$categorieslist = $this->Categories->find('all',['conditions'=>['Categories.status'=>1]]);    
+		$categorieslist = $categorieslist->all()->toArray();
 		
-		$this->set(compact('categories'));
-                $this->set('_serialize', ['categories']);
+		$this->set(compact('categorieslist'));
+                $this->set('_serialize', ['categorieslist']);   
 		
 		/*************************************/
 

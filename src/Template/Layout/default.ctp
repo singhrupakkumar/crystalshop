@@ -154,8 +154,8 @@ $cakeDescription = '';
                    
                     <select name="catid" style=" border: 0;   line-height: 30px;  height: 34px; width: 100px; border-left: 1px solid #ccc;">
                               <option value="0">All Categories</option>   
-                                <?php if(isset($categories)){   
-                                    foreach($categories as $cat){
+                                <?php if(isset($categorieslist)){   
+                                    foreach($categorieslist as $cat){  
                                     ?>  
                                 <option value="<?php if(isset($cat['id'])){ echo $cat['id']; } ?>"><?php if(isset($cat['name'])){ echo $cat['name'];} ?></option>
                                 <?php }   
@@ -223,7 +223,7 @@ $cakeDescription = '';
                 <li class="<?php  if($this->request->params['action'] == 'index' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>stores/index">Home</a></li>
                 <li class="<?php  if($this->request->params['action'] == 'contact' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>staticpages/contact">Contact Us</a></li> 
                 <li class="<?php  if($this->request->params['action'] == 'addsellproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>products/addsellproduct">Selling Your Products</a></li>
-                 <li class="<?php  if($this->request->params['action'] == 'add' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>articles/add">Promote Your Products</a></li>  
+                 <li class="<?php  if($this->request->params['action'] == 'promoteproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>staticpages/promoteproduct">Promote Your Products</a></li>  
             </ul>      
             
         </div>
@@ -281,11 +281,11 @@ $cakeDescription = '';
                        
                     </div>
                     <ul>
-                    <li><a href="<?php echo $this->request->webroot ?>users/add">Become a seller</a></li>
-                    <li><a href="<?php echo $this->request->webroot ?>articles/add">Write an article</a></li>
-                    <li><a href="<?php echo $this->request->webroot ?>articles/add">Promote Yourself</a></li>  
+                    <li><a href="<?php echo $this->request->webroot ?>staticpages/becomeaseller">Become a seller</a></li>
+                    <li><a href="<?php echo $this->request->webroot ?>staticpages/writeanarticle">Write an article</a></li>
+                    <li><a href="<?php echo $this->request->webroot ?>staticpages/promoteproduct">Promote Yourself</a></li>  
                     </ul>
-                	</div>
+                	</div>  
                </div>
                
                <div class="col-sm-3">
@@ -302,8 +302,8 @@ $cakeDescription = '';
                             
                             <form  method="post" id="subscribe">
                               <input id="email" type="email" name="email" class="form-control" placeholder="Your email address">
-                              <button type="button" id="nwsltr" name="nwsltr" class="submit_align">SUBRCIBE</button>  
-                            </form> 
+                              <button type="button" id="nwsltr" name="nwsltr" class="submit_align">SUBSCRIBE</button>    
+                            </form>  
                             <div class="message fotermessg" ></div>   
                          </div>
                     </div>
@@ -464,11 +464,45 @@ $cakeDescription = '';
         });
         
         $(document).ready(function(){ 
-                $('.flash-msg').delay(8000).fadeOut('slow');
-        }); 
+                $('.flash-msg').delay(5000).fadeOut('slow');
+        });
         
     </script> 
-   
+
+    
+    <script> 
+//    jQuery("#s").autocomplete({
+//		minLength: 2,
+//		select: function(event, ui) {
+//			jQuery("#s").val(ui.item.label);
+//			jQuery("#searchform").submit();
+//		},
+//		source: function (request, response) {
+//			jQuery.ajax({
+//				url: 'https://rupak.crystalbiltech.com/affiliate/products/searchjson',
+//				data: {
+//					term: request.term
+//				},
+//				dataType: "json",
+//				success: function(data) {
+//					response(jQuery.map(data, function(el, index) {
+//						return {
+//							value: el.name,
+//							name: el.name,
+//							image: el.image
+//						};
+//					}));
+//				}
+//			});
+//		}
+//	}).data("ui-autocomplete")._renderItem = function (ul, item) {
+//		return jQuery("<li></li>")
+//			.data("item.autocomplete", item) 
+//			.append("<a><img width='40' src='https://rupak.crystalbiltech.com/affiliate/images/products/" + item.image + "' /> " + item.name + "</a>")
+//			.appendTo(ul)
+//	};
+	</script> 
+    
 <script>
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";

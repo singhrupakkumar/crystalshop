@@ -12,17 +12,20 @@
 <section class="content">
 	<div class="row">
     
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
+                <a href="<?php echo $this->request->webroot; ?>admin/users">  
                 <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">All Users</span>
+                  
+                    <span class="info-box-text">All Sellers</span>
                     <span class="info-box-number"><?php echo count($users); ?><small></small></span> 
                 </div>
+              </a>  
             </div>
         </div>
         
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <!--div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-red"><i class="fa fa-blind"></i></span>
                 <div class="info-box-content">
@@ -30,25 +33,29 @@
                     <span class="info-box-number"><?php echo count($seller); ?></span>
                 </div>  
             </div>
-        </div>
+        </div--> 
         
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
+                <a href="<?php echo $this->request->webroot; ?>admin/products">  
                 <span class="info-box-icon bg-green"><i class="fa fa-bicycle"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Products</span>
                     <span class="info-box-number"><?php echo count($products); ?></span>
                 </div>
+              </a>  
             </div>
         </div>
         
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
+            <a href="<?php echo $this->request->webroot; ?>admin/reviews">      
                 <span class="info-box-icon bg-yellow"><i class="fa fa-star"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Reviews</span>
-                    <span class="info-box-number"><?php // echo count($reviews); ?></span>
+                    <span class="info-box-number"><?php echo count($reviews); ?></span>
                 </div>
+            </a> 
             </div>
         </div>
     

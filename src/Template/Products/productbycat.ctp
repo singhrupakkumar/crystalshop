@@ -60,8 +60,8 @@
                     <?php if(!empty($products)):
                         foreach($products as $item):
                         ?>
-                    <div class="col-sm-3">   
-                        <div class="cvr_pic">
+                    <div class="col-sm-4">     
+                        <div class="cvr_dsgn">
                             <a href="<?php echo $this->request->webroot."products/view/".$item['slug']; ?>"> 
                             <div class="brd_pic">
                                  <?php if($item['image']){ ?>   
@@ -75,7 +75,7 @@
                                 <h5><?php if(isset($item['name'])){ echo $item['name']; } ?></h5>
                                 <span>$<?php if(isset($item['price'])){ echo $item['price']; } ?></span>    
                                 <div class="star_lst">
-                                   <ul>
+                                   <!--ul>
                                       <?php 
                                $avg = 0;
                                $avgRating = 0; 
@@ -107,7 +107,7 @@
                                         } 
 			                    ?>   
                                      <li>(<?php echo count($item['reviews']); ?>)</li> 
-                                    </ul>
+                                    </ul-->
                                     <div class="btn_sell1">   
                                     <?php echo $this->Form->create(NULL, array('url' => array('controller' => 'products', 'action' => 'addtocart'))); ?> 
                                     <?php echo $this->Form->control('id', array('type' => 'hidden', 'value' => $item['id'])); ?> 

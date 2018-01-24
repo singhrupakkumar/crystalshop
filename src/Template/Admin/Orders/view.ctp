@@ -71,7 +71,7 @@
         </tr>
          <tr>
             <th scope="row"><?= __('Status') ?></th>
-            <td><?php if($order->order_status == 1){ echo "Processing"; }elseif($order->order_status == 2){ echo "Pending";  }elseif($order->order_status == 3){ echo "Complete";  }elseif($order->order_status == 4){ echo "Cancel";  } ?></td>    
+            <td><?php if($order->order_status == 1){ echo "Pending"; }elseif($order->order_status == 2){ echo "Processing";  }elseif($order->order_status == 3){ echo "Complete";  }elseif($order->order_status == 4){ echo "Cancel";  } ?></td>    
         </tr> 
         <tr>
             <th scope="row"><?= __('Created') ?></th>

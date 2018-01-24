@@ -1,4 +1,8 @@
-
+<style>
+    .error-message{
+        color: red;
+    }  
+</style>
 <div class="frm_sgnup">
 	<div class="container">
     	<div class="row">
@@ -33,21 +37,22 @@
           <?php echo $this->Form->error('email', null, array('class' => 'label label-block label-danger text-left', 'wrap' => 'label')); ?>
     </div>
     
-    <div class="input-group zip_full <?= ($this->Form->isFieldError('paypal_email'))? 'has-error': '' ; ?>">
-         <span class="input-group-addon brdr_trns"><i class="fa fa-envelope-o" aria-hidden="true"></i></span> 
+    <div class="input-group zip_full <?= ($this->Form->isFieldError('paypal_email'))? 'has-error': '' ; ?>">  
+         <span class="input-group-addon brdr_trns"><i class="fa fa-paypal" aria-hidden="true"></i></span> 
           <input name="paypal_email" id="paypal_email" class="form-control ctrl_smn" placeholder="Paypal Email Address" type="email" value="<?php echo isset($user['paypal_email']) ? $user['paypal_email'] : ''; ?>">
            
           <?php echo $this->Form->error('paypal_email', null, array('class' => 'label label-block label-danger text-left', 'wrap' => 'label')); ?>
     </div>
  
-    <div class="input-group zip_full">
+    <div class="input-group zip_full <?= ($this->Form->isFieldError('phone'))? 'has-error': '' ; ?>">
       <span class="input-group-addon brdr_trns"><i class="fa fa-mobile fnt_inc" aria-hidden="true"></i></span>
        <?php echo $this->Form->control('phone', [
         'label' => false,
         'class' => 'form-control ctrl_smn',
-        'placeholder' => 'Phone Number',
+        'placeholder' => '123-456-1234',  
         'maxlength'=>12     
     ]); ?>
+         
     </div>
     
      <div class="input-group zip_full">

@@ -1,4 +1,3 @@
-
 <div class="smart_container">
 <!--------------------Your Order_sec----------------------->
 	<div class="ur_ordr_sec">
@@ -21,7 +20,7 @@
         	<div class="order_tbl">
             <div class="order_tblsec table-responsive">
 
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="yourorder" class="table table-bordered table-hover">
              <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('Order ID') ?></th>
@@ -31,6 +30,7 @@
                 <th scope="col"><?= $this->Paginator->sort('Total') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col" class="actions"><?= __('Status') ?></th>
+                <th scope="col" class="actions"><?= __('Action') ?></th>
             </tr>
             </thead>
                 <tbody>
@@ -46,7 +46,27 @@
                 <td data-label="Order total"><?= h($info->total) ?></td>
                  <td data-label="Order created"><?= h($info->created) ?></td> 
                 <td data-label="Order order_status"><?php if($info->order_status == 1){ echo "Pending"; }elseif($info->order_status == 2){ echo "Processing";  }elseif($info->order_status == 3){ echo "Complete";  }elseif($info->order_status == 4){ echo "Cancel";  } ?></td> 
+            
+                <td data-label="Order actions" class="actions">   
+                     <?php 
+                    $orderdate = $info->created;  
+                   $createDate = new DateTime($orderdate);
+                   $strip = $createDate->format('Y-m-d');
+                    $now = time(); // or your date as well
+            $your_date = strtotime($strip);
+            $datediff = $now - $your_date;
+
+             $datecount = floor($datediff / (60 * 60 * 24));
+               if($info->order_status !=3){  
+              if($datecount > 2 && $info->order_status !=4){ 
                
+                         ?>        
+                   <p>You cannot cancel this Booking as cancellation period has expired.</p>   
+                    <?php }elseif($info->order_status !=4){ ?> 
+                    <?= $this->Form->postLink(__('Cancel'), ['action' => 'ordercancel', $info['id']], ['confirm' => __('Are you sure you want to cancel order # {0}?', $info['id']),'class' => 'btn btn-danger btn-xs']) ?>     
+               <?php } } ?>                    
+                </td> 
+         
             </tr>
             <?php endforeach; ?>
                 </tbody>
@@ -85,7 +105,7 @@
         	<div class="order_tbl">
             <div class="order_tblsec table-responsive">
 
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="sellingorder" class="table table-bordered table-hover">
              <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('Order ID') ?></th>
@@ -142,5 +162,8 @@
         });
         //alert(a);
     });
+    
+        $('#yourorder').DataTable();  
+        $('#sellingorder').DataTable();  
 </script>
  

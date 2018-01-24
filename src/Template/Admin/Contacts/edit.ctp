@@ -22,19 +22,19 @@
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Name</label>
-                  <?php echo $this->Form->control('name', ['class' => 'form-control', 'label' => false]); ?>
+                  <?php echo $this->Form->control('name', ['class' => 'form-control', 'label' => false,'readonly']); ?>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Email</label>
-                  <?php echo $this->Form->control('email', ['class' => 'form-control', 'label' => false]); ?>
+                  <?php echo $this->Form->control('email', ['class' => 'form-control', 'label' => false,'readonly']); ?>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Subject</label>
-                  <?php echo $this->Form->control('subject', ['class' => 'form-control', 'label' => false]); ?>
+                  <?php echo $this->Form->control('subject', ['class' => 'form-control', 'label' => false,'readonly']); ?>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Message</label>
-                  <?php echo $this->Form->control('message', ['type' => 'text', 'class' => 'form-control', 'label' => false]); ?>
+                  <?php echo $this->Form->control('message', ['type' => 'text', 'class' => 'form-control', 'label' => false,'readonly']); ?>
                 </div>
                   
                <div class="form-group">  

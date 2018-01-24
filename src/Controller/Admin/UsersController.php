@@ -388,6 +388,95 @@ class UsersController extends AppController
 		$this->set(compact('user'));
         $this->set('_serialize', ['user']);
 	}
+        
+        /**
+     * 
+     * @param type $id
+     */
+    public function enable($id = null) {
+           $user = $this->Users->get($id);
+           $post['status'] = 1;
+           $user = $this->Users->patchEntity($user, $post);
+        if ($this->Users->save($user)) {
+
+            $this->Flash->success(__('Activated successfully.'));
+
+        } else {
+
+            $this->Flash->error(__('Unable to activate.'));
+
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * 
+     * @param type $id
+     */
+    public function desable($id = null) {
+         $user = $this->Users->get($id);
+         $post['status'] = 0;
+         $user = $this->Users->patchEntity($user, $post);
+        if ($this->Users->save($user)) {
+
+            $this->Flash->success(__('Deactivated successfully.'));
+
+        } else {  
+
+            $this->Flash->error(__('Unable to Deactivated.'));
+
+        }
+
+
+
+        return $this->redirect(['action' => 'index']);
+    }
+    
+      
+        /**
+     * 
+     * @param type $id
+     */
+    public function bonusenable($id = null) { 
+           $this->loadModel('Products'); 
+           $user = $this->Products->get($id);
+           $post['bonus_disable_admin'] = 0;
+           $user = $this->Products->patchEntity($user, $post);
+        if ($this->Products->save($user)) {
+
+            $this->Flash->success(__('Enable successfully.'));
+
+        } else {
+
+            $this->Flash->error(__('Unable to enable.'));
+
+        } 
+        
+       return $this->redirect(['action' => 'view/'.$user['user_id']]);   
+    }
+
+    /**
+     * 
+     * @param type $id
+     */
+    public function bonusdisable($id = null) {
+        $this->loadModel('Products'); 
+         $user = $this->Products->get($id);
+         $post['bonus_disable_admin'] = 1;
+         $user = $this->Products->patchEntity($user, $post);
+        if ($this->Products->save($user)) {
+
+            $this->Flash->success(__('Disable successfully.'));
+
+        } else {  
+
+            $this->Flash->error(__('Unable to Disable.'));
+
+        }
+        return $this->redirect(['action' => 'view/'.$user['user_id']]);  
+    }
+
 
 }
 

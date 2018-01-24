@@ -28,7 +28,8 @@
 
   
   
-    <div class="col-sm-12">
+    <div class="col-sm-12 <?php if($bonus['bonus_disable_admin']==1){ echo "disble"; } ?>">
+    <?php if($bonus['bonus_disable_admin']==1){ echo '<div class="disble-txt">Product disabled by Admin </div>'; } ?>          
 	<div class="row">
   <div class="box-body no-padding">
     <table class="table table-condensed freesaleproducttbl">

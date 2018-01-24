@@ -58,6 +58,7 @@ class DashboardController extends AppController
 
 		$this->loadModel('Users');
                 $this->loadModel('Products');
+                $this->loadModel('Reviews');
 		
 		$users = $this->Users->find('all',[
 			'conditions' => ['Users.role' => 'user','Users.status' => 1]
@@ -88,6 +89,13 @@ class DashboardController extends AppController
 		
 		$this->set('members', $members);
 		$this->set('_serialize', ['members']);
+                
+                $reviews = $this->Reviews->find('all',[
+                'conditions' => ['Reviews.status' => 1],
+		])->all()->toArray();
+		
+		$this->set('reviews', $reviews);  
+		$this->set('_serialize', ['reviews']);
 		  
 
 	}

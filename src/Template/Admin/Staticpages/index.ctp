@@ -26,7 +26,6 @@
                 <tr>
                   <th>ID</th>
                   <th>Title</th>
-                  <th>Image</th>
                   <th>Actions</th>
                 </tr>
                 </thead>
@@ -34,14 +33,14 @@
                 <?php foreach($staticpages as $staticpage): ?>
                 <tr>
                   <td><?php echo $staticpage['id']; ?></td>
-                  <td><?php echo $staticpage['title']; ?></td>
-                  <td>
-                    <?php if($staticpage['image'] != ''){ ?>
+                  <td><?php echo $staticpage['title']; ?></td>   
+                  <!--td>
+                    <?php if($staticpage['image'] != ''){ ?>  
                     <img src="<?php echo $this->request->webroot; ?>images/staticpages/<?php echo $staticpage['image']; ?>" style="width: 140px;" class="previewHolder"/>
                     <?php }else{ ?>
                     <img src="<?php echo $this->request->webroot; ?>images/staticpages/no_image.jpg" style="width: 140px;" class="previewHolder"/>
                     <?php } ?>
-                  </td>
+                  </td-->  
                   <td>
                     <?= $this->Html->link(
                         '<span class="fa fa-eye"></span><span class="sr-only">' . __('View') . '</span>',

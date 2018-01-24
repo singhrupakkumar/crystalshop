@@ -46,9 +46,9 @@ myvar += '   <tr>'+
 '      </td>'+
 '      <td data-label="PRICE">$'+ value.price +'</td>'+
 '      <td data-label="DELIVERY DETAIL">';
- if(value.product.delivery_details != null){
- myvar += '      <h3 class="fre_colr">Free</h3>'+
-'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>';
+ if(value.product.delivery_details != null){    
+ myvar += '      <h3 class="fre_colr"></h3>'+
+'      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>';   
  }
 myvar += '      </td>'+
 '      <td data-label="REMOVE" class="trsh_sze"><i class="fa fa-trash remove_item" id=' + value.product.id + ' aria-hidden="true"></i></td>'+
@@ -131,7 +131,7 @@ myvar += '   <tr>'+
 '      <td data-label="PRICE">$'+ value.price +'</td>'+
 '      <td data-label="DELIVERY DETAIL">';
  if(value.product.delivery_details != null){
- myvar += '      <h3 class="fre_colr">Free</h3>'+
+ myvar += '      <h3 class="fre_colr"></h3>'+
 '      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>';
  }
 myvar += '      </td>'+
@@ -221,7 +221,7 @@ myvar += '   <tr>'+
 '      <td data-label="PRICE">$'+ value.price +'</td>'+
 '      <td data-label="DELIVERY DETAIL">';
  if(value.product.delivery_details != null){
- myvar += '      <h3 class="fre_colr">Free</h3>'+
+ myvar += '      <h3 class="fre_colr"></h3>'+
 '      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>';
  }
 myvar += '      </td>'+
@@ -308,7 +308,7 @@ myvar += '   <tr>'+
 '      <td data-label="PRICE">$'+ value.price +'</td>'+
 '      <td data-label="DELIVERY DETAIL">';
  if(value.product.delivery_details != null){
- myvar += '      <h3 class="fre_colr">Free</h3>'+
+ myvar += '      <h3 class="fre_colr"></h3>'+
 '      <span class="delvr_bsns">'+ value.product.delivery_details +'</span>';
  }
 myvar += '      </td>'+

@@ -1,6 +1,7 @@
 <section class="content-header">
     <h1>
     Users
+     <?= $this->Flash->render() ?> 
     <small></small>
     </h1>
     <ol class="breadcrumb">
@@ -12,7 +13,7 @@
 <section class="content">
 	<div class="row">
         <div class="col-xs-12">
-        
+         
         
         <div class="box">
   <div class="box-header">
@@ -160,7 +161,16 @@
           </td>
         </tr>
          <?php } ?>
-
+        <tr>
+             <th><?= __('') ?></th>
+             <td>
+            <?php if($bonus['bonus_disable_admin'] == 1){ ?>     
+                       <?= $this->Form->postLink(__('Enable'), ['action' => 'bonusenable', $bonus['id']], ['confirm' => __('Are you sure you want to enable # {0}?', $bonus['id']),'class' => 'btn btn-success btn-xs']) ?>      
+                    <?php }else{ ?> 
+                    <?= $this->Form->postLink(__('Disable'), ['action' => 'bonusdisable', $bonus['id']], ['confirm' => __('Are you sure you want to disable # {0}?', $bonus['id']),'class' => 'btn btn-danger btn-xs']) ?>     
+                    <?php } ?>  
+             </td>         
+        </tr>
      
       </tbody>
     </table>

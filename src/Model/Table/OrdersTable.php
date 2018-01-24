@@ -43,11 +43,14 @@ class OrdersTable extends Table
         $this->belongsTo('Users', [      
             'foreignKey' => 'uid',
             'joinType' => 'INNER'
-        ]);   
-    
+        ]);     
+       $this->belongsTo('Seller', [  
+            'className' => 'Users',
+            'foreignKey' => 'seller_id'
+        ]);    
 
         $this->hasMany('OrderItems', [  
-            'foreignKey' => 'order_id'
+            'foreignKey' => 'order_id'  
         ]);
        
     }
@@ -64,4 +67,12 @@ class OrdersTable extends Table
 
         return $validator; 
     }
+   
+        public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['seller_id'], 'Seller'));  
+
+        return $rules;
+    }
+    
 }

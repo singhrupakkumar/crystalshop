@@ -16,8 +16,8 @@ class StaticpagesController extends AppController
 	
 	public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        $this->Auth->allow(['view','faq','contact','term']);    
-        $this->authcontent();
+        $this->Auth->allow(['view','faq','contact','term','promoteproduct','writeanarticle','becomeaseller']);      
+        $this->authcontent();    
     }
 	
     /**
@@ -198,5 +198,29 @@ class StaticpagesController extends AppController
     
        $this->set(compact('faq'));
        $this->set('_serialize', ['faq']);  
+    }
+    
+    public function promoteproduct(){
+       $promoteproduct = $this->Staticpages->find('all',['conditions'=>['Staticpages.position'=>'promoteproduct','Staticpages.status'=>1]]);
+       $promoteproduct = $promoteproduct->first();  
+    
+       $this->set(compact('promoteproduct'));
+       $this->set('_serialize', ['promoteproduct']);    
+    }
+    
+     public function writeanarticle(){
+       $promoteproduct = $this->Staticpages->find('all',['conditions'=>['Staticpages.position'=>'write-article','Staticpages.status'=>1]]);
+       $promoteproduct = $promoteproduct->first();  
+    
+       $this->set(compact('promoteproduct'));
+       $this->set('_serialize', ['promoteproduct']);    
+    }
+    
+     public function becomeaseller(){
+       $promoteproduct = $this->Staticpages->find('all',['conditions'=>['Staticpages.position'=>'become-a-seller','Staticpages.status'=>1]]);
+       $promoteproduct = $promoteproduct->first();  
+    
+       $this->set(compact('promoteproduct'));
+       $this->set('_serialize', ['promoteproduct']);    
     }
 }

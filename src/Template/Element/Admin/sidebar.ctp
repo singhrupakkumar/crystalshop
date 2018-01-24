@@ -30,7 +30,7 @@
         
         <li class="<?php if($this->request->params['controller'] == 'Users' ) { echo "active"; }?>">
           <a href="<?php echo $this->request->webroot; ?>admin/users">
-            <i class="fa fa-user"></i> <span>Users</span>
+            <i class="fa fa-user"></i> <span>Sellers</span>
             <span class="pull-right-container">
             </span>
           </a>
@@ -83,6 +83,28 @@
           </a>  
         </li>
         
+        <li class="<?php if($this->request->params['controller'] == 'Orders' ) { echo "active"; }?>">
+          <a href="<?php echo $this->request->webroot; ?>admin/orders/payments">
+            <i class="fa fa-money"></i> <span>Payments</span>      
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li>
+        
+        <li class="<?php if($this->request->params['controller'] == 'Reviews' ) { echo "active"; }?>">
+          <a href="<?php echo $this->request->webroot; ?>admin/reviews">
+            <i class="fa fa-comments-o"></i> <span>Reviews</span>        
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li>
+        <li class="<?php if($this->request->params['action'] == 'homepage' ) { echo "active"; }?>">
+          <a href="<?php echo $this->request->webroot; ?>admin/staticpages/homepage">
+            <i class="fa fa-file"></i> <span>Home Page</span>  
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li>
         <li class="<?php if($this->request->params['controller'] == 'Settings' ) { echo "active"; }?>">
           <a href="<?php echo $this->request->webroot; ?>admin/settings">
             <i class="fa fa-cog"></i> <span>Settings</span>  
@@ -90,8 +112,7 @@
             </span>
           </a>
         </li>
-         
-       
+  
       </ul>
     </section>
     <!-- /.sidebar -->

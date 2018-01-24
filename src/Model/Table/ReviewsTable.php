@@ -44,7 +44,7 @@ class ReviewsTable extends Table
         /*$this->belongsTo('Trainers', [
             'foreignKey' => 'trainer_id'
         ]);*/
-        $this->belongsTo('Products', [
+        $this->belongsTo('Products', [ 
             'foreignKey' => 'product_id'
         ]);
 		

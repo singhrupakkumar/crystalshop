@@ -52,7 +52,7 @@ class StoresController extends AppController
         $this->loadModel('Products');
         $this->loadModel('Categories'); 
         $this->loadModel('Articles');   
-        $products = $this->Products->find('all',['contain'=>['Categories','Reviews'], 'conditions' => ['Products.status' => 1]]);
+        $products = $this->Products->find('all',['contain'=>['Categories','Reviews'], 'conditions' => ['Products.status' => 1,'Products.bonus_disable_admin' => 0]]);
         $features = $products->all(); 
         $features = $features->toArray();
         /*************Categories*************/
@@ -83,6 +83,16 @@ class StoresController extends AppController
         $this->set('_serialize', ['features']);
         $this->set('categories', $categories);
         $this->set('_serialize', ['categories']); 
+        /*************************************/
+        $this->loadModel('Homepages');      
+        $homepages = $this->Homepages->find('all');
+        $homepages = $homepages->all()->toArray();    
+
+
+        $this->set(compact('homepages'));
+        $this->set('_serialize', ['homepages']);    
+
+
     }
     
       public function shop() 
@@ -550,13 +560,18 @@ class StoresController extends AppController
     public function payment() {
         $this->loadModel('Orders');
         $this->loadModel('OrderItems');  
-        $this->loadModel('Users');    
- 
+        $this->loadModel('Users');
+        $this->loadModel('Settings');
+        $settings =  $this->Settings->find('all',['conditions'=>['Settings.key'=>'sale_commission']]); 
+        $settings = $settings->first();
+        $commission = $settings['value'] ;
+
         $uid      = $this->Auth->user('id');
         $sesid    = $this->request->session()->id(); 
         $shipping = $this->request->session()->read('shippingaddress');
         $user_id = $uid?$uid:0;   
         $cart = $this->displaycart($user_id, $sesid);  
+
         $user = $this->Users->find('all',['Users.id'=>$user_id]);
         $user = $user->first();
         
@@ -586,8 +601,9 @@ class StoresController extends AppController
             $orderdata['state'] = $orderstate;
             $orderdata['zip'] = $orderzip;  
             $orderdata['seller_id'] = $cart['seller']['id'];
-            $orderdata['order_item_count'] = $cart['cartInfo']['order_item_count']; 
+            $orderdata['order_item_count'] = $cart['cartInfo']['order_item_count'];    
             $orderdata['subtotal'] = $cart['cartInfo']['subtotal'];
+            $orderdata['commission_amount'] = $cart['cartInfo']['total']*$commission/100;
             $orderdata['total'] = $cart['cartInfo']['total'];  
             $orders = $this->Orders->patchEntity($orders, $orderdata);
             $save = $this->Orders->save($orders);  
@@ -599,6 +615,11 @@ class StoresController extends AppController
                $orderitemsave['order_id'] = $last_id; 
                $orderitemsave['product_id'] = $orderitem['product_id'];  
                $orderitemsave['name'] = $orderitem['name'];
+               if($orderitem['product']['free_sale']== 1){  
+               $orderitemsave['commission_amount'] = 0;   
+               }else{
+                 $orderitemsave['commission_amount'] = $orderitem['price']*$commission/100;   
+               }
                $orderitemsave['image'] = $orderitem['image'];
                $orderitemsave['quantity'] = $orderitem['quantity'];
                $orderitemsave['weight'] = $orderitem['weight'];

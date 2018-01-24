@@ -86,9 +86,9 @@ class ProductsController extends AppController
     }
 
     
-      public function productbycat($slug = NULL)
+      public function productbycat($slug = NULL) 
     {    
-        $this->loadModel('Categories');
+        $this->loadModel('Categories'); 
         $this->loadModel('Users');
         $cat  = $this->Categories->find('all',array('conditions'=>array('Categories.slug'=>$slug)));
         $cat = $cat->first(); 
@@ -97,9 +97,9 @@ class ProductsController extends AppController
         $seller = $this->Users->find('all',['conditions'=>['Users.name LIKE' => '%' . $uname . '%']]); 
         $seller = $seller->first();
         $seller_id = $seller['id'];    
-        $this->paginate = [
+        $this->paginate = [ 
             'contain' => ['Categories', 'Users','Reviews'],  
-            'conditions'=>['AND'=>['Products.user_id'=>$seller_id,'Products.cat_id'=>$cat['id']]]
+            'conditions'=>['AND'=>['Products.user_id'=>$seller_id,'Products.cat_id'=>$cat['id'],'Products.bonus_disable_admin' => 0]]
         ];  
         
         }else{
@@ -276,9 +276,9 @@ class ProductsController extends AppController
             }
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
-        $cats = $this->Products->Cats->find('list', ['limit' => 200]);
-        $stores = $this->Products->Stores->find('list', ['limit' => 200]);
-        $this->set(compact('product', 'cats', 'stores'));
+        $cats = $this->Products->Categories->find('treeList', ['limit' => 200]);   
+       // $stores = $this->Products->Stores->find('list', ['limit' => 200]);
+        $this->set(compact('product', 'cats'));
         $this->set('_serialize', ['product']);
     }
 
@@ -361,9 +361,9 @@ class ProductsController extends AppController
           return $this->redirect(['controller' => 'stores', 'action' => 'index']);      
       }   
         $cats = $this->Products->Categories->find('treeList', ['limit' => 200]); 
-        $stores = $this->Products->Stores->find('list', ['limit' => 200]);
-        $this->set(compact('product', 'cats', 'stores'));
-        $this->set('_serialize', ['product']);  
+       // $stores = $this->Products->Stores->find('list', ['limit' => 200]);
+        $this->set(compact('product', 'cats'));  
+        $this->set('_serialize', ['product']);    
     }  
 
     /**

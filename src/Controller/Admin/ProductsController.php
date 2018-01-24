@@ -285,10 +285,10 @@ class ProductsController extends AppController
             }
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
-        $cats = $this->Products->Categories->find('treeList', ['limit' => 200]); 
-        $stores = $this->Products->Stores->find('list', ['limit' => 200]);
+        $cats = $this->Products->Categories->find('list', ['limit' => 200]);   
+       // $stores = $this->Products->Stores->find('list', ['limit' => 200]);
         $users = $this->Products->Users->find('list',array('conditions'=>array('Users.role'=>'user')));
-        $this->set(compact('product', 'cats', 'stores','users'));
+        $this->set(compact('product', 'cats','users'));  
         $this->set('_serialize', ['product']);
     }
 
@@ -361,9 +361,9 @@ class ProductsController extends AppController
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
         $cats = $this->Products->Categories->find('treeList', ['limit' => 200]); 
-        $stores = $this->Products->Stores->find('list', ['limit' => 200]);
+       // $stores = $this->Products->Stores->find('list', ['limit' => 200]);
         $users = $this->Products->Users->find('list',array('conditions'=>array('Users.role'=>'user'))); 
-        $this->set(compact('product', 'cats', 'stores','users'));  
+        $this->set(compact('product', 'cats','users'));    
         $this->set('_serialize', ['product']);
     }
 

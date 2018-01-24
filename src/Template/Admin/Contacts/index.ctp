@@ -28,17 +28,25 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Status</th>
+                  <th>Replied</th>
                   <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach($contacts as $contact): ?>
+                <?php foreach($contacts as $contact): ?>  
                 <tr>
                   <td><?php echo $contact['id']; ?></td>
                   <td><?php echo $contact['name']; ?></td>
                   <td><?php echo $contact['email']; ?></td>
                   <td><?php echo $contact['status'] != 0 ? '<span class="label label-success">Answered</span>' : '<span class="label label-danger">Not Answered</span>'; ?></td>
                   <td>
+                   <?php if($contact['status'] == 1){ ?>    
+                      <a href="#" class="btn btn-success btn-xs">YES </a> 
+                    <?php }else{ ?>
+                    <?= $this->Form->postLink(__('NO'), ['action' => 'changestatus', $contact->id], ['confirm' => __('Are you sure you want to change status # {0}?', $contact->id),'class' => 'btn btn-danger btn-xs']) ?>     
+                    <?php } ?>
+                  </td>      
+                  <td>  
                     <?= $this->Html->link(
                         '<span class="fa fa-eye"></span><span class="sr-only">' . __('View') . '</span>',
                         ['action' => 'view', $contact['id']],
@@ -49,7 +57,7 @@
                         ['action' => 'edit', $contact['id']],
                         ['escape' => false, 'title' => __('Edit'), 'class' => 'btn btn-success btn-xs']
                     ) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $contact['id']], ['confirm' => __('Are you sure you want to delete # {0}?', $contact['id']),'class' => 'btn btn-danger btn-xs']) ?>   
+                    
                    
                   </td>
                 </tr>

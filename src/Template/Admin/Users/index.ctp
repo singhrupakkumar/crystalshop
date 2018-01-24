@@ -1,11 +1,11 @@
 <section class="content-header">
     <h1>
-    Users   <?= $this->Html->link(__('Add User'), ['action' => 'add'], ['class' => 'btn btn-warning']) ?>
+    Sellers   <?= $this->Html->link(__('Add Seller'), ['action' => 'add'], ['class' => 'btn btn-warning']) ?>
     <small></small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Users</li>
+        <li class="active">Sellers</li>
     </ol>
 </section>
 
@@ -56,8 +56,12 @@
                         ['action' => 'changepassword', $user['id']],
                         ['escape' => false, 'title' => __('Edit'), 'class' => 'btn btn-warning btn-xs']
                     ) ?>
-                    <?php if($user['role'] != 'admin'){ ?>
-                    <a href="<?php echo $this->request->webroot; ?>admin/users/delete/<?php echo $user['id']; ?>" class="btn btn-danger btn-xs" onclick="if (confirm('Are you sure you want to delete this user?')) { return true; } return false;"><span class="fa fa-trash"></span></a>
+                    <?php if($user['status'] == 1){ ?>    
+                  <?= $this->Form->postLink(__('Disable '), ['action' => 'desable', $user->id], ['confirm' => __('Are you sure you want to disable # {0}?', $user->id),'class' => 'btn btn-success btn-xs']) ?>  
+                    <?php }else{ ?>
+                    <?= $this->Form->postLink(__('Enable'), ['action' => 'enable', $user->id], ['confirm' => __('Are you sure you want to enable # {0}?', $user->id),'class' => 'btn btn-danger btn-xs']) ?>     
+                    <?php } if($user['role'] != 'admin'){ ?>
+                    <a href="<?php echo $this->request->webroot; ?>admin/users/delete/<?php echo $user['id']; ?>"  class="btn btn-danger btn-xs" onclick="if (confirm('Are you sure you want to delete this user?')) { return true; } return false;"><span class="fa fa-trash"></span></a>
                     <?php } ?>
                   </td>
                 </tr>

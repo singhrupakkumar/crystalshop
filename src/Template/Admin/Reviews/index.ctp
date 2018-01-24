@@ -26,8 +26,9 @@
                 <tr>
                   <th>ID</th>
                   <th>Name</th>
+                  <th>Product</th>
                   <th>Reviews</th>
-                  <th>Average Rating</th>
+                  <th>Rated</th>
                   <th>Actions</th>
                 </tr>
                 </thead>
@@ -35,15 +36,17 @@
                 <?php foreach($review as $reviews): ?>
                 <tr>
                   <td><?php echo $reviews['id']; ?></td>
-                  <td><?php echo $reviews['user_id']; ?></td>
-                  <td><?php echo count($review); ?></td>
-                  <td>
+                  <td><?php echo $reviews['user']['name']; ?></td>
+                  <td><?php echo $reviews['product']['name']; ?></td>
+                   <td>
                   <?php echo $reviews['text']; ?>
                   </td>
+                  <td><?php echo $reviews['rating']; ?></td>
+                 
                   <td>
                     <?= $this->Html->link(  
                         '<span class="fa fa-eye"></span><span class="sr-only">' . __('View Reviews') . '</span>',
-                        ['action' => 'reviews', $reviews['id']],
+                        ['action' => 'view', $reviews['id']],
                         ['escape' => false, 'title' => __('View Reviews'), 'class' => 'btn btn-info']
                     ) ?>
                   </td>

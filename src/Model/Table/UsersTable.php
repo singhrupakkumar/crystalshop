@@ -226,9 +226,22 @@ class UsersTable extends Table
 
     public function buildRules(RulesChecker $rules)
 
-    {
+    {   
 
-        $rules->add($rules->isUnique(['email']));
+        $rules->add($rules->isUnique(['email'],[
+    'errorField' => 'status',
+    'message' => 'Email address already exists, add a unique value.'
+]));
+        
+        $rules->add($rules->isUnique(['paypal_email'],[
+    'errorField' => 'status',
+    'message' => 'Paypal email address already exists, add a unique value.'
+]));  
+        
+        $rules->add($rules->isUnique(['phone'],[
+    'errorField' => 'status',
+    'message' => 'Mobile number already exists, add a unique value.'  
+])); 
 
 
 

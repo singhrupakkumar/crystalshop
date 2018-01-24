@@ -3,7 +3,7 @@
 </style>
 <section class="content-header">
     <h1>
-    Review And Rating (By: <?php echo $review->user->name; ?>)
+    Review And Rating (By: <?php echo $review['user']['name']; ?>)
     <small></small>
     </h1>
     <ol class="breadcrumb">
@@ -19,7 +19,7 @@
         
         <div class="box">
   <div class="box-header">
-    <h3 class="box-title">By <?= h($review->user->name) ?></h3>
+    <h3 class="box-title">By <?= h($review['user']['name']) ?></h3>
   </div>
   <!-- /.box-header -->
   <div class="box-body no-padding">
@@ -47,7 +47,7 @@
         </tr>
         <tr>
           <th><?= __('Review') ?></th>
-          <td><?= h($review->review) ?></td>
+          <td><?= h($review->text) ?></td>
         </tr>
         </tr>
       </tbody>

@@ -7,13 +7,14 @@
         <li><a href="dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Articles</li>
     </ol>
+     <?= $this->Flash->render() ?>
 </section>
 
 <section class="content">
 	<div class="row">
         <div class="col-xs-12">
         
-        <?= $this->Flash->render() ?>
+       
         
         <div class="box">
             <!--<div class="box-header">

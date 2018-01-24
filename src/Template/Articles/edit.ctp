@@ -45,22 +45,38 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="pwd">Outbound Link</label>
+                        <label class="control-label col-sm-2" for="pwd">Outbound Link1</label>
                         <div class="col-sm-10">
                           <?php echo $this->Form->control('outboundlink', ['class' => 'form-control','placeholder'=>'Web address for your website, video, etc', 'label' => false, 'contenteditable' => false]); ?>  
                          
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="pwd">Linking Text</label>
+                        <label class="control-label col-sm-2" for="pwd">Linking Text1</label>
                         <div class="col-sm-10"> 
                             <?php echo $this->Form->control('linkingtext', ['class' => 'form-control','placeholder'=>'What text do want to
                                    connect with the above URL', 'label' => false, 'contenteditable' => false]); ?> 
                         
                         </div>
                     </div>
-
+                
+                      <div class="form-group">
+                        <label class="control-label col-sm-2" for="pwd">Outbound Link2</label>
+                        <div class="col-sm-10">
+                          <?php echo $this->Form->control('outboundlink2', ['class' => 'form-control','placeholder'=>'Web address for your website, video, etc', 'label' => false, 'contenteditable' => false]); ?>  
+                         
+                        </div>
+                    </div>
                     <div class="form-group">
+                        <label class="control-label col-sm-2" for="pwd">Linking Text2</label>
+                        <div class="col-sm-10"> 
+                            <?php echo $this->Form->control('linkingtext2', ['class' => 'form-control','placeholder'=>'What text do want to
+                                   connect with the above URL', 'label' => false, 'contenteditable' => false]); ?> 
+                        
+                        </div>
+                    </div>
+
+                    <div class="form-group">  
                         <label class="control-label col-sm-2" for="pwd">Author</label>
                         <div class="col-sm-10">
                             

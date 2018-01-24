@@ -151,4 +151,29 @@ class ContactsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    
+     /**
+     * 
+     * @param type $id
+     */
+    public function changestatus($id = null) {
+         $contact = $this->Contacts->get($id);
+         $post['status'] = 1;    
+         $user = $this->Contacts->patchEntity($contact, $post);
+        if ($this->Contacts->save($contact)) {
+
+            $this->Flash->success(__('Status change successfully.'));  
+
+        } else {  
+
+            $this->Flash->error(__('Unable to change.'));
+
+        }
+  
+
+
+        return $this->redirect(['action' => 'index']);
+    }
+    
+    
 }

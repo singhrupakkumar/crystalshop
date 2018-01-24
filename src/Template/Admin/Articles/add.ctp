@@ -40,14 +40,25 @@
                 </div> 
                   
                 <div class="form-group">
-                  <label for="outboundlink">Outbound Link</label>
+                  <label for="outboundlink">Outbound Link1</label>
                   <?php echo $this->Form->control('outboundlink', ['class' => 'form-control', 'label' => false, 'contenteditable' => false]); ?>
                 </div> 
                 
                 <div class="form-group">
-                  <label for="linkingtext">Linking Text</label>
+                  <label for="linkingtext">Linking Text1</label>
                   <?php echo $this->Form->control('linkingtext', ['class' => 'form-control', 'label' => false, 'contenteditable' => false]); ?>
-                </div>    
+                </div> 
+                  
+                 <div class="form-group">  
+                  <label for="outboundlink">Outbound Link2</label>
+                  <?php echo $this->Form->control('outboundlink2', ['class' => 'form-control', 'label' => false, 'contenteditable' => false]); ?>
+                </div> 
+                
+                <div class="form-group">
+                  <label for="linkingtext">Linking Text2</label>
+                  <?php echo $this->Form->control('linkingtext2', ['class' => 'form-control', 'label' => false, 'contenteditable' => false]); ?>
+                </div>   
+                  
                 <div class="form-group">
                   <label for="author">Author</label>  
                   <?php echo $this->Form->control('author', ['class' => 'form-control', 'label' => false, 'contenteditable' => false]); ?>

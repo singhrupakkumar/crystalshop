@@ -19,7 +19,11 @@
         <?php if(isset($articles['description'])){ echo $articles['description']; }?>  
 	  
             <!--div class="keyword"><span>Keywords: </span><?php if(isset($articles['keyword'])){ echo $articles['keyword']; }?></div--><br/>  
-            <div class="outboundlink"><a target="_blank" href="<?php if(isset($articles['outboundlink'])){ echo $articles['outboundlink']; }?>" class="btn btn-success scss_grn"><?php if(isset($articles['linkingtext'])){ echo $articles['linkingtext']; }?> </a></div><br/>  
+            <div class="outboundlink">
+                <a target="_blank" href="<?php if(isset($articles['outboundlink'])){ echo $articles['outboundlink']; }?>" class="btn btn-success scss_grn"><?php if(isset($articles['linkingtext'])){ echo $articles['linkingtext']; }?> </a>
+                <a target="_blank" href="<?php if(isset($articles['outboundlink2'])){ echo $articles['outboundlink2']; }?>" class="btn btn-success scss_grn"><?php if(isset($articles['linkingtext2'])){ echo $articles['linkingtext2']; }?> </a> 
+            </div><br/>  
+             
           
 	</div>        
 	

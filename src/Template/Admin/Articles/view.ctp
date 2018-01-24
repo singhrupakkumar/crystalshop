@@ -38,6 +38,35 @@
           <th><?= __('Description') ?></th>      
           <td><?= html_entity_decode($articles->description, ENT_QUOTES, "UTF-8"); ?></td>
         </tr>
+        
+        <tr>   
+          <th><?= __('Keyword') ?></th>      
+          <td><?= h($articles->keyword) ?></td>  
+        </tr>
+        <tr>   
+          <th><?= __('Outboundlink 1') ?></th>      
+          <td><?= h($articles->outboundlink) ?></td>  
+        </tr>
+          <tr>   
+          <th><?= __('Linkingtext 1') ?></th>      
+          <td><?= h($articles->linkingtext) ?></td>  
+        </tr>
+
+        <tr>   
+          <th><?= __('Outboundlink 2') ?></th>      
+          <td><?= h($articles->outboundlink2) ?></td>  
+        </tr>
+        <tr>   
+          <th><?= __('Linkingtext 2') ?></th>      
+          <td><?= h($articles->linkingtext2) ?></td>  
+        </tr>
+        
+        <tr>   
+          <th><?= __('Author') ?></th>      
+          <td><?= h($articles->author) ?></td>   
+        </tr>
+        
+        
       </tbody>
     </table>
   </div>

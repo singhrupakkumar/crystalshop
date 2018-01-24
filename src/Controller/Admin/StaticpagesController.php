@@ -27,7 +27,7 @@ class StaticpagesController extends AppController
 
         }
 
-        $this->Auth->allow(['logout']);
+        $this->Auth->allow(['logout','homepage']);
 
         $this->authcontent();
 
@@ -49,6 +49,33 @@ class StaticpagesController extends AppController
         $this->set(compact('staticpages'));
         $this->set('_serialize', ['staticpages']);
     }
+    
+    
+    
+      public function homepage() 
+    {      $this->loadModel('Homepages');
+          if ($this->request->is(array('post', 'put'))) {
+
+            foreach ($this->request->data as $setting_key=>$setting_value){
+                 
+               $this->Homepages->updateAll(['value'=>"$setting_value"],['key'=>$setting_key]);          
+            }
+            
+             $this->Flash->success(__('Homepages updated!'));
+        
+             
+         }
+        
+        $settings = $this->Homepages->find('all',[
+			'order'		=>  ['Homepages.id' => 'ASC']
+		]);
+		
+	$settings = $settings->all()->toArray(); 
+
+        $this->set(compact('settings'));
+        $this->set('_serialize', ['settings']);    
+    }
+    
 
     /**
      * View method
