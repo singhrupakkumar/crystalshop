@@ -38,12 +38,11 @@ class ReviewsController extends AppController
     public function index()
     {
         $review = $this->Reviews->find('all', [
-                'contain'	=>	['Products','Users'], 
+                'contain'	=>	['Products'=>'Users','Users'], 
                 'order'		=>  ['Reviews.id' => 'desc']
         ]);
 	
-	$review = $review->all()->toArray();  
-        
+	$review = $review->all()->toArray();   
         $this->set(compact('review'));
         $this->set('_serialize', ['review']);
     }

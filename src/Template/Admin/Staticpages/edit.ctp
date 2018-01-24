@@ -24,10 +24,10 @@
                   <label for="exampleInputEmail1">Title</label>
                   <?php echo $this->Form->control('title', ['class' => 'form-control', 'label' => false]); ?>
                 </div>
-                <div class="form-group">
+                <!--div class="form-group">  
                   <label for="exampleInputPassword1">Image</label>
                   <?php  echo $this->Form->control('image', ['type' => 'file', 'label' => false, 'id' => 'profilePic']); ?>
-                </div>
+                </div-->
                 <!--div>  
                 <?php if($staticpage['image'] != ''){ ?>
                 <img src="<?php echo $this->request->webroot; ?>images/staticpages/<?php echo $staticpage['image']; ?>" style="width: 190px; margin-bottom: 20px;

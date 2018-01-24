@@ -146,8 +146,8 @@
                         
                                  <?php  
                                         $string = strip_tags($article['description']);
-                                        if (strlen($string) > 250) {    
-                                            $stringCut = substr($string, 0, 250);
+                                        if (strlen($string) > 170) {     
+                                            $stringCut = substr($string, 0, 170);
                                             $string = substr($stringCut, 0, strrpos($stringCut, ' ')).'... <a href="'.$this->request->webroot.'articles/view/'.$article['id'].'" class="read_lst">Read More</a>'; 
                                         }
                                         ?>

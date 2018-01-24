@@ -28,10 +28,10 @@
                   <label for="exampleInputEmail1">Title</label>
                   <?php echo $this->Form->control('title', ['class' => 'form-control', 'label' => false]); ?>
                 </div>
-                <div class="form-group">
+                <!--div class="form-group"> 
                   <label for="exampleInputPassword1">Image</label>
                   <?php echo $this->Form->control('image', ['type' => 'file', 'label' => false]); ?>
-                </div>
+                </div-->
                 <div class="form-group">
                   <label for="exampleInputPassword1">Content</label>
                   <?php echo $this->Form->control('content', ['class' => 'form-control', 'label' => false, 'contenteditable' => false]); ?>

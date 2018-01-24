@@ -3,7 +3,7 @@ jQuery(document).ready(function () {
  jQuery('#cartcount').html(data['data']['cartcount']); 
   var myvar = '';
  if(data['data']['cartcount'] == "0"){     
-  myvar += '<img src="http://rupak.crystalbiltech.com/crystal/img/NoDataAvailable.png" alt="img" />';   
+  myvar += '<img src="http://rupak.crystalbiltech.com/crystal/img/empty-cart-icon-1.jpg" alt="img" />';   
  }else{
  myvar = '<div class="table_boundry">'+
 '<table>'+
@@ -87,7 +87,7 @@ myvar += '  </tbody>'+
  jQuery('#cartcount').html(data['data']['cartcount']); 
   var myvar = '';
  if(data['data']['cartcount'] == "0"){    
-  myvar += '<img src="http://rupak.crystalbiltech.com/crystal/img/NoDataAvailable.png" alt="img" />'; 
+  myvar += '<img src="http://rupak.crystalbiltech.com/crystal/img/empty-cart-icon-1.jpg" alt="img" />'; 
  }else{
  myvar = '<div class="table_boundry">'+
 '<table>'+
@@ -177,7 +177,7 @@ myvar += '  </tbody>'+
               jQuery('#cartcount').html(data['data']['cartcount']); 
   var myvar = '';
  if(data['data']['cartcount'] == "0"){    
-  myvar += '<img src="http://rupak.crystalbiltech.com/crystal/img/NoDataAvailable.png" alt="img" />'; 
+  myvar += '<img src="http://rupak.crystalbiltech.com/crystal/img/empty-cart-icon-1.jpg" alt="img" />'; 
  }else{
  myvar = '<div class="table_boundry">'+
 '<table>'+
@@ -262,9 +262,9 @@ myvar += '  </tbody>'+
      
                jQuery('#cartcount').html(data['data']['cartcount']); 
                 
-  var myvar = '';
+  var myvar = '';  
  if(data['data']['cartcount'] == "0"){    
-  myvar += '<img src="http://rupak.crystalbiltech.com/crystal/img/NoDataAvailable.png" alt="img" />'; 
+  myvar += '<img src="http://rupak.crystalbiltech.com/crystal/img/empty-cart-icon-1.jpg" alt="img" />'; 
  }else{
  myvar = '<div class="table_boundry">'+
 '<table>'+

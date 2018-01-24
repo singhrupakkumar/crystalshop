@@ -42,24 +42,57 @@
           <td><?= h($user->email) ?></td>
         </tr>
         <?php } ?> 
+        
+       <?php if($user->paypal_email){ ?>
+        <tr>
+          <th><?= __('Paypal Email') ?></th>
+          <td><?= h($user->paypal_email) ?></td>  
+        </tr>
+        <?php } ?> 
         <?php if($user->phone){ ?>
         <tr>
           <th><?= __('Phone') ?></th>
           <td><?= h($user->phone) ?></td>
         </tr>
-         <?php } ?>
-        <?php if($user->gender){ ?>
+         <?php } ?> 
+        <?php if($user->address){ ?>
         <tr>
-          <th><?= __('Gender') ?></th>
-          <td><?= h($user->gender) ?></td>
+          <th><?= __('Address') ?></th>
+          <td><?= h($user->address) ?></td>
         </tr>
-         <?php } ?>
+         <?php } ?> 
+        
+        
         <?php if($user->dob){ ?>
         <tr>
           <th><?= __('Dob') ?></th>
           <td><?= h($user->dob) ?></td>
         </tr>
         <?php } ?>
+        
+       <?php if($user->city){ ?>
+        <tr>
+          <th><?= __('City') ?></th>
+          <td><?= h($user->city) ?></td>
+        </tr>
+         <?php } ?>
+        
+         <?php if($user->state){ ?>
+        <tr>
+          <th><?= __('State') ?></th>
+          <td><?= h($user->state) ?></td>
+        </tr>
+         <?php } ?>
+        
+        
+          <?php if($user->zip){ ?>  
+        <tr>
+          <th><?= __('Zip') ?></th>
+          <td><?= h($user->zip) ?></td>
+        </tr>
+         <?php } ?>
+        
+        
         <?php if($user->country){ ?>
         <tr>
           <th><?= __('Country') ?></th>

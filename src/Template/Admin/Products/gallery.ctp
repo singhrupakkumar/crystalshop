@@ -10,14 +10,12 @@
         <li class="active">Gallery</li>
     </ol>
     
-   
+     <?php echo $this->Flash->render(); ?>
 </section>
 
 <section class="content">
 	<div class="row">
         <div class="col-xs-12">
-        
-        <?php echo $this->Flash->render(); ?>
         
         <div class="box">
             <!--<div class="box-header">
@@ -25,7 +23,7 @@
             </div>-->
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="gallery" class="table table-bordered table-hover">
              <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('image') ?></th>
@@ -59,4 +57,10 @@
         
         </div>  
     </div>
-</section>       
+</section>  
+<script>
+    $(document).ready(function() {  
+        
+    $('#gallery').DataTable();
+     });   
+</script>

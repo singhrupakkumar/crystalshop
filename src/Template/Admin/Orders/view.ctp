@@ -69,6 +69,16 @@
             <th scope="row"><?= __('Total') ?></th>
             <td>$<?= h($order->total) ?></td>    
         </tr>
+        
+        <tr>
+            <th scope="row"><?= __('Pay to Seller') ?></th>
+            <td>$<?= h($order->total - $order->commission_amount) ?></td>
+        </tr>
+         <tr>
+            <th scope="row"><?= __('Admin Comission') ?></th>
+            <td>$<?= h($order->commission_amount) ?></td>    
+        </tr>
+        
          <tr>
             <th scope="row"><?= __('Status') ?></th>
             <td><?php if($order->order_status == 1){ echo "Pending"; }elseif($order->order_status == 2){ echo "Processing";  }elseif($order->order_status == 3){ echo "Complete";  }elseif($order->order_status == 4){ echo "Cancel";  } ?></td>    
@@ -108,9 +118,10 @@
                 <th scope="col"><?= __('Name') ?></th>
                 <th scope="col"><?= __('Seller Name') ?></th>
                 <th scope="col"><?= __('Image') ?></th>
-                <th scope="col"><?= __('Price') ?></th>
+                <th scope="col"><?= __('Item Price') ?></th>
+                <th scope="col"><?= __('Admin Comission') ?></th>
                 <th scope="col"><?= __('Quantity') ?></th>
-                <th scope="col"><?= __('Subtotal') ?></th>
+                <th scope="col"><?= __('Item Total') ?></th>
             </tr> 
         </thead>    
       <tbody>  
@@ -127,7 +138,8 @@
                 " class="previewHolder"/>
                 <?php } ?>
                 </td>
-                <td><?= h($item->price) ?></td> 
+                <td><?= h($item->price) ?></td>
+                <td><?= h($item->commission_amount); if($item->commission_amount == 0){ echo '<p style="color:red"> Bonus Product</p>'; } ?> </td>  
                 <td><?= h($item->quantity) ?></td> 
                 <td>$<?= h($item->subtotal) ?></td>    
             </tr>

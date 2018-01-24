@@ -27,6 +27,7 @@
                   <th>ID</th>
                   <th>Name</th>
                   <th>Product</th>
+                  <th>Reviewer (name)</th>
                   <th>Reviews</th>
                   <th>Rated</th>
                   <th>Actions</th>
@@ -38,6 +39,7 @@
                   <td><?php echo $reviews['id']; ?></td>
                   <td><?php echo $reviews['user']['name']; ?></td>
                   <td><?php echo $reviews['product']['name']; ?></td>
+                  <td><?php echo $reviews['product']['user']['name']; ?></td>  
                    <td>
                   <?php echo $reviews['text']; ?>
                   </td>

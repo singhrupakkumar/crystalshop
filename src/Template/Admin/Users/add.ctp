@@ -36,6 +36,11 @@
                   <label for="exampleInputPassword1">Email</label>
                   <?php echo $this->Form->control('email', ['class' => 'form-control', 'label' => false]); ?>
                 </div>
+                 <div class="form-group">
+                  <label for="exampleInputpaypal">Paypal Email</label>
+                  <?php echo $this->Form->control('paypal_email', ['class' => 'form-control', 'label' => false]); ?>
+                </div>  
+                  
                 <div class="form-group">
                   <label for="exampleInputEmail1">Phone</label>
                   <?php echo $this->Form->control('phone', ['class' => 'form-control', 'label' => false]); ?>
@@ -102,7 +107,7 @@ $().ready(function() {
 			},
 			phone: {
 				required: true,
-				digits: true
+				//digits: true
 			},
 			country: {
 				required: true

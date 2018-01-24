@@ -16,7 +16,7 @@ class StaticpagesController extends AppController
 	
 	public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        $this->Auth->allow(['view','faq','contact','term','promoteproduct','writeanarticle','becomeaseller']);      
+        $this->Auth->allow(['view','faq','contact','term','promoteproduct','writeanarticle','becomeaseller','sellingproducts']);      
         $this->authcontent();    
     }
 	
@@ -223,4 +223,14 @@ class StaticpagesController extends AppController
        $this->set(compact('promoteproduct'));
        $this->set('_serialize', ['promoteproduct']);    
     }
+    
+    public function sellingproducts(){    
+       $sellingproducts = $this->Staticpages->find('all',['conditions'=>['Staticpages.position'=>'sellingyour-products','Staticpages.status'=>1]]);
+       $sellingproducts = $sellingproducts->first();  
+    
+       $this->set(compact('sellingproducts'));
+       $this->set('_serialize', ['sellingproducts']);    
+    }
+    
+    
 }

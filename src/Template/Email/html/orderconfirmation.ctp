@@ -22,8 +22,8 @@
   </tr>  
     <tr>
     	<td style="text-align:right;">
-        	<h1 style="font-size:16px; margin:0;  color:#487697; font-weight:600;">Order Confirmed</h1>    
-            <h2 style="font-size:12px; margin:0; color:#4a4a4a; font-weight:normal;">Order No:- <?php if(isset($order['id'])){ echo $order['id']; } ?></h2>
+        	<h1 style="font-size:16px; margin:0;  color:#487697; font-weight:600;">New Order Received!</h1>       
+            <h2 style="font-size:12px; margin:0; color:#4a4a4a; font-weight:bold; ">Order No:- <?php if(isset($order['id'])){ echo $order['id']; } ?></h2>
         </td>
     </tr>
     
@@ -63,9 +63,9 @@
            ?>   
           <tr>
               <td> 
-                <?php if($item['image']){ ?> 
-                     <img src="<?php echo $this->request->webroot."images/products/".$item['image']; ?>"/>
-                    <?php }else{ ?>
+                <?php if($item['image']){ ?>   
+                     <img src="<?php echo "http://rupak.crystalbiltech.com/crystal/images/products/".$item['image']; ?>"/>
+                    <?php }else{ ?> 
                    <img src="<?php echo $this->request->webroot."images/products/no-image.jpg"; ?>"/>
                     <?php } ?>    
             </td>
@@ -79,11 +79,11 @@
             </td>  
               
             <!--td  style="text-align:left;"><p style="font-size:10px; color:#929292;">Voucher discount: Rs. 264.00</p></td-->  
-            <td  style="text-align:left;"><p style=" font-size:13px; font-weight:bold;">$<?php if(isset($item['price'])){ echo $item['price']; } ?></p></td>
+            <td  style="text-align:left;"><p style=" font-size:13px; float: right; padding-right: 10px;">$<?php if(isset($item['price'])){ echo $item['price']; } ?></p></td>
           </tr>
          <?php } } ?>   
           <tr>
-          	<td colspan="2" style="padding:10px 0; border-top:1px solid #CCC; border-bottom:1px solid #CCC;"><p style="margin:0; font-size:14px;; text-align:left; padding:0 0 0 10px;">Price</p></td>
+          	<td colspan="2" style="padding:10px 0; border-top:1px solid #CCC; border-bottom:1px solid #CCC;"><p style="margin:0; font-size:14px;; text-align:left; padding:0 0 0 10px; text-transform:bold;">Price</p></td>
                 <td colspan="2" style="padding:10px 0; border-top:1px solid #CCC;  border-bottom:1px solid #CCC; "><p style="margin:0; font-size:14px;; text-align:right; padding:0 10px 0px 0px;">$<?php if(isset($order['subtotal'])){ echo $order['subtotal']; } ?></p></td>
           </tr>
            
@@ -102,7 +102,7 @@
         </td>  
     </tr>
     <tr>
-    	<td style="padding:0;"><p style="padding:10px 10px; font-size:12px; text-align:left;">Thank you  <br><span style=" font-size:12px; font-weight:600;">Team Earth Vendors</span></p></td>   
+    	<td style="padding:0;"><p style="padding:10px 10px; font-size:12px; text-align:center;">Thank you  <br><span style=" font-size:12px; font-weight:600;">Team Earth Vendors</span></p></td>   
     </tr> 
 
 </table>    

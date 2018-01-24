@@ -603,9 +603,17 @@ class StoresController extends AppController
             $orderdata['seller_id'] = $cart['seller']['id'];
             $orderdata['order_item_count'] = $cart['cartInfo']['order_item_count'];    
             $orderdata['subtotal'] = $cart['cartInfo']['subtotal'];
-            $orderdata['commission_amount'] = $cart['cartInfo']['total']*$commission/100;
+            $totalcommission = 0 ;
+             foreach($cart['products'] as $orderitem){
+                 if($orderitem['product']['free_sale']== 1){  
+               $totalcommission += 0;   
+               }else{
+               $totalcommission += $orderitem['price']*$commission/100;   
+               }
+             }
+            $orderdata['commission_amount'] = $totalcommission;    
             $orderdata['total'] = $cart['cartInfo']['total'];  
-            $orders = $this->Orders->patchEntity($orders, $orderdata);
+            $orders = $this->Orders->patchEntity($orders, $orderdata);  
             $save = $this->Orders->save($orders);  
            if ($save) { 
                $last_id = $save['id'];
@@ -639,7 +647,7 @@ class StoresController extends AppController
                         ->cc('rupak@avainfotech.com')
                         ->cc($cart['seller']['email']) 
                         ->to($orderemail)
-                        ->subject('Order Confirmation')    
+                        ->subject('New Order Received!')    
                         ->viewVars(array('order' => $data))           
                         ->send();        
                

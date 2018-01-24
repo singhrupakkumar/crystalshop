@@ -1,8 +1,11 @@
 <div class="chk_section">
     <div class="container">
+	<div class="alert-messge">
      <?= $this->Flash->render() ?>  
+	 </div>
         <div class="row">
             <div class="my_thm">
+                <a class="btn btn-success scss_grn" href="<?php echo $this->request->webroot."products/addsellproduct"; ?>">Add Product</a>
                 <div class="my_hder">
                     <h3>My Products</h3>   
                 </div>
@@ -14,7 +17,7 @@
 					
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
-                            <tr>
+                            <tr class="clr_chmg">
                                 <th scope="col">Title</th>
                                 <th scope="col">QTY</th>
                                 <th scope="col">Price</th>
@@ -24,9 +27,10 @@
                         <tbody>
                             <?php if(!empty($userdata)){
                                 
-                             foreach($userdata['products'] as $product){    
+                             foreach($userdata['products'] as $product){      
                             ?>
-                            <tr>
+                            <tr class="<?php if($product['bonus_disable_admin']==1){ echo "disble"; } ?>"> 
+                                
                                 <td data-label="Title" class="ttl_pnh">
                                     <div class="mypr_pic">
                                         <?php if($product['image']){ ?>  
@@ -49,8 +53,8 @@
 
 
 
-                                </td>
-                                <td data-label="QTY"><?php if(isset($product['quantity'])){ echo $product['quantity']; } ?></td>
+                                </td>  
+                                <td data-label="QTY"><?php if($product['bonus_disable_admin']==1){ echo '<div class="disble-txttable">Product disabled by Admin </div>'; } ?> <?php if(isset($product['quantity'])){ echo $product['quantity']; } ?></td>
                                 <td data-label="Price">$<?php if(isset($product['price'])){ echo $product['price']; } ?></td>
                                 <td class="actions">
                                     <?= $this->Html->link(

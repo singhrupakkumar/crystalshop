@@ -28,55 +28,84 @@
                     <div class="frm_sgncvr1">
                          <?= $this->Form->create($user, ['id' => 'edit-form', 'enctype' => 'multipart/form-data']) ?>
                             <?php echo $this->Form->control('image', ['class' => 'form-control ctrl_smn smm_alg','type'=>'file','id'=>'img' ,'label' => false]); ?>
-                            <div class="input-group gp_slct">
-                                <span class="input-group-addon brdr_trns"><i class="glyphicon glyphicon-user"></i></span>
+                            <div class="input-group gp_slct slct_fln">
+							<div class="col-sm-2">
+                           <span class="brdr_trns"><label>Name</label></span>
+							 </div>
+							  <div class="col-sm-10">
                                 <?php echo $this->Form->control('name', ['class' => 'form-control ctrl_smn lft_hldr', 'label' => false,'placeholder'=>'Full Name']); ?>
                             </div> 
+							</div>
                         
-                             <div class="input-group">
-                                <span class="input-group-addon brdr_trns"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                             <div class="input-group slct_fln">
+							 <div class="col-sm-2">
+                                <span class="brdr_trns"><label>Email</label></span>
+								</div>
+								 <div class="col-sm-10">
                                 <?php echo $this->Form->control('email', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Email Address','readonly']); ?>
                             </div>
+							</div>
                         
-                             <div class="input-group">
-                                <span class="input-group-addon brdr_trns"><i class="fa fa-paypal" aria-hidden="true"></i></span> 
+                             <div class="input-group slct_fln">
+							  <div class="col-sm-2">
+                                <span class="brdr_trns lbl_sgnl"><label>Paypal Email</label></span> 
+								</div>
+								 <div class="col-sm-10">
                                 <?php echo $this->Form->control('paypal_email', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Paypal Email Address']); ?> 
                             </div>
-
-                           <div class="input-group">
-                               <span class="input-group-addon brdr_trns"><i class="glyphicon glyphicon-user"></i></span>
-                       <!--   <label for="exampleInputGender">Gender</label>-->
-                                <select name="gender" class="form-control">
-                                  <option value="male" <?php if($user->gender=='male'){ echo "selected"; }?>>Male</option>
-                                  <option value="female" <?php if($user->gender=='female'){ echo "selected"; }?>>Female</option>
-
-                                </select>
-                           </div>
+							</div>
                         
-                            <div class="input-group">
-                              <span class="input-group-addon brdr_trns"><i class="fa fa-mobile fnt_inc" aria-hidden="true"></i></span>  
+                            <div class="input-group slct_fln">
+							<div class="col-sm-2">
+                              <span class="brdr_trns lbl_sgnl"><label>Phone Number</label></span> 
+							  </div>
+								 <div class="col-sm-10"> 
                               <?php echo $this->Form->control('phone', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'123-456-1234','maxlength'=>12]); ?>
                            </div>
-                           <div class="input-group ">
-                           <span class="input-group-addon brdr_trns"><i class="fa fa-calendar fnt_clng" aria-hidden="true"></i></span>  
+						   </div>
+								 
+                           <div class="input-group slct_fln">
+						   <div class="col-sm-2">
+                           <span class="brdr_trns"><label>DOB</label></span>
+						     </div>
+								 <div class="col-sm-10">   
                               <?php echo $this->Form->control('dob', ['class' => 'form-control ctrl_smn lft_hldr', 'label' => false,'placeholder'=>'Date Of Birth']); ?>
                            </div>
-                           <div class="input-group">
-                            <span class="input-group-addon brdr_trns"><i class="fa fa-map-marker fnt_inc1" aria-hidden="true"></i></span>   
+						     </div>
+								 
+                           <div class="input-group slct_fln">
+						     <div class="col-sm-2">
+                            <span class="brdr_trns"><label>Address</label></span>  
+							 </div>
+								 <div class="col-sm-10">   
                               <?php echo $this->Form->control('address', ['class' => 'form-control ctrl_smn', 'label' => false,'placeholder'=>'Address']); ?>
                            </div> 
-                            
+                            </div>
+							
                            <div class="input-group grp_adjst">
-                            <span class="input-group-addon brdr_trns lgh_snt"><i class="fa fa-globe" aria-hidden="true"></i></span> 
+						     <div class="col-sm-4">
+                            <span class="brdr_trns lgh_snt"><label>State</label></span> 
+							 </div>
+								 <div class="col-sm-8">  
                               <?php echo $this->Form->control('state', ['class' => 'form-control ctrl_smn lft_hldr', 'label' => false,'placeholder'=>'State']); ?>
                            </div> 
+						   </div>
+						   
                            <div class="input-group grp_adjst">
-                             <span class="input-group-addon brdr_trns"><i class="fa fa-barcode" aria-hidden="true"></i></span> 
+						     <div class="col-sm-4">
+                             <span class="brdr_trns"><label>Zip Code</label></span> 
+							  </div>
+								 <div class="col-sm-8">  
                               <?php echo $this->Form->control('zip', ['class' => 'form-control ctrl_smn lft_hldr', 'label' => false,'placeholder'=>'Zip']); ?>
                            </div>
-                           <div class="input-group cntr_ctl">
+						   </div>
+						   
+                           <div class="input-group cntr_ctl slct_fln">
                               <!--<label for="exampleInputPassword1">Country</label> -->
-                              <span class="input-group-addon brdr_trns"><i class="fa fa-flag" aria-hidden="true"></i></span>
+							  <div class="col-sm-2">
+                              <span class="brdr_trns"><label>Country</label></span>
+							   </div>
+								 <div class="col-sm-10">  
                               <select class="form-control form-select ajax-processed sel-country" id="edit-node-type" name="country" required="required">
                                <option value="United States">United States</option>
                                <?php if(!empty($countries)){ ?>
@@ -91,6 +120,7 @@
                                <?php } ?>
                                </select>
                            </div> 
+						   </div>
 
                         <?= $this->Form->button(__('Save Changes'), ['class' => 'btn btn-success cntr_grn']) ?>
                            <?= $this->Form->end() ?>

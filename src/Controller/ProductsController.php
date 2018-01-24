@@ -102,10 +102,10 @@ class ProductsController extends AppController
             'conditions'=>['AND'=>['Products.user_id'=>$seller_id,'Products.cat_id'=>$cat['id'],'Products.bonus_disable_admin' => 0]]
         ];  
         
-        }else{
+        }else{ 
              $this->paginate = [
             'contain' => ['Categories', 'Users'],
-            'conditions'=>['Products.cat_id'=>$cat['id']]    
+            'conditions'=>['AND'=>['Products.cat_id'=>$cat['id'],'Products.bonus_disable_admin' => 0]]    
         ];
             
         }

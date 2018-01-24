@@ -222,9 +222,9 @@ $cakeDescription = '';
             <ul class="nav navbar-nav navbar-right">
                 <li class="<?php  if($this->request->params['action'] == 'index' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>stores/index">Home</a></li>
                 <li class="<?php  if($this->request->params['action'] == 'contact' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>staticpages/contact">Contact Us</a></li> 
-                <li class="<?php  if($this->request->params['action'] == 'addsellproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>products/addsellproduct">Selling Your Products</a></li>
-                 <li class="<?php  if($this->request->params['action'] == 'promoteproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>staticpages/promoteproduct">Promote Your Products</a></li>  
-            </ul>      
+                <li class="<?php  if($this->request->params['action'] == 'sellingproducts' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>staticpages/sellingproducts">Selling Your Products</a></li>
+                 <li class="<?php  if($this->request->params['action'] == 'promoteproduct' ) { echo "active"; }?>"><a href="<?php echo $this->request->webroot ?>staticpages/promoteproduct">Promote Your Products</a></li>   
+            </ul>       
             
         </div>
     </nav>
@@ -251,12 +251,13 @@ $cakeDescription = '';
              <div class="ftr_dvde">
               <div class="col-sm-3">
               	<div class="privcy_sction">
-                	<h3>Privacy info</h3>
+                	<h3>General Info</h3> 
                        <div class="after_prvsy">
                        
                     </div>
                     <ul>
                     <li><a href="<?php echo $this->request->webroot ?>staticpages/term">Terms & Conditions</a></li>
+                    <li><a href="<?php echo $this->request->webroot ?>staticpages/aboutus">About Us</a></li>  
                     </ul>
                 	</div>
                </div>
@@ -308,8 +309,8 @@ $cakeDescription = '';
                          </div>
                     </div>
                     </li>
-                    <li><a href="#" class="rgst_lnk">Register now to get updates</a></li>
-                    <li><a href="#" class="pay_lnk">payment</a><img src="<?php echo $this->request->webroot; ?>images/website/foter_paypal.png" class="pal_side"></li>
+                    <!--li><a href="#" class="rgst_lnk">Register now to get updates</a></li-->
+                    <li><a href="#" class="pay_lnk"></a><img src="<?php echo $this->request->webroot; ?>images/website/foter_paypal.png" class="pal_side"></li>
                     </ul>
                 	</div>
                </div>

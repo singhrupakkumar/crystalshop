@@ -1,6 +1,6 @@
 <section class="content-header">
     <h1>
-    Static Pages  <?= $this->Html->link(__('Add Static Page'), ['action' => 'add'], ['class' => 'btn btn-warning']) ?>
+    Static Pages  <?php // $this->Html->link(__('Add Static Page'), ['action' => 'add'], ['class' => 'btn btn-warning']) ?>
     <small></small>
     </h1>
     <ol class="breadcrumb">
@@ -52,7 +52,7 @@
                         ['action' => 'edit', $staticpage['id']],
                         ['escape' => false, 'title' => __('Edit'), 'class' => 'btn btn-success']
                     ) ?>
-                    <a href="<?php echo $this->request->webroot; ?>admin/staticpages/delete/<?php echo $staticpage['id']; ?>" class="btn btn-danger" onclick="if (confirm('Are you sure you want to delete this file?')) { return true; } return false;"><span class="fa fa-trash"></span></a>
+                    <a href="<?php echo $this->request->webroot; ?>admin/staticpages/delete/<?php echo $staticpage['id']; ?>" class="btn btn-danger delt" onclick="if (confirm('Are you sure you want to delete this file?')) { return true; } return false;"><span class="fa fa-trash"></span></a>
                   </td>
                 </tr>
                 <?php endforeach; ?>
@@ -74,4 +74,11 @@
         
         </div>
     </div>
-</section>       
+</section>     
+
+<style>
+
+.delt { margin-left:20px;} 
+
+
+</style>     

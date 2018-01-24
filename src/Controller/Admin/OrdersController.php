@@ -50,7 +50,8 @@ class OrdersController extends AppController
         public function index()
     {
         $this->paginate = [
-            'contain' => ['OrderItems','Users']
+            'contain' => ['OrderItems','Users','Seller'],
+            'order'   => ['Orders.id' => 'desc'] 
         ];
         $orders = $this->paginate($this->Orders);
     

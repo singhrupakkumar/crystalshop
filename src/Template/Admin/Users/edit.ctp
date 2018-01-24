@@ -42,19 +42,24 @@
                   <label for="exampleInputPassword1">Email</label>
                   <?php echo $this->Form->control('email', ['class' => 'form-control', 'label' => false, 'disabled' => 'disabled']); ?>
                 </div>
+                 <div class="form-group">
+                  <label for="exampleInputPassword1">Paypal Email</label>
+                  <?php echo $this->Form->control('paypal_email', ['class' => 'form-control', 'label' => false]); ?>
+                </div>    
+                    
                 <div class="form-group">
                   <label for="exampleInputEmail1">Phone</label>
                   <?php echo $this->Form->control('phone', ['class' => 'form-control', 'label' => false]); ?>
                 </div>
 
-                <div class="form-group">
+                <!--div class="form-group">
                   <label for="exampleInputEmail1">Gender</label>
                   <select name="gender" class="form-control">
                     <option value="male" <?php if($user->gender=='male'){ echo "selected"; }?>>Male</option>
                     <option value="female" <?php if($user->gender=='female'){ echo "selected"; }?>>Female</option>
         
                   </select>
-                </div>  
+                </div-->  
                   
                 
                 <div class="form-group">
@@ -65,7 +70,7 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Country</label>
                   <select name="country" class="form-control">
-                  	<option value="">Select Country</option>
+                    <option value="United States">United States</option>  
                     <?php foreach($countries as $country){ ?>
                     <?php if($country['name'] == $user['country']){ ?>
                     <option value="<?php echo $country['name']; ?>" selected="selected"><?php echo $country['name']; ?></option>
@@ -101,7 +106,7 @@ $().ready(function() {
 			last_name: "required",
 			phone: {
 				required: true,
-				digits: true
+				//digits: true
 			},
 			country: {
 				required: true

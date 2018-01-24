@@ -77,7 +77,7 @@
         </li>
         <li class="<?php if($this->request->params['controller'] == 'Contacts' ) { echo "active"; }?>">
           <a href="<?php echo $this->request->webroot; ?>admin/contacts">
-            <i class="fa fa-address-card"></i> <span>Contact Request</span>  
+            <i class="fa fa-address-card"></i> <span>Contact Us</span>  
             <span class="pull-right-container">  
             </span>
           </a>  

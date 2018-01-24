@@ -51,11 +51,11 @@ class OrdersController extends AppController
 //           $orderid[] = $item['order_id'];  
 //       }
 //       $orderid = $orderid?$orderid:0;  
-        $sellorder = $this->Orders->find('all',['contain'=>['Users'],'conditions'=>['Orders.seller_id'=>$uid]]);         
+        $sellorder = $this->Orders->find('all',['contain'=>['Users','Seller'],'conditions'=>['Orders.seller_id'=>$uid]]);         
         $sellorder = $sellorder->all();  
 
         $this->paginate = [
-            'contain' => ['OrderItems','Users'],'conditions'=>['Orders.uid'=>$this->Auth->user('id')]  
+            'contain' => ['OrderItems','Users','Seller'],'conditions'=>['Orders.uid'=>$this->Auth->user('id')]  
         ];
         $yourorders = $this->paginate($this->Orders);      
 

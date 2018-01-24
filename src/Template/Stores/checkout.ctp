@@ -105,7 +105,7 @@
 
                  <div class="form-group nm_lese less_mrgn">
                   <label for="phone">Phone Number</label>
-                  <input type="number" class="form-control" id="phone" value="<?php if(isset($phone)){ echo $phone; } ?>" placeholder="Phone Number" name="phone">
+                  <input type="text" maxlength="12" class="form-control" id="phone" value="<?php if(isset($phone)){ echo $phone; } ?>" placeholder="Phone Number" name="phone">
                 </div>
 
                  <div class="form-group">
@@ -176,10 +176,20 @@
                    </div>
                   <div class="col-sm-9">
                   <h4 class="spn_hdng"><?php if(isset($item['product']['name'])){ echo $item['product']['name']; } ?></h4>
-                  <p class="para_chktxt"><?php if(isset($item['product']['description'])){ echo $item['product']['description']; } ?></p>
+                  <p class="para_chktxt">
+                          <?php  
+                                        $string = strip_tags($item['product']['description']);
+                                        if (strlen($string) > 108) {     
+                                            $stringCut = substr($string, 0, 108);
+                                            $string = substr($stringCut, 0, strrpos($stringCut, ' ')).'... <a href="'.$this->request->webroot.'products/view/'.$item['product']['slug'].'" class="read_lst">Read More</a>'; 
+                                        }
+                                        ?>
+                  <?php if(isset($string)){ echo $string; } ?>     
+                     
+                  </p>
                 	</div>
                    <div class="rght_dte">
-                   	<h3>$<?php if(isset($item['product']['description'])){ echo $item['product']['price']; } ?></h3> 
+                   	<h3>$<?php if(isset($item['product']['price'])){ echo $item['product']['price']; } ?></h3> 
                    	</div>
                     </div>
             	</div>
@@ -252,6 +262,21 @@
     	</div>
 	</div>  
 <script>
+ 
+ function contactFormat(number){   
+  if(number.length == 3){
+      number = number+'-'
+  } else if (number.length == 7){
+      number = number+'-';
+  }
+  return number;
+}  
+   
+$("#phone").keyup(function(){ 
+var num = contactFormat($(this).val());   
+ $(this).val(num)  ; 
+});     
+    
 $().ready(function() {
 	var valid = $("#checkout-form").validate({
 		rules: {
@@ -262,7 +287,7 @@ $().ready(function() {
 			},
 			phone: {
 				required: true,
-				digits: true
+				
 			},
 			state: {
 				required: true

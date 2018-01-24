@@ -106,13 +106,13 @@ class StaticpagesController extends AppController
 		
 			$post = $this->request->data;
 			
-			$image = $this->request->data['image'];
-			$name = time().$image['name'];
-			$tmp_name = $image['tmp_name'];
-			$upload_path = WWW_ROOT.'images/staticpages/'.$name;
-			move_uploaded_file($tmp_name, $upload_path);
-			
-			$post['image'] = $name;
+//			$image = $this->request->data['image'];
+//			$name = time().$image['name'];
+//			$tmp_name = $image['tmp_name'];
+//			$upload_path = WWW_ROOT.'images/staticpages/'.$name;
+//			move_uploaded_file($tmp_name, $upload_path);
+//			
+//			$post['image'] = $name;
 		
 			$post['slug'] = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $post['title']));
 		
@@ -141,28 +141,28 @@ class StaticpagesController extends AppController
         $staticpage = $this->Staticpages->get($id, [
             'contain' => []
         ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
+        if ($this->request->is(['patch', 'post', 'put'])) { 
 		
 			$post = $this->request->data;
 		
-			if($this->request->data['image']['name'] != ''){
-					
-				if($staticpage->image != ''){
-					unlink(WWW_ROOT.'images/staticpages/'.$staticpage->image);
-				}	
-			
-				$image = $this->request->data['image'];
-				$name = time().$image['name'];
-				$tmp_name = $image['tmp_name'];
-				$upload_path = WWW_ROOT.'images/staticpages/'.$name;
-				move_uploaded_file($tmp_name, $upload_path);
-				
-				$post['image'] = $name;
-			
-			}else{
-				unset($this->request->data['image']);
-				$post = $this->request->data;
-			}
+//			if($this->request->data['image']['name'] != ''){
+//					
+//				if($staticpage->image != ''){
+//					unlink(WWW_ROOT.'images/staticpages/'.$staticpage->image);
+//				}	
+//			
+//				$image = $this->request->data['image'];
+//				$name = time().$image['name'];
+//				$tmp_name = $image['tmp_name'];
+//				$upload_path = WWW_ROOT.'images/staticpages/'.$name;
+//				move_uploaded_file($tmp_name, $upload_path);
+//				
+//				$post['image'] = $name;
+//			
+//			}else{
+//				unset($this->request->data['image']);
+//				$post = $this->request->data;
+//			}
 			
 			$post['slug'] = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $post['title']));
 			

@@ -33,7 +33,7 @@
           <th><?= __('Title') ?></th>
           <td><?= h($staticpage->title) ?></td>
         </tr>
-        <tr>
+        <!--tr>  
           <th><?= __('Image') ?></th>
           <td>
             <?php if($staticpage->image != ''){ ?>
@@ -44,7 +44,7 @@
             " class="previewHolder"/>
             <?php } ?>
           </td>
-        </tr>
+        </tr-->
         <tr>
           <th><?= __('Content') ?></th>
           <td><?= html_entity_decode($staticpage->content, ENT_QUOTES, "UTF-8"); ?></td>
