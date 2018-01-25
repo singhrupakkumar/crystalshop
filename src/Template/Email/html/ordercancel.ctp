@@ -7,7 +7,7 @@
 <meta name="viewport" content="width">
 </head>    
 
-
+   
 
 <body style="padding:15px 0; background: url(http://rupak.crystalbiltech.com/crystal/img/bgplait.png) repeat #dddddd;
 		margin:0px auto;
