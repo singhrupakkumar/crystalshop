@@ -705,21 +705,21 @@ class UsersController extends AppController {
     
      public function paymenthistory() {
          $this->loadModel('Orders');
-         $this->loadModel('OrderItems');  
+
          $uid = $this->Auth->user('id');
          if (empty($uid)) {      
             $this->redirect('/');
         }
-       $orderitems  = $this->OrderItems->find('all', ['conditions' => ['OrderItems.seller_id' => $uid]]);
-       $orderitems  = $orderitems->all();  
-        $orderid = array();
-       foreach($orderitems as $item){
-           $orderid[] = $item['order_id'];  
-       }
+//       $orderitems  = $this->OrderItems->find('all', ['conditions' => ['OrderItems.seller_id' => $uid]]);
+//       $orderitems  = $orderitems->all();  
+//        $orderid = array();
+//       foreach($orderitems as $item){
+//           $orderid[] = $item['order_id'];  
+//       }
    
-       $orderid = $orderid?$orderid:0;
+      // $orderid = $orderid?$orderid:0; 
        
-      $order = $this->Orders->find('all',['contain'=>['Users'],'conditions'=>['Orders.id in'=>$orderid]]);         
+      $order = $this->Orders->find('all',['contain'=>['OrderItems','Users','Seller'],'conditions'=>['Orders.seller_id'=>$uid]]);           
       $orderhistory = $order->all(); 
    
     

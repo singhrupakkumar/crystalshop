@@ -11,11 +11,11 @@
              <form method="post">
              <div class="form-group">
                  <label>From</label>
-                 <input type="text" name="from" class="form-control date">
+                 <input type="text" name="from" value="<?php if(isset($_POST['from'])){ echo $_POST['from']; } ?>" class="form-control date">
              </div> 
-             <div class="form-group">
+             <div class="form-group"> 
                  <label>To</label>
-                 <input type="text" name="to" class="form-control date">
+                 <input type="text" name="to" value="<?php if(isset($_POST['to'])){ echo $_POST['to']; } ?>" class="form-control date">
              </div>  
              <div class="form-group">
                  <input type="submit" name="submit" value="Search" class="btn btn-info">

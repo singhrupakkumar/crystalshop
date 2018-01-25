@@ -43,7 +43,7 @@
                   
                 <div class="form-group">
                   <label for="exampleInputEmail1">Phone</label>
-                  <?php echo $this->Form->control('phone', ['class' => 'form-control', 'label' => false]); ?>
+                  <?php echo $this->Form->control('phone', ['class' => 'form-control', 'label' => false,'autocomplete'=>'off','maxlength'=>12]); ?> 
                 </div>
                 
                 <div class="form-group">
@@ -96,6 +96,23 @@
 </section> 
 
 <script>
+    
+    
+    
+ function contactFormat(number){   
+  if(number.length == 3){
+      number = number+'-'
+  } else if (number.length == 7){
+      number = number+'-';
+  }
+  return number;
+}  
+   
+$("#phone").keyup(function(){ 
+var num = contactFormat($(this).val()); 
+ $(this).val(num)  ; 
+});      
+        
 $().ready(function() {
 	$("#user-form").validate({
 		rules: {

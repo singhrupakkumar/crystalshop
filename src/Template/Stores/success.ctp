@@ -6,7 +6,8 @@
             </div> 
             <div class="frm_sgncvr">
                 <div class="img_cnfm">
-                    <img src="<?php echo $this->request->webroot; ?>images/website/thku_pic.png">     
+                    <img src="<?php echo $this->request->webroot; ?>images/website/thku_pic.png">   
+                    <span class="ordr_pro">Thank You for Your Order!</span>  
                 </div>
                 <span class="smry_stng">Summary</span>
                 <?php if(!empty($cart['products'])){

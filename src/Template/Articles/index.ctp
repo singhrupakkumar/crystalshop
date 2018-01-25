@@ -40,7 +40,7 @@
                 	</div>
             	</div>
               <?php } }else{  
-                  echo '<div class="col-sm-12"><div class="blankimg"><img src="'.$this->request->webroot.'/img/no-article.png" class="img-responsive"></div></div>';
+                  echo '<div class="col-sm-12"><div class="blankimg"><img src="'.$this->request->webroot.'/img/imgpsh_fullsize.png" class="img-responsive"></div></div>';
                   
                   echo '<div class="col-sm-4 col-sm-offset-5"><div class="noarticlebtn"><a class="btn btn-success scss_grn" href="'.$this->request->webroot.'articles/add">Click here to add article</a></div></div>';
                }  ?>   

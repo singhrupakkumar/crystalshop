@@ -35,7 +35,7 @@ class StoresController extends AppController
 
 
         $this->Auth->allow(['index', 'add','storeDetails','shop','all','hotdeals','cart','checkout','payment',
-            'remove','itemupdate','clear','displaycart','webdisplaycart','webremoveitems','cartincreaseqty','cartdecreaseqty']);
+            'remove','itemupdate','clear','displaycart','webdisplaycart','webremoveitems','cartincreaseqty','cartdecreaseqty','ipn']);
 
         $this->authcontent();
   
@@ -649,16 +649,16 @@ class StoresController extends AppController
                         ->to($orderemail)
                         ->subject('New Order Received!')    
                         ->viewVars(array('order' => $data))           
-                        ->send();        
+                        ->send();         
                
-               $amt = $cart['cartInfo']['total'] ;
-               $returnUrl = Router::url('/', true)."stores/success";  
+               $amt = $cart['cartInfo']['total'] ;     
+               $returnUrl = Router::url('/', true)."stores/success?order_id=$last_id";  
                $ipnNotificationUrl = Router::url('/', true)."stores/ipn";
           ///////////////////////////////////////////////payment////////////////////////////////////////////////
                         echo ".<form name=\"_xclick\" action=\"https://www.sandbox.paypal.com/cgi-bin/webscr\" method=\"post\">
                     <input type=\"hidden\" name=\"cmd\" value=\"_xclick\">
                     <input type=\"hidden\" name=\"email\" value=\"rupak-buyer@avainfotech.com\">
-                    <input type=\"hidden\" name=\"business\" value=\"rupak-facilitator@avainfotech.com\">
+                    <input type=\"hidden\" name=\"business\" value=\"rupak1-facilitator@avainfotech.com\">
                     <input type=\"hidden\" name=\"currency_code\" value=\"USD\">
                     <input type=\"hidden\" name=\"custom\" value=\"$last_id\">
                     <input type=\"hidden\" name=\"amount\" value=\"$amt\">
@@ -669,7 +669,7 @@ class StoresController extends AppController
                         echo "<script>document._xclick.submit();</script>";
             
            }
-        }
+        } 
                
         }else{
            $this->Flash->error(__('Shopping Cart is empty'));  
@@ -683,8 +683,8 @@ class StoresController extends AppController
 
     }
     
-      public function success() { 
-
+      public function success() {
+          
         $shop     = $this->request->session()->read('Shop');
         $uid      = $this->Auth->user('id');    
         $sesid    = $this->request->session()->id(); 
@@ -692,8 +692,53 @@ class StoresController extends AppController
         $cart = $this->displaycart($user_id, $sesid); 
         if(empty($cart['products'])){    
           $this->Flash->error(__('Shopping Cart is empty'));  
-           return $this->redirect('/');       
-        }  
+           return $this->redirect('/');               
+        } 
+        
+        $this->loadModel('Products');
+        $this->loadModel('Orders');
+        
+        if(isset($_REQUEST['tx'])){ 
+                $this->Orders->updateAll(array(
+                    'transaction_id'=> $_REQUEST['tx'],
+                    'payment_gateway_price'=> $_REQUEST['amt'],
+                    'payment_status'=> $_REQUEST['st'],
+                    'order_status'=> 2    
+                ),array(
+                    'Orders.id'=>$_REQUEST['cm']
+                )); 
+         }
+        
+            $data = $this->Orders->find('all', array('contain'=>['OrderItems'],'conditions' => array('Orders.id' => $_GET['order_id'])));     
+            $data = $data->first(); 
+        // print_r($data); exit;      
+         // manage stock 
+         if(isset($data)){  
+             foreach ($data['order_items'] as $orderItem) { 
+        $product = $this->Products->find('all',array('conditions'=>array('Products.id'=>$orderItem['product_id'])));  
+        $product = $product->first();
+        if($product){    
+            $updated_quantity = $product['quantity']-$orderItem['quantity'];
+            if($updated_quantity >0){
+                $this->Products->updateAll(array(
+                    'quantity'=>$updated_quantity
+                ),array(
+                    'Products.id'=>$product['id']
+                ));
+            }else{
+                $this->Products->updateAll(array(
+                    'quantity'=>0
+                ),array(
+                    'Products.id'=>$product['id']
+                ));
+            }
+
+        }
+        
+        
+      }
+    }
+        
         $this->Cart->clear();     
         $this->set(compact('shop','cart'));    
       }
@@ -701,9 +746,9 @@ class StoresController extends AppController
       public function ipn() {  
         $fc = fopen('ipn_data.txt', 'wb');
         ob_start();
-        print_r($_POST);
+        print_r($_REQUEST);
         $req = 'cmd=' . urlencode('_notify-validate');
-        foreach ($_POST as $key => $value) {
+        foreach ($_REQUEST as $key => $value) {
             $value = urlencode(stripslashes($value));
             $req .= "&$key=$value";
         }
@@ -719,17 +764,17 @@ class StoresController extends AppController
         $res = curl_exec($ch);
         curl_close($ch);
         if (strcmp($res, "VERIFIED") == 0) {
-            $custom_field = $_POST['custom'];
-            $payer_email = $_POST['payer_email'];
-            $trn_id = $_POST['txn_id'];
-            $pay = $_POST['mc_gross'];
+            $custom_field = $_REQUEST['custom'];
+            $payer_email = $_REQUEST['payer_email'];
+            $trn_id = $_REQUEST['txn_id'];
+            $pay = $_REQUEST['mc_gross'];
             $this->loadModel('Orders');
             $this->Orders->query("UPDATE `orders` SET `order_status` = 1, `payment_status` = '$res',`transaction_id`='$trn_id', `payment_gateway_price`='$pay' WHERE `id` ='$custom_field';");
             $this->set('smtp_errors', "none");
         } else if (strcmp($res, "INVALID") == 0) {
             
         } 
-        $xt = ob_get_clean(); 
+        $xt = ob_get_clean();   
         fwrite($fc, $xt);
         fclose($fc);
         exit;

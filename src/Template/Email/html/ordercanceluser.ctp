@@ -14,7 +14,7 @@
 		font-family: 'Roboto', sans-serif;
 		font-weight:400;
 		background-size: 160px;">
-<table width="600" border="0" cellpadding="10" cellspacing="0" style="margin:0px auto; background:#fffefb; text-align:center;">
+<table width="600" border="0" cellpadding="10" cellspacing="0" style="margin:0px auto; background:#fffefb; text-align:center;">  
   <tr style="background:#fff;">
     <td style="text-align:center; padding-top:2px; padding-bottom:2px; border-bottom:2px solid #5786a6; padding:0;">  
     	<img src="http://rupak.crystalbiltech.com/crystal/img/emaillogo.png" alt="img" />
@@ -28,9 +28,9 @@
     </tr>
     
     <tr>
-    	<td style="text-align:center;">  
-        	<h1 style="font-size:16px; margin:0;  color:#487697; font-weight:600;">Hi Admin</h1>     
-            <h2 style="font-size:12px; margin:0; color:#4a4a4a; font-weight:normal;">Order No:- <?php if(isset($order['id'])){ echo $order['id']; } ?>  to <?php if(isset($order['seller']['name'])){ echo $order['seller']['name']; } ?> has been cancelled by <?php if(isset($order['user']['name'])){ echo $order['user']['name']; } ?> with below details.</h2>
+    	<td style="text-align:center;">    
+        	<h1 style="font-size:16px; margin:0;  color:#487697; font-weight:600;">Hi <?php if(isset($order['user']['name'])){ echo $order['user']['name']; } ?>,</h1>     
+            <h2 style="font-size:12px; margin:0; color:#4a4a4a; font-weight:normal;">Your order #<?php if(isset($order['id'])){ echo $order['id']; } ?> has been cancelled with below details.</h2>
         </td>
     </tr>
     

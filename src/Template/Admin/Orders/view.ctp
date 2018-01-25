@@ -32,7 +32,10 @@
             <th scope="row"><?= __('Email') ?></th>
             <td><?= h($order->email) ?></td>
         </tr>
-
+        <tr>
+            <th scope="row"><?= __('Paypal Email') ?></th>
+            <td><?= h($order['user']['paypal_email']) ?></td>
+        </tr>
         <tr>
             <th scope="row"><?= __('Phone') ?></th>
             <td><?= h($order->phone) ?></td>
@@ -60,11 +63,7 @@
             <th scope="row"><?= __('Country') ?></th>
             <td><?= h($order->country) ?></td>
         </tr>
-        
-        <tr>
-            <th scope="row"><?= __('Subtotal') ?></th>
-            <td>$<?= h($order->subtotal) ?></td>
-        </tr>
+   
          <tr>
             <th scope="row"><?= __('Total') ?></th>
             <td>$<?= h($order->total) ?></td>    

@@ -3,7 +3,11 @@
 	<div class="ur_ordr_sec">
             
             <div class="ur_order">
-                 <?php echo $this->Flash->render(); ?>   
+                 <div class="col-sm-12">
+             <div class="sign-flash">  
+              <?= $this->Flash->render() ?>   
+              </div>
+              </div>     
             	<h1>My Purchased Orders</h1>              
             </div>
                
@@ -23,14 +27,14 @@
               <table id="yourorder" class="table table-bordered table-hover">
              <thead>
             <tr class="clr_chmg">
-                <th class="colr_for" scope="col"><?= $this->Paginator->sort('Order ID') ?></th>
-                <th class="colr_for" scope="col"><?= $this->Paginator->sort('Name') ?></th>
-                <th class="colr_for" scope="col"><?= $this->Paginator->sort('Email') ?></th>
-                <th class="colr_for" scope="col"><?= $this->Paginator->sort('Seller') ?></th>
-                <th class="colr_for" scope="col"><?= $this->Paginator->sort('Total') ?></th>
-                <th class="colr_for" scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th class="colr_bld" scope="col" class="actions"><?= __('Status') ?></th>
-                <th class="colr_bld" scope="col" class="actions"><?= __('Action') ?></th>
+                <th class="colr_for" scope="col">Order ID</th>
+                <th class="colr_for" scope="col">Name</th>
+                <th class="colr_for" scope="col">Email</th>
+                <th class="colr_for" scope="col">Seller</th>
+                <th class="colr_for" scope="col">Total</th>
+                <th class="colr_for" scope="col">created</th>
+                <th class="colr_bld" scope="col" class="actions">Status</th>  
+                <th class="colr_bld" scope="col" class="actions">Action</th>
             </tr>
             </thead>
                 <tbody>
@@ -63,7 +67,7 @@
                          ?>        
                    <p>You cannot cancel this Booking as cancellation period has expired.</p>   
                     <?php }elseif($info->order_status !=4){ ?> 
-                    <?= $this->Form->postLink(__('Cancel'), ['action' => 'ordercancel', $info['id']], ['confirm' => __('Are you sure you want to cancel order # {0}?', $info['id']),'class' => 'btn btn-danger btn-xs']) ?>     
+                    <?= $this->Form->postLink(__('Cancel'), ['action' => 'ordercancel', $info['id']], ['confirm' => __('Are you sure you want to cancel order # {0}?', $info['id']),'class' => 'btn btn-danger btn-xs cancelbtn']) ?>      
                <?php } } ?>                    
                 </td> 
          
@@ -169,7 +173,17 @@
         //alert(a);
     });
     
-        $('#yourorder').DataTable();  
-        $('#sellingorder').DataTable();  
+    
+         
+    $(document).ready(function() {   
+  $('#yourorder').DataTable( {
+   "order": [[ 1, "desc" ]]
+    } );
+
+   $('#sellingorder').DataTable( {
+   "order": [[ 1, "desc" ]]
+    } );
+   } );  
+
 </script>
  

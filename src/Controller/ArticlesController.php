@@ -95,6 +95,7 @@ class ArticlesController extends AppController
             $articles = $this->Articles->patchEntity($articles, $post);
             if ($this->Articles->save($articles)) {  
                 $this->Flash->success(__('The articles has been saved.'));
+                return $this->redirect(['action' => 'index']);  
             }else{
               $this->Flash->error(__('The articles could not be saved. Please, try again.'));    
             }

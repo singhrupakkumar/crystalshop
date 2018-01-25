@@ -20,16 +20,16 @@
               <h3 class="box-title">Hover Data Table</h3>
             </div>-->
             <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
+            <div class="box-body"> 
+              <table id="reviews" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
+                  <th>Reviewer</th>
                   <th>Product</th>
-                  <th>Reviewer (name)</th>
+                  <th>Seller</th>
                   <th>Reviews</th>
-                  <th>Rated</th>
+                  <th>Rating</th>
                   <th>Actions</th>
                 </tr>
                 </thead>
@@ -55,15 +55,7 @@
                 </tr>
                 <?php endforeach; ?>
                 </tbody>
-                <tfoot>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Reviews</th>
-                  <th>Average Rating</th>
-                  <th>Actions</th>
-                </tr>
-                </tfoot>
+               
               </table>
             </div>
             <!-- /.box-body -->
@@ -73,4 +65,15 @@
         
         </div>
     </div>
-</section>       
+</section>  
+<script type="text/javascript">
+
+    $(document).ready(function() {   
+  $('#reviews').DataTable( {
+   "order": [[ 3, "desc" ]]
+    } );
+
+   } );
+
+</script>
+ 

@@ -393,9 +393,9 @@ class ProductsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $product = $this->Galleries->get($id);
         if ($this->Galleries->delete($product)) {
-            $this->Flash->success(__('The gallery has been deleted.'));
-        } else {
-            $this->Flash->error(__('The gallery could not be deleted. Please, try again.'));
+            $this->Flash->success(__('Image is deleted successfully'));
+        } else { 
+            $this->Flash->error(__('The Image could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'gallery/'.$product['product_id']]);   

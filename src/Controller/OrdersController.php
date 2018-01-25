@@ -48,17 +48,18 @@ class OrdersController extends AppController
 //       $orderitems  = $orderitems->all();  
 //        $orderid = array();
 //       foreach($orderitems as $item){
-//           $orderid[] = $item['order_id'];  
+//           $orderid[] = $item['order_id'];    
 //       }
 //       $orderid = $orderid?$orderid:0;  
-        $sellorder = $this->Orders->find('all',['contain'=>['Users','Seller'],'conditions'=>['Orders.seller_id'=>$uid]]);         
+        $sellorder = $this->Orders->find('all',['contain'=>['Users','Seller'],'conditions'=>['Orders.seller_id'=>$uid],'order'   => ['Orders.id' => 'desc'] ]);         
         $sellorder = $sellorder->all();  
 
         $this->paginate = [
-            'contain' => ['OrderItems','Users','Seller'],'conditions'=>['Orders.uid'=>$this->Auth->user('id')]  
+            'contain' => ['OrderItems','Users','Seller'],'conditions'=>['Orders.uid'=>$this->Auth->user('id')],
+            'order'   => ['Orders.id' => 'desc'] 
         ];
-        $yourorders = $this->paginate($this->Orders);      
-
+        $yourorders = $this->paginate($this->Orders);  
+  
         $this->set(compact('yourorders','sellorder'));
         $this->set('_serialize', ['yourorders','sellorder']); 
    
@@ -121,16 +122,31 @@ class OrdersController extends AppController
         $data = $this->Orders->find('all', array('contain'=>array('Users','OrderItems','Seller'),'conditions' => array('Orders.id' => $id)));  
         $data = $data->first()->toArray();     
                
-               $email = new Email('default');     
-
+               $email = new Email('default');        
+                        /**********admin***********/
                  $send = $email->from(['rupak@avainfotech.com' => 'Earth Vendors'])      
                         ->emailFormat('html')
                         ->template('ordercancel')
-                        ->cc('rupak@avainfotech.com')
-                        ->cc($data['seller']['email']) 
-                        ->to($data['email']) 
-                        ->subject('Order Cancellation')    
+                        ->to('rupak@avainfotech.com')   
+                        ->subject('Order Cancelled')      
                         ->viewVars(array('order' => $data))           
+                        ->send();  
+                 
+                         /**********seller***********/
+                 $send1 = $email->from(['rupak@avainfotech.com' => 'Earth Vendors'])      
+                        ->emailFormat('html')
+                        ->template('ordercancelseller')
+                        ->to($data['seller']['email']) 
+                        ->subject('Order Cancelled')      
+                        ->viewVars(array('order' => $data))           
+                        ->send();   
+                        /**********buyer***********/
+                 $send2 = $email->from(['rupak@avainfotech.com' => 'Earth Vendors'])      
+                        ->emailFormat('html')
+                        ->template('ordercanceluser')  
+                        ->to($data['email']) 
+                        ->subject('Order Cancelled')      
+                        ->viewVars(array('order' => $data))              
                         ->send();    
  
 
