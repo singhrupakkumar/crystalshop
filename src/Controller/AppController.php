@@ -55,6 +55,14 @@ use Cake\Event\Event;
 class AppController extends Controller
 
 {
+    
+    
+    
+    public function beforeFilter(Event $event) 
+    {
+        parent::beforeFilter($event);    
+        $this->Security->requireSecure();
+    }
 
 
 
@@ -81,7 +89,7 @@ class AppController extends Controller
     {
 
         parent::initialize();
-
+         $this->loadComponent('Security', ['blackHoleCallback' => 'forceSSL']);  
 
 
         $this->loadComponent('RequestHandler');
@@ -126,7 +134,6 @@ class AppController extends Controller
                 $this->loadModel('Settings');
 		$globalsettings = $this->Settings->find('all');
 		$globalsettings = $globalsettings->all()->toArray();
-		
 		$this->set(compact('globalsettings'));
                 $this->set('_serialize', ['globalsettings']);    
 		
@@ -146,6 +153,14 @@ class AppController extends Controller
 		
 		$this->set(compact('categorieslist'));
                 $this->set('_serialize', ['categorieslist']);   
+                
+                
+                $this->loadModel('Homepages');
+		$homesetting = $this->Homepages->find('all');    
+		$homesetting = $homesetting->all()->toArray();
+	
+		$this->set(compact('homesetting'));
+                $this->set('_serialize', ['homesetting']);  
 		
 		/*************************************/
 
@@ -162,6 +177,8 @@ class AppController extends Controller
         //$this->loadComponent('Security');
 
         //$this->loadComponent('Csrf');
+                
+                
 
     }
 
@@ -214,7 +231,10 @@ class AppController extends Controller
     }
 
     
-    
+    public function forceSSL()
+    {
+        return $this->redirect('https://' . env('SERVER_NAME'));
+    }
       
 
     public function authcontent() {
@@ -225,3 +245,4 @@ class AppController extends Controller
 
 }
 
+  
